@@ -22,6 +22,7 @@ namespace GameBlocks
     {
         public MainWindow()
         {
+            // HELLO WORLD
             InitializeComponent();
         }
     }
