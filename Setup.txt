@@ -1,3 +1,1 @@
 ﻿Chain name: chain11
-Chain queuse: QueueTicTacToe, QueueChess
-Chain games: GameTicTacToe, GameChess
