@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Background="LightBlue">
     <Grid>
-        <Button Content="Button" HorizontalAlignment="Center" Margin="0,157,0,0" VerticalAlignment="Top" Click="Button_Click" Height="63" Width="160"/>
+        <Button Content="liststreams" HorizontalAlignment="Center" Margin="0,157,0,0" VerticalAlignment="Top" Click="Liststreams_Button_Click" Height="63" Width="160"/>
         <TextBlock x:Name="textBox1" HorizontalAlignment="Left" Margin="31,31,0,0" TextWrapping="Wrap" Text="liststreams" VerticalAlignment="Top" Height="378" Width="194" Background="Wheat"/>
+        <Button Content="Start Node" HorizontalAlignment="Left" Margin="544,157,0,0" VerticalAlignment="Top" Click="Start_Button_Click" Height="63" Width="160"/>
 
     </Grid>
 </Window>

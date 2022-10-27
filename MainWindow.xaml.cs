@@ -1,4 +1,4 @@
-﻿using LucidOcean.MultiChain;
+﻿using GameBlocks.Classes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,31 +27,19 @@ namespace GameBlocks
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Start_Button_Click(object sender, RoutedEventArgs e)
+        {
+            (_, _) = MultiChainClient.RunCommand("multichaind", "chain11", "-daemon");
+            //textBox1.Text = output;
+        }
+
+        private void Liststreams_Button_Click(object sender, RoutedEventArgs e)
         {
             //Na razie chaina trzeba najpierw uruchomić ręcznie;
             string output, err;
-            (output, err) = runCommand("liststreams");
+            (output, err) = MultiChainClient.RunCommand("multichain-cli", "chain11", "liststreams");
             textBox1.Text = output;
         }
 
-        public (string, string) runCommand(string command)
-        {
-            Process process = new Process();
-            process.StartInfo.WorkingDirectory = @"d:\Multichain\";
-            process.StartInfo.FileName = @"d:\Multichain\multichain-cli.exe";
-            process.StartInfo.Arguments = $"chain11 {command}";
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.Start();
-            //* Read the output (or the error)
-            string output = process.StandardOutput.ReadToEnd();
-            string err = process.StandardError.ReadToEnd();
-            process.WaitForExit();
-
-            return (output, err);
-        }
     }
 }
