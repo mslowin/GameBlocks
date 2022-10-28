@@ -23,12 +23,21 @@ namespace GameBlocks
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// MainWindow constructor.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             GlobalVariables.ChainName = ExtensionsMethods.ReadSetupFile();
+            //Chain chain = MultiChainClient.InitializeChain(GlobalVariables.ChainName);
         }
 
+        /// <summary>
+        /// Using multi chain command to start the node.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
             // Starting a Node
@@ -36,14 +45,23 @@ namespace GameBlocks
             liststreamsButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Using multi chain command to list streams.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Liststreams_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Using multi chain command (The node must be already running)
             string output, err;
             (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
             textBox1.Text = output;
         }
 
+        /// <summary>
+        /// Using multi chain command to stop the running node.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
             // Stopping a Node
@@ -51,6 +69,11 @@ namespace GameBlocks
             liststreamsButton.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Handling the window closing event.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var result = CustomMessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -60,6 +83,11 @@ namespace GameBlocks
             }
         }
 
+        /// <summary>
+        /// Handling an instance where the window was closed.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closed(object sender, EventArgs e)
         {
             // Stopping a Node

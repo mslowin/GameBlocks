@@ -10,6 +10,9 @@ using WPFCustomMessageBox;
 
 namespace GameBlocks.Classes
 {
+    /// <summary>
+    /// Methods which extend the main Classes and give additional functionalities.
+    /// </summary>
     internal static class ExtensionsMethods
     {
         //public static (string, List<string>, List<string>) ReadSetupFile()

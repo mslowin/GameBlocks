@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameBlocks.Classes
 {
+    /// <summary>
+    /// Class containing a collection of methods used to perform operations on the Chain.
+    /// </summary>
     internal static class MultiChainClient
     {
         /// <summary>
@@ -41,12 +44,29 @@ namespace GameBlocks.Classes
             return (output, err);
         }
 
-        private async static Task<string> StartNodeAsync(Process process)
+        /// <summary>
+        /// Gathers information about the chain and its component. Creates classes.
+        /// </summary>
+        /// <param name="chainName">Name of a chain.</param>
+        /// <returns>Chain object.</returns>
+        internal static Chain InitializeChain(string chainName)
+        {
+            //GlobalVariables.ChainName = ExtensionsMethods.ReadSetupFile();
+            //(List<Stream> queueStreams, List<Stream> gameStreams) = MultiChainClient.ReadChainStreams();
+            //var chain = new Chain(GlobalVariables.ChainName, queueStreams, gameStreams);
+
+            //return chain;
+            return null;
+        }
+
+        /// <summary>
+        /// Asynchronicly starts a Node.
+        /// </summary>
+        /// <param name="process">Process that starts a node.</param>
+        private async static Task StartNodeAsync(Process process)
         {
             process.Start();
             await process.WaitForExitAsync();  // this needs to run untill the app is closed
-
-            return process.StandardOutput.ReadToEnd();
         }
     }
 }
