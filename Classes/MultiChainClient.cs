@@ -22,6 +22,7 @@ namespace GameBlocks.Classes
         public static Chain InitializeChain(string chainName)
         {
             MultiChainClient.RunCommand("multichaind", chainName, "-daemon");
+            System.Threading.Thread.Sleep(3000);                                // <-- sleep to make sure the node is running
 
             List<Stream> allStreams = MultiChainClient.ReadChainStreams();
             Chain chain = CreateChainObjet(allStreams);

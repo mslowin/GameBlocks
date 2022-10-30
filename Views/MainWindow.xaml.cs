@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPFCustomMessageBox;
 
-namespace GameBlocks
+namespace GameBlocks.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,6 +32,7 @@ namespace GameBlocks
             Setup? setup = ExtensionsMethods.ReadSetupFile();
             GlobalVariables.ChainName = setup.ChainName;
             GlobalVariables.MainChain = MultiChainClient.InitializeChain(GlobalVariables.ChainName); // Starting a Node and gathering infotmation
+            currentChainTextBlock.Text = setup.ChainName;
         }
 
         /// <summary>
@@ -44,6 +45,19 @@ namespace GameBlocks
             string login = loginTextBox.Text;
             string password = passwordTextBox.Text;
             bool credentialsOk = GlobalVariables.MainChain.LogIntoChainSuccess(login, password);
+
+            if(credentialsOk)
+            {
+                GameChooseWindow gameChooseWindow = new GameChooseWindow();
+                Visibility = Visibility.Hidden;
+                gameChooseWindow.Show();
+            }
+            else
+            {
+                loginErrorTextBlock.Text = "Invalid login or password";
+            }
+
+            // TODO: if true: odpalanie okna z grami.
         }
 
         /// <summary>

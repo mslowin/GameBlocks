@@ -76,11 +76,9 @@ namespace GameBlocks.Classes
             {
                 if(passwordHash == myPasswordHash && chainLogins[i] == myLogin)
                 {
-                    // TODO: jeszcze sprawdz nazwy
                     return true;
                 }
             }
-
             return false;
         }
     }
