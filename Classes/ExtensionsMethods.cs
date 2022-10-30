@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,38 +18,17 @@ namespace GameBlocks.Classes
     internal static class ExtensionsMethods
     {
         //public static (string, List<string>, List<string>) ReadSetupFile()
-        public static string ReadSetupFile()
+        public static Setup? ReadSetupFile()
         {
             try
             {
                 // Open the text file using a stream reader.
-                using (var sr = new StreamReader("../../../Setup.txt"))    // <-- być może trzeba to będzie zmienić kiedyś jeśli będzie plik exe
+                using (var sr = new StreamReader("../../../Setup.json"))    // <-- być może trzeba to będzie zmienić kiedyś jeśli będzie plik exe
                 {
-                    var output = sr.ReadToEnd();
-                    string[] separatingStrings = { "Chain name: " };
-                    string[] words = output.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
-
-                    return words[0];
-
-                    //string[] separatingStrings = { "Chain name: ", "Chain queues: ", "Chain games: ", ", " };
-
-                    //string[] words = output.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
-
-                    //if (!words.Any())
-                    //{
-                    //    MessageBox.Show($"Setup.txt is empty.", "File error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    //}
-                    //else
-                    //{
-                    //    string patternQueue = "Queue";
-                    //    string patternGame = "Game";
-                    //    Regex rgQueue = new Regex(patternQueue);
-                    //    Regex rgGame = new Regex(patternGame);
-                    //    foreach (var word in rgQueue.Matches(words.ToString()))
-                    //    {
-                    //    }
-                    //    return (null, null, null);
-                    //}
+                    string json = sr.ReadToEnd();
+                    Setup? setup = JsonConvert.DeserializeObject<Setup>(json);
+                    
+                    return setup;
                 }
             }
             catch (IOException e)
@@ -57,8 +38,39 @@ namespace GameBlocks.Classes
 
                 ExitApplication();
 
+                return null;
+            }
+        }
+
+        public static string ReadJsonFile(string pathToFile)
+        {
+            try
+            {
+                using (var sr = new StreamReader(pathToFile))
+                {
+                    string json = sr.ReadToEnd();
+                    JsonTextReader reader = new JsonTextReader(new StringReader(json));
+                    while (reader.Read())
+                    {
+                        if (reader.Value != null)
+                        {
+                            Trace.WriteLine($"Token: {reader.TokenType}, Value: {reader.Value}");
+                        }
+                        else
+                        {
+                            Trace.WriteLine($"Token: {reader.TokenType}");
+                        }
+                    }
+
+                    return json;
+                }
+            }
+            catch (IOException e)
+            {
+                CustomMessageBox.Show($"Json file is missing.\n{e.Message}",
+                    "File error", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 return "";
-                //return (null, null, null);
             }
         }
 

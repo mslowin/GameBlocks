@@ -29,7 +29,8 @@ namespace GameBlocks
         public MainWindow()
         {
             InitializeComponent();
-            GlobalVariables.ChainName = ExtensionsMethods.ReadSetupFile();
+            Setup? setup = ExtensionsMethods.ReadSetupFile();
+            GlobalVariables.ChainName = setup.ChainName;
             //Chain chain = MultiChainClient.InitializeChain(GlobalVariables.ChainName);
         }
 
