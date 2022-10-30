@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,78 @@ namespace GameBlocks.Classes
     /// </summary>
     internal static class MultiChainClient
     {
+        /// <summary>
+        /// Gathers information about the chain and its component. Creates classes.
+        /// </summary>
+        /// <param name="chainName">Name of a chain.</param>
+        /// <returns>Chain object.</returns>
+        public static Chain InitializeChain(string chainName)
+        {
+            MultiChainClient.RunCommand("multichaind", chainName, "-daemon");
+
+            List<Stream> allStreams = MultiChainClient.ReadChainStreams();
+            Chain chain = CreateChainObjet(allStreams);
+
+            return chain;
+        }
+
+        /// <summary>
+        /// Creates Chain object from gathered Streams.
+        /// </summary>
+        /// <param name="allStreams">List of all Streams in a chain.</param>
+        /// <returns>Chain object.</returns>
+        private static Chain CreateChainObjet(List<Stream> allStreams)
+        {
+            Stream rootStream = allStreams.Single(x => x.StreamName == "root");
+            Stream usersStream = allStreams.Single(x => x.StreamName == "UsersStream");
+            List<Stream> queueStreams = allStreams.Where(x => x.StreamName.StartsWith("Queue")).ToList();
+            List<Stream> gameStreams = allStreams.Where(x => x.StreamName.StartsWith("Game")).ToList();
+
+            return new Chain(GlobalVariables.ChainName, rootStream, usersStream, queueStreams, gameStreams);
+        }
+
+        /// <summary>
+        /// Gathers information about streams in a chain and creates Stream classes.
+        /// </summary>
+        /// <returns>List of all streams in a chain.</returns>
+        private static List<Stream> ReadChainStreams()
+        {
+            string output, err;
+            List<Stream> allStreams = new List<Stream>();
+            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
+
+            List<string> streamNames = ExtensionsMethods.SearchInJson(output, "name");
+
+            foreach (string streamName in streamNames)
+            {
+                List<Key> keys = ReadStreamKeys(streamName);
+                allStreams.Add(new Stream { StreamName = streamName, Keys = keys });
+            }
+
+            return allStreams;
+        }
+
+        /// <summary>
+        /// Reads all keys in a single Stream and creates Key objects.
+        /// </summary>
+        /// <param name="streamName">Name of a stream to check for keys.</param>
+        /// <returns>List of all Keys objects in a Stream.</returns>
+        private static List<Key> ReadStreamKeys(string streamName)
+        {
+            List <Key> keys = new List<Key>();
+            string output, err;
+            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName}");
+
+            List<string> streamKeysNames = ExtensionsMethods.SearchInJson(output, "key");
+            List<string> streamKeysItems = ExtensionsMethods.SearchInJson(output, "items");
+
+            int i = 0;
+            streamKeysNames.ForEach(x => keys.Add(new Key { KeyName = x, KeyItems = int.Parse(streamKeysItems[i++]) }));
+
+            return keys;
+
+        }
+
         /// <summary>
         /// Runns a multichain command using CMD (warning: multichain must be already running).
         /// </summary>
@@ -43,21 +117,6 @@ namespace GameBlocks.Classes
             process.WaitForExit();
 
             return (output, err);
-        }
-
-        /// <summary>
-        /// Gathers information about the chain and its component. Creates classes.
-        /// </summary>
-        /// <param name="chainName">Name of a chain.</param>
-        /// <returns>Chain object.</returns>
-        internal static Chain InitializeChain(string chainName)
-        {
-            //GlobalVariables.ChainName = ExtensionsMethods.ReadSetupFile();
-            //(List<Stream> queueStreams, List<Stream> gameStreams) = MultiChainClient.ReadChainStreams();
-            //var chain = new Chain(GlobalVariables.ChainName, queueStreams, gameStreams);
-
-            //return chain;
-            return null;
         }
 
         /// <summary>

@@ -17,7 +17,10 @@ namespace GameBlocks.Classes
     /// </summary>
     internal static class ExtensionsMethods
     {
-        //public static (string, List<string>, List<string>) ReadSetupFile()
+        /// <summary>
+        /// Reads Setup.json file and Creates Setup object.
+        /// </summary>
+        /// <returns>Setup object.</returns>
         public static Setup? ReadSetupFile()
         {
             try
@@ -42,6 +45,11 @@ namespace GameBlocks.Classes
             }
         }
 
+        /// <summary>
+        /// Reads json files.
+        /// </summary>
+        /// <param name="pathToFile">path to a jason file.</param>
+        /// <returns>Contents of a file in a single string.</returns>
         public static string ReadJsonFile(string pathToFile)
         {
             try
@@ -74,6 +82,36 @@ namespace GameBlocks.Classes
             }
         }
 
+        /// <summary>
+        /// Performs a search in a json file. Finds attributes and corrseponding values.
+        /// </summary>
+        /// <param name="jsonText">Text to perform a search on.</param>
+        /// <param name="attributeToSearchFor">Attribute to search for.</param>
+        /// <returns>List of corresponding values.</returns>
+        public static List<string> SearchInJson(string jsonText, string attributeToSearchFor)
+        {
+            bool desiredTypeFlag = false;
+            List<string> correspondingValues = new List<string>();
+            JsonTextReader reader = new JsonTextReader(new StringReader(jsonText));
+            while (reader.Read())
+            {
+                if (desiredTypeFlag)
+                {
+                    correspondingValues.Add(reader.Value.ToString());
+                    desiredTypeFlag = false;
+                }
+                if (reader.Value != null && reader.Value.ToString() == attributeToSearchFor)
+                {
+                    desiredTypeFlag = true;
+                }
+            }
+
+            return correspondingValues;
+        }
+
+        /// <summary>
+        /// Stops Node and exits application.
+        /// </summary>
         private static void ExitApplication()
         {
             // Stopping a Node

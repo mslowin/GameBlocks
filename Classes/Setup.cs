@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace GameBlocks.Classes
 {
+    /// <summary>
+    /// Setup class to store information from Setup.json file.
+    /// </summary>
     internal class Setup
     {
-        public string? ChainName { get; set; }
-        public string? asswordKey { get; set; }
+        /// <summary>
+        /// ChainName provided in Setup file.
+        /// </summary>
+        public string ChainName { get; set; } = "";
     }
 }

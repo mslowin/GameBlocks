@@ -19,6 +19,6 @@ namespace GameBlocks.Classes
         /// <summary>
         /// List of keys used in a stream.
         /// </summary>
-        List<Key> Keys { get; set; }
+        public List<Key> Keys { get; set; }
     }
 }

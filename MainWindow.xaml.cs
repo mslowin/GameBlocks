@@ -31,7 +31,19 @@ namespace GameBlocks
             InitializeComponent();
             Setup? setup = ExtensionsMethods.ReadSetupFile();
             GlobalVariables.ChainName = setup.ChainName;
-            //Chain chain = MultiChainClient.InitializeChain(GlobalVariables.ChainName);
+            GlobalVariables.MainChain = MultiChainClient.InitializeChain(GlobalVariables.ChainName); // Starting a Node and gathering infotmation
+        }
+
+        /// <summary>
+        /// Checking chain for matching information in UsersStream to log into an account.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void LogIn_Button_Click(object sender, RoutedEventArgs e)
+        {
+            string login = loginTextBox.Text;
+            string password = passwordTextBox.Text;
+            bool credentialsOk = GlobalVariables.MainChain.LogIntoChainSuccess(login, password);
         }
 
         /// <summary>
@@ -39,36 +51,36 @@ namespace GameBlocks
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>
-        private void Start_Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Starting a Node
-            MultiChainClient.RunCommand("multichaind", GlobalVariables.ChainName, "-daemon");
-            liststreamsButton.IsEnabled = true;
-        }
+        //private void Start_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Starting a Node
+        //    MultiChainClient.RunCommand("multichaind", GlobalVariables.ChainName, "-daemon");
+        //    liststreamsButton.IsEnabled = true;
+        //}
 
         /// <summary>
         /// Using multi chain command to list streams.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>
-        private void Liststreams_Button_Click(object sender, RoutedEventArgs e)
-        {
-            string output, err;
-            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
-            textBox1.Text = output;
-        }
+        //private void Liststreams_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string output, err;
+        //    (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
+        //    textBox1.Text = output;
+        //}
 
         /// <summary>
         /// Using multi chain command to stop the running node.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>
-        private void Stop_Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Stopping a Node
-            MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
-            liststreamsButton.IsEnabled = false;
-        }
+        //private void Stop_Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    // Stopping a Node
+        //    MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
+        //    liststreamsButton.IsEnabled = false;
+        //}
 
         /// <summary>
         /// Handling the window closing event.
