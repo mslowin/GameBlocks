@@ -59,12 +59,29 @@ namespace GameBlocks.Classes
         /// <param name="login">login from a text box.</param>
         /// <param name="password">password from a text box.</param>
         /// <returns>true if successfuly logged in, else false.</returns>
-        public bool LogIntoChainSuccess(string login, string password)
+        public bool LogIntoChainSuccess(string myLogin, string myPassword)
         {
             string output, err;
-            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamitems {UsersStream.StreamName}");
-            List<string> logins = ExtensionsMethods.SearchInJson(output, "login");
-            return true;
+            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamitems {UsersStream.StreamName} false 10000");
+            List<string> chainLogins = ExtensionsMethods.SearchInJson(output, "login");
+            List<string> chainPasswordHashes = ExtensionsMethods.SearchInJson(output, "password");
+
+            // reversing lists to search newest information first
+            chainLogins.Reverse();
+            chainPasswordHashes.Reverse();
+
+            var myPasswordHash = EasyEncryption.SHA.ComputeSHA256Hash(myPassword);  // using sha256 encryption algorithm ho hash my password.
+
+            foreach (var (passwordHash, i) in chainPasswordHashes.Select((passwordHash, i) => (passwordHash, i)))
+            {
+                if(passwordHash == myPasswordHash && chainLogins[i] == myLogin)
+                {
+                    // TODO: jeszcze sprawdz nazwy
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
