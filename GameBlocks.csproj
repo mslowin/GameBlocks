@@ -8,10 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\TicTacToe_Icon.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EasyEncryption" Version="1.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="StyleCop" Version="6.2.0" />
     <PackageReference Include="WPFCustomMessageBox" Version="1.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\TicTacToe_Icon.jpg" />
   </ItemGroup>
 
 </Project>

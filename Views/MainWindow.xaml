@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameBlocks.Views"
         mc:Ignorable="d"
         Closing="Window_Closing" Closed="Window_Closed"
-        Title="MainWindow" Height="450" Width="800" Background="MediumSlateBlue" >
+        Title="MainWindow" Height="450" Width="800" Background="MediumSlateBlue">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />

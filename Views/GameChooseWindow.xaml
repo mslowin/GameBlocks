@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameBlocks.Views"
         mc:Ignorable="d"
-        Title="GameChooseWindow" Height="450" Width="800">
+        Title="GameChooseWindow" Height="450" Width="800" Background="MediumSlateBlue">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <!--Upper part-->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="PlayerLoginTextBlock" Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,24,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Player login" Foreground="White" FontSize="24" TextAlignment="Right" Width="Auto" Height="34"/>
+        </Grid>
+
+        <!--Middle part-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*" />
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="35*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock  Margin="0,25,0,0" TextWrapping="Wrap" Text="TicTacToe" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Foreground="White" FontSize="22" TextAlignment="Center" Width="Auto"/>
+            
+            <Image Source="/Views/TicTacToe_Icon.jpg" Stretch="Fill" Grid.Column="1" Margin="64,64,64,64"/>
+
+            <Button Click="Left_Arrow_Button_Click" Height="70" Width="70" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Polygon Points= "70, 0, 70, 70, 0, 35" Stroke="White" Fill="White"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Click="Right_Arrow_Button_Click" Height="70" Width="70" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Polygon Points= "0, 0, 70, 35, 0, 70" Stroke="White" Fill="White"/>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
     </Grid>
 </Window>
