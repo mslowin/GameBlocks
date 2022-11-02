@@ -53,7 +53,7 @@ namespace GameBlocks.Classes
         {
             string output, err;
             List<Stream> allStreams = new List<Stream>();
-            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
+            (output, err) = RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
 
             List<string> streamNames = ExtensionsMethods.SearchInJson(output, "name");
 

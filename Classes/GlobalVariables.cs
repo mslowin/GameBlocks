@@ -20,5 +20,10 @@ namespace GameBlocks.Classes
         /// Chain object of the chain (has all vital streams and keys stored inside).
         /// </summary>
         public static Chain? MainChain { get; set; } = null;
+
+        /// <summary>
+        /// Account object with credentials inside.
+        /// </summary>
+        public static Account? UserAccount { get; set; } = null;
     }
 }

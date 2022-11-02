@@ -48,6 +48,7 @@ namespace GameBlocks.Views
 
             if(credentialsOk)
             {
+                GlobalVariables.UserAccount = new Account(login, password);     // creation of an account object
                 GameChooseWindow gameChooseWindow = new GameChooseWindow();
                 Visibility = Visibility.Hidden;
                 gameChooseWindow.Show();
@@ -56,8 +57,6 @@ namespace GameBlocks.Views
             {
                 loginErrorTextBlock.Text = "Invalid login or password";
             }
-
-            // TODO: if true: odpalanie okna z grami.
         }
 
         /// <summary>

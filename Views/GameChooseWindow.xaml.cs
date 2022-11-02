@@ -22,11 +22,23 @@ namespace GameBlocks.Views
     public partial class GameChooseWindow : Window
     {
         /// <summary>
+        /// Indicator which game is currently selected
+        /// </summary>
+        private int _SelectedGame = 0;
+
+        /// <summary>
         /// GameChooseWindow constructor.
         /// </summary>
         public GameChooseWindow()
         {
             InitializeComponent();
+            PlayerLoginTextBlock.Text = GlobalVariables.UserAccount!.Login;
+        }
+
+        private void Start_Button_Click(object sender, RoutedEventArgs e)
+        {
+            // Method intentionally left empty.
+
         }
 
         private void Left_Arrow_Button_Click(object sender, RoutedEventArgs e)
@@ -37,6 +49,7 @@ namespace GameBlocks.Views
         private void Right_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
             // Method intentionally left empty.
+
         }
 
         /// <summary>

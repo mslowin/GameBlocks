@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameBlocks.Views"
         mc:Ignorable="d"
+        Closing="Window_Closing" Closed="Window_Closed"
         Title="GameChooseWindow" Height="450" Width="800" Background="MediumSlateBlue">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,36 +19,53 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="PlayerLoginTextBlock" Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,24,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="Player login" Foreground="White" FontSize="24" TextAlignment="Right" Width="Auto" Height="34"/>
+            <TextBlock x:Name="PlayerLoginTextBlock" Text="Player_Login" Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,24,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontSize="24" TextAlignment="Right" Width="Auto" Height="34"/>
         </Grid>
 
         <!--Middle part-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="35*" />
-                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="35*" />
             </Grid.ColumnDefinitions>
-
-            <TextBlock  Margin="0,25,0,0" TextWrapping="Wrap" Text="TicTacToe" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Column="1" Foreground="White" FontSize="22" TextAlignment="Center" Width="Auto"/>
-            
-            <Image Source="/Views/TicTacToe_Icon.jpg" Stretch="Fill" Grid.Column="1" Margin="64,64,64,64"/>
-
-            <Button Click="Left_Arrow_Button_Click" Height="70" Width="70" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <TextBlock Grid.Column="1" Margin="0,10,0,0" TextWrapping="Wrap" Text="TicTacToe" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="22" TextAlignment="Center" Width="Auto"/>
+            <Image Grid.Column="1" Source="/Views/TicTacToe_Icon.jpg" Stretch="Fill" Margin="16,48,16,48"/>
+            <Button Click="Start_Button_Click" Grid.Column="1" Content="START" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Bottom" Height="38" Width="108" FontSize="24" Background="lightgreen">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="15"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Click="Right_Arrow_Button_Click" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Height="94" Width="94" FontSize="90" FontFamily="Segoe MDL2 Assets" Content="&#xE761;" Foreground="White" BorderBrush="MediumSlateBlue" Background="MediumSlateBlue">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Click="Left_Arrow_Button_Click" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="94" Width="94" FontSize="90" FontFamily="Segoe MDL2 Assets" Content="&#xE760;" Foreground="White" BorderBrush="MediumSlateBlue" Background="MediumSlateBlue">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="50"/>
+                </Style>
+            </Button.Resources>
+            </Button>
+            <!--<Button Click="Left_Arrow_Button_Click" Height="70" Width="70" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Polygon Points= "70, 0, 70, 70, 0, 35" Stroke="White" Fill="White"/>
                     </ControlTemplate>
                 </Button.Template>
-            </Button>
-            <Button Click="Right_Arrow_Button_Click" Height="70" Width="70" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+            </Button>-->
+            <!--<Button Click="Right_Arrow_Button_Click" Height="70" Width="70" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Polygon Points= "0, 0, 70, 35, 0, 70" Stroke="White" Fill="White"/>
+                        <Polygon Points= "0, 0, 70, 35, 0, 70" Fill="White"/>
                     </ControlTemplate>
                 </Button.Template>
-            </Button>
+            </Button>-->
         </Grid>
-
     </Grid>
 </Window>
