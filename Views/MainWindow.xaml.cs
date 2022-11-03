@@ -117,7 +117,8 @@ namespace GameBlocks.Views
         private void Window_Closed(object sender, EventArgs e)
         {
             // Stopping a Node
-            MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
+            //MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
+            ExtensionsMethods.ExitApplication();
         }
     }
 }

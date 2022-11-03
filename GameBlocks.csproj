@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\Checkers_Icon.jpg" />
     <None Remove="Views\TicTacToe_Icon.jpg" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Views\Checkers_Icon.jpg" />
     <Resource Include="Views\TicTacToe_Icon.jpg" />
   </ItemGroup>
 

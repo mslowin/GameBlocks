@@ -29,8 +29,8 @@
                 <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="35*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Margin="0,10,0,0" TextWrapping="Wrap" Text="TicTacToe" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="22" TextAlignment="Center" Width="Auto"/>
-            <Image Grid.Column="1" Source="/Views/TicTacToe_Icon.jpg" Stretch="Fill" Margin="16,48,16,48"/>
+            <TextBlock x:Name="GameNameTextBlock" Grid.Column="1" Margin="0,10,0,0" TextWrapping="Wrap" Text="TicTacToe" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="22" TextAlignment="Center" Width="Auto"/>
+            <Image x:Name="GameImage" Grid.Column="1" Stretch="Fill" Margin="16,48,16,48" Source="/Views/TicTacToe_Icon.jpg"/>
             <Button Click="Start_Button_Click" Grid.Column="1" Content="START" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Bottom" Height="38" Width="108" FontSize="24" Background="lightgreen">
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -46,26 +46,12 @@
                 </Button.Resources>
             </Button>
             <Button Click="Left_Arrow_Button_Click" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="94" Width="94" FontSize="90" FontFamily="Segoe MDL2 Assets" Content="&#xE760;" Foreground="White" BorderBrush="MediumSlateBlue" Background="MediumSlateBlue">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="50"/>
-                </Style>
-            </Button.Resources>
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="50"/>
+                    </Style>
+                </Button.Resources>
             </Button>
-            <!--<Button Click="Left_Arrow_Button_Click" Height="70" Width="70" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Polygon Points= "70, 0, 70, 70, 0, 35" Stroke="White" Fill="White"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>-->
-            <!--<Button Click="Right_Arrow_Button_Click" Height="70" Width="70" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Polygon Points= "0, 0, 70, 35, 0, 70" Fill="White"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>-->
         </Grid>
     </Grid>
 </Window>

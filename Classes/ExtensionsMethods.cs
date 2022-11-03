@@ -1,13 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using GameBlocks.Views;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using WPFCustomMessageBox;
 
 namespace GameBlocks.Classes
@@ -110,9 +113,41 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
+        /// Chooses game title from available game titles List, using index.
+        /// </summary>
+        /// <param name="selectedGameIndex">Index defining which title to choose.</param>
+        /// <param name="availableGames">List of available game titles</param>
+        /// <returns>Game title.</returns>
+        public static (int, string) ChooseGameTitle(int selectedGameIndex, List<string> availableGames)
+        {
+            if (selectedGameIndex >= availableGames.Count)  // going up, right arrow
+            {
+                selectedGameIndex = 0;
+            }
+            else if (selectedGameIndex < 0)  // going down, left arrow
+            {
+                selectedGameIndex = availableGames.Count - 1;
+            }
+
+            return (selectedGameIndex, $"{availableGames[selectedGameIndex]}");
+        }
+
+        /// <summary>
+        /// Gets full path to an image.
+        /// </summary>
+        /// <param name="resourcePath">Path to an image from project perspective e.g. /Views/image.jpg.</param>
+        /// <returns>Uri identifiator of an image.</returns>
+        public static Uri GetFullImageSource(string resourcePath)
+        {
+            var uri = string.Format($"pack://application:,,,/{Assembly.GetExecutingAssembly().GetName().Name};component/{resourcePath}");
+
+            return new Uri(uri);
+        }
+
+        /// <summary>
         /// Stops Node and exits application.
         /// </summary>
-        private static void ExitApplication()
+        public static void ExitApplication()
         {
             // Stopping a Node
             MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");

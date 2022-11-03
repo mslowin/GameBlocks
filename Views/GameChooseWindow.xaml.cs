@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,14 @@ namespace GameBlocks.Views
     public partial class GameChooseWindow : Window
     {
         /// <summary>
-        /// Indicator which game is currently selected
+        /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
         /// </summary>
-        private int _SelectedGame = 0;
+        public int _SelectedGame = 0;
+
+        /// <summary>
+        /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
+        /// </summary>
+        public readonly List<string> _AvailableGames = new() { "TicTacToe", "Checkers" };
 
         /// <summary>
         /// GameChooseWindow constructor.
@@ -38,18 +44,22 @@ namespace GameBlocks.Views
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
             // Method intentionally left empty.
-
-        }
-
-        private void Left_Arrow_Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Method intentionally left empty.
         }
 
         private void Right_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Method intentionally left empty.
+            _SelectedGame++;
+            (_SelectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_SelectedGame, _AvailableGames);
+            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
+            GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
+        }
 
+        private void Left_Arrow_Button_Click(object sender, RoutedEventArgs e)
+        {
+            _SelectedGame--;
+            (_SelectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_SelectedGame, _AvailableGames);
+            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
+            GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }
 
         /// <summary>
@@ -74,7 +84,8 @@ namespace GameBlocks.Views
         private void Window_Closed(object sender, EventArgs e)
         {
             // Stopping a Node
-            MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
+            //MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
+            ExtensionsMethods.ExitApplication();
         }
     }
 }
