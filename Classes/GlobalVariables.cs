@@ -17,6 +17,11 @@ namespace GameBlocks.Classes
         public static string ChainName { get; set; } = "";
 
         /// <summary>
+        /// Address of a node (from getaddresses command).
+        /// </summary>
+        public static string NodeAddress { get; set; } = "";
+
+        /// <summary>
         /// Chain object of the chain (has all vital streams and keys stored inside).
         /// </summary>
         public static Chain? MainChain { get; set; } = null;

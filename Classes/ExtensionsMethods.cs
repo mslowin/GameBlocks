@@ -113,6 +113,39 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
+        /// Creates or joins a waiting room inside a chain.
+        /// </summary>
+        /// <param name="gameChooseWindow">Window from which the game was chosen.</param>
+        /// <param name="selectedGame">Index of the selected game.</param>
+        internal static void CreateOrJoinWaitingRoom(GameChooseWindow gameChooseWindow, string gameName)
+        {
+            string streamName = $"Queue{gameName}";
+            var keys = MultiChainClient.ReadStreamKeys(streamName);
+
+            int lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
+            int lastRoomItems = keys.Last().KeyItems;
+
+            if (lastRoomItems == 2)
+            {
+                lastRoomNumber++;
+                string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
+                MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
+                // Nowe okno z oczekiwaniem na drugiego gracza
+                // Można nacisnąć cancel, wtedy do streama pod danym kluczem waitngRoomu dodawany jest Item Status:Canceled
+            }
+            else if (lastRoomItems == 1)
+            {
+                // Tu odpalane nowe okno, gdzie przez kilka sekund można jeszcze anulować machmaking
+                string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
+                MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
+                // Należy dołączyć do pokoju
+                // Rozpoczęcie gry
+            }
+
+
+        }
+
+        /// <summary>
         /// Chooses game title from available game titles List, using index.
         /// </summary>
         /// <param name="selectedGameIndex">Index defining which title to choose.</param>

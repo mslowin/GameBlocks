@@ -43,7 +43,8 @@ namespace GameBlocks.Views
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Method intentionally left empty.
+            // Może nowe okno dające kilka sekund na ewentualny cancel?
+            ExtensionsMethods.CreateOrJoinWaitingRoom(this, _AvailableGames[_SelectedGame]);
         }
 
         private void Right_Arrow_Button_Click(object sender, RoutedEventArgs e)

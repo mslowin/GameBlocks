@@ -49,7 +49,7 @@ namespace GameBlocks.Classes
         /// Gathers information about streams in a chain and creates Stream classes.
         /// </summary>
         /// <returns>List of all streams in a chain.</returns>
-        private static List<Stream> ReadChainStreams()
+        public static List<Stream> ReadChainStreams()
         {
             string output, err;
             List<Stream> allStreams = new List<Stream>();
@@ -71,7 +71,7 @@ namespace GameBlocks.Classes
         /// </summary>
         /// <param name="streamName">Name of a stream to check for keys.</param>
         /// <returns>List of all Keys objects in a Stream.</returns>
-        private static List<Key> ReadStreamKeys(string streamName)
+        public static List<Key> ReadStreamKeys(string streamName)
         {
             List <Key> keys = new List<Key>();
             string output, err;
@@ -87,6 +87,11 @@ namespace GameBlocks.Classes
 
         }
 
+        internal static void PublishToStream(string streamName, string keyName, string jsonItems)
+        {
+            RunCommand("multichain-cli", GlobalVariables.ChainName, $"publish {streamName} {keyName} {jsonItems}");
+        }
+
         /// <summary>
         /// Runns a multichain command using CMD (warning: multichain must be already running).
         /// </summary>
@@ -100,7 +105,7 @@ namespace GameBlocks.Classes
             process.StartInfo.WorkingDirectory = @"d:\Multichain\";              // TODO: to powinno być sczytywane z pliku Setup
             process.StartInfo.FileName = $@"d:\Multichain\{prefix}.exe";
             process.StartInfo.Arguments = $"{chainName} {command}";
-            // string fullCommand = $"{prefix} {chainName} {command}";
+            string fullCommand = $"{prefix} {chainName} {command}";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;

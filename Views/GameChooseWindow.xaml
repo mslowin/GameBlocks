@@ -53,5 +53,10 @@
                 </Button.Resources>
             </Button>
         </Grid>
+
+        <!--Middle part-->
+        <Grid Grid.Row="2">
+            <TextBlock x:Name="InformationsTextBlock" Text="informations" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="Yellow" />
+        </Grid>
     </Grid>
 </Window>
