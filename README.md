@@ -6,6 +6,8 @@ TODO3: Przenieœæ sprawdzanie loginu i has³a do osobnej metody w ExtensionMethods
 TODO4: W przysz³oœci dodaæ wiêcej gier i uzupe³niæ zmienne globalne w GameChooseWindow</br>
 TODO5: Logowanie przy pomocy ENTER</br>
 TODO6: Poruszanie siê strza³kami i Start za pomoc¹ ENTER</br>
+TODO7: Przenieœæ metode WaitForPlayer z LoadingWindow do ExtensionMethods</br>
+TODO8: Utworzyc now¹ metodê StartGame i w niej dopiero wywo³anie metody CreateOrJoinWaitingRoom</br>
 
 
 

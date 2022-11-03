@@ -41,12 +41,21 @@ namespace GameBlocks.Views
             PlayerLoginTextBlock.Text = GlobalVariables.UserAccount!.Login;
         }
 
+        /// <summary>
+        /// Starts a new game.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            // Może nowe okno dające kilka sekund na ewentualny cancel?
             ExtensionsMethods.CreateOrJoinWaitingRoom(this, _AvailableGames[_SelectedGame]);
         }
 
+        /// <summary>
+        /// Selects next available game.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Right_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
             _SelectedGame++;
@@ -55,6 +64,12 @@ namespace GameBlocks.Views
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }
 
+
+        /// <summary>
+        /// Selects previous available game.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void Left_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
             _SelectedGame--;

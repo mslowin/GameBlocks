@@ -125,13 +125,18 @@ namespace GameBlocks.Classes
             int lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
             int lastRoomItems = keys.Last().KeyItems;
 
-            if (lastRoomItems == 2)
+            if (lastRoomItems >= 2)
             {
                 lastRoomNumber++;
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
                 MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
+
+
                 // Nowe okno z oczekiwaniem na drugiego gracza
                 // Można nacisnąć cancel, wtedy do streama pod danym kluczem waitngRoomu dodawany jest Item Status:Canceled
+                
+                LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
+                loadingWindow.ShowDialog();
             }
             else if (lastRoomItems == 1)
             {
@@ -141,8 +146,6 @@ namespace GameBlocks.Classes
                 // Należy dołączyć do pokoju
                 // Rozpoczęcie gry
             }
-
-
         }
 
         /// <summary>

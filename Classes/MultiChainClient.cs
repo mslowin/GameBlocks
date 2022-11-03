@@ -105,7 +105,7 @@ namespace GameBlocks.Classes
             process.StartInfo.WorkingDirectory = @"d:\Multichain\";              // TODO: to powinno być sczytywane z pliku Setup
             process.StartInfo.FileName = $@"d:\Multichain\{prefix}.exe";
             process.StartInfo.Arguments = $"{chainName} {command}";
-            string fullCommand = $"{prefix} {chainName} {command}";
+            //string fullCommand = $"{prefix} {chainName} {command}";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
