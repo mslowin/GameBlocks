@@ -42,11 +42,16 @@ namespace GameBlocks.Views
         /// </summary>
         private string WaitingRoomName { get; set; }
 
+        /// <summary>
+        /// Intiger defying the purpose of loading window (0 - waiting for player, 1 - joining player).
+        /// </summary>
+        private int PurposeIndex { get; set; }
+
 
         /// <summary>
         /// Constructor of LoadingWindow class.
         /// </summary>
-        /// <param name="purposeIndex">Intiger defying the purpose of loading window (0 - waiting for player).</param>
+        /// <param name="purposeIndex">Intiger defying the purpose of loading window (0 - waiting for player, 1 - joining player).</param>
         /// <param name="informations">Text displayed d loading window.</param>
         /// <param name="streamName">Name of a stream in which the waitingroom is located.</param>
         /// <param name="waitingRoomName">Name of the waiting room in which the player is located.</param>
@@ -55,6 +60,7 @@ namespace GameBlocks.Views
             InitializeComponent();
             WaitingRoomName = waitingRoomName;
             StreamName = streamName;
+            PurposeIndex = purposeIndex;
             LoadingInformaitonTextBlock.Text = informations;
 
             CancellationToken ct = ts.Token;
@@ -62,7 +68,11 @@ namespace GameBlocks.Views
             switch (purposeIndex)
             {
                 case 0:
-                    BackgroundTask = Task.Factory.StartNew(() => WaitForPlayer(waitingRoomName, ct), ct);
+                    BackgroundTask = Task.Factory.StartNew(() => WaitForPlayer(streamName, waitingRoomName, ct), ct);
+                    break;
+
+                case 1:
+                    BackgroundTask = Task.Factory.StartNew(() => MatchmakingStartingAsync(5000, streamName, waitingRoomName, ct), ct);
                     break;
             }
         }
@@ -70,12 +80,12 @@ namespace GameBlocks.Views
         /// <summary>
         /// Checks in loop if a new player joined waiing room.
         /// </summary>
+        /// <param name="streamName">Name of a stream where waiting room is located.</param>
         /// <param name="waitingRoomName">Name of a waiting room in which player is located.</param>
         /// <param name="cancellationToken">Token that can be used by other threads to cancel the loop.</param>
-        public static void WaitForPlayer(string waitingRoomName, CancellationToken cancellationToken)
+        public static void WaitForPlayer(string streamName, string waitingRoomName, CancellationToken cancellationToken)
         {
-            bool run = true;
-            while (run)
+            while (true)
             {
                 (var output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys QueueTicTacToe {waitingRoomName}");
                 List<string> players = ExtensionsMethods.SearchInJson(output, "items");
@@ -90,7 +100,42 @@ namespace GameBlocks.Views
                 // When window clossed or cancel button pressed
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    // Adding Item status:cancelled
+                    MultiChainClient.PublishToStream(streamName, waitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"status\"\"\":\"\"\"cancelled\"\"\"}}}}");
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gives player some time to cancel matchmaking. After this time starts game.
+        /// </summary>
+        /// <param name="milisecondsToStart">Time in miliseconds when player can cancel matchmaking.</param>
+        /// <param name="streamName">Name of a stream where waiting room is located.</param>
+        /// <param name="waitingRoomName">Name of a waiting room in which player is located.</param>
+        /// <param name="cancellationToken">Token that can be used by other threads to cancel the loop.</param>
+        /// <returns></returns>
+        public static async Task MatchmakingStartingAsync(int milisecondsToStart, string streamName, string waitingRoomName, CancellationToken cancellationToken)
+        {
+            int loops = 0;
+            while (true)
+            {
+                await Task.Delay(1000);
+                loops++;
+
+                if (loops == (milisecondsToStart/1000))
+                {
+                    // Dołączenie do waitingRoomu i Start gry po upłynięciu kilku sekund
+                    MultiChainClient.PublishToStream(streamName, waitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
+                    break;
+                    // Start gry  <-----
+                }
+
+                // When window clossed or cancel button pressed
+                if (cancellationToken.IsCancellationRequested)
+                {
                     Console.WriteLine("task canceled");
+                    // Nothing should happen. Matchmaking cancelled
                     break;
                 }
             }
@@ -115,7 +160,6 @@ namespace GameBlocks.Views
         private void Window_Closed(object sender, EventArgs e)
         {
             ts.Cancel();
-            MultiChainClient.PublishToStream(StreamName, WaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"status\"\"\":\"\"\"cancelled\"\"\"}}}}");
         }
     }
 }

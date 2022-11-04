@@ -125,26 +125,27 @@ namespace GameBlocks.Classes
             int lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
             int lastRoomItems = keys.Last().KeyItems;
 
-            if (lastRoomItems >= 2)
+            if (lastRoomItems >= 2) // When there is no other players waiting
             {
                 lastRoomNumber++;
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
+                // Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli racz nie anuluje
                 MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
 
 
-                // Nowe okno z oczekiwaniem na drugiego gracza
-                // Można nacisnąć cancel, wtedy do streama pod danym kluczem waitngRoomu dodawany jest Item Status:Canceled
-                
+                // New window - waitning for other players
+                // Cancel button can be pressed - then to the newly created waiting room secend Item (status:cancelled) is added
                 LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
             }
-            else if (lastRoomItems == 1)
+            else if (lastRoomItems == 1) // When the player can join the waitnig room
             {
-                // Tu odpalane nowe okno, gdzie przez kilka sekund można jeszcze anulować machmaking
-                string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
-                MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
-                // Należy dołączyć do pokoju
-                // Rozpoczęcie gry
+                string newWaitingRoomName = $"waitingRoom{lastRoomNumber}"; // New waiting room is actually the last waiting room found in keys
+
+                // Here new "loading" window, where for a few seconds machmaking can be cancelled without consequences
+                // If not cancelled the loading window will start a game
+                LoadingWindow loadingWindow = new LoadingWindow(1, "Matchmaking...", streamName, newWaitingRoomName);
+                loadingWindow.ShowDialog();
             }
         }
 

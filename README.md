@@ -8,6 +8,8 @@ TODO5: Logowanie przy pomocy ENTER</br>
 TODO6: Poruszanie siê strza³kami i Start za pomoc¹ ENTER</br>
 TODO7: Przenieœæ metode WaitForPlayer z LoadingWindow do ExtensionMethods</br>
 TODO8: Utworzyc now¹ metodê StartGame i w niej dopiero wywo³anie metody CreateOrJoinWaitingRoom</br>
+TODO9: Zamiast od razu tworzyæ waiting room, mo¿e te¿ daæ kilka sekund na anulowanie</br>
+TODO10: Prawdopodobnie do Loading window bêdzie trzeba przekazaæ nazwe gry</br>
 
 
 
