@@ -115,9 +115,9 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Creates or joins a waiting room inside a chain.
         /// </summary>
-        /// <param name="gameChooseWindow">Window from which the game was chosen.</param>
-        /// <param name="selectedGame">Index of the selected game.</param>
-        internal static void CreateOrJoinWaitingRoom(GameChooseWindow gameChooseWindow, string gameName)
+        /// <param name="gameName">Selected game name.</param>
+        /// <returns>True if Game should start, false if matchmaking cancelled.</returns>
+        internal static bool CreateOrJoinWaitingRoom(string gameName)
         {
             string streamName = $"Queue{gameName}";
             var keys = MultiChainClient.ReadStreamKeys(streamName);
@@ -125,56 +125,55 @@ namespace GameBlocks.Classes
             int lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
             int lastRoomItems = keys.Last().KeyItems;
 
-            if (lastRoomItems >= 2) // When there is no other players waiting
+            if (lastRoomItems >= 2) // Creating waiting room
             {
                 lastRoomNumber++;
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
-                // Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli racz nie anuluje
+                // TODO: Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli racz nie anuluje
                 MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
 
-
-                // New window - waitning for other players
-                // Cancel button can be pressed - then to the newly created waiting room secend Item (status:cancelled) is added
                 LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
 
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
                 {
                     Trace.WriteLine("Game cancelled");
+                    return false;
                 }
                 if (GlobalVariables.IsMatchmakingComplete)
                 {
                     Trace.WriteLine("Game starts");
-                    // Here logic for the game, opening new window and so on
-                    // ...
-                    // ...
-                    // After game is finished:
                     GlobalVariables.IsMatchmakingComplete = false;
+
+                    string gameKey = MultiChainClient.CreateNewGameKey(streamName, newWaitingRoomName);
+                    // TODO: Start of a game with gameKey 
+                    return true;
                 }
             }
-            else if (lastRoomItems == 1) // When the player can join the waitnig room
+            else if (lastRoomItems == 1) // Joining waitnig room
             {
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}"; // New waiting room is actually the last waiting room found in keys
 
-                // Here new "loading" window, where for a few seconds machmaking can be cancelled without consequences
-                // If not cancelled the loading window will start a game
                 LoadingWindow loadingWindow = new LoadingWindow(1, "Matchmaking...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
 
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
                 {
                     Trace.WriteLine("Game cancelled");
+                    return false;
                 }
                 if (GlobalVariables.IsMatchmakingComplete)
                 {
                     Trace.WriteLine("Game starts");
-                    // Here logic for the game, opening new window and so on
-                    // ...
-                    // ...
-                    // After game is finished:
                     GlobalVariables.IsMatchmakingComplete = false;
+
+                    string gameKey = MultiChainClient.CreateNewGameKey(streamName, newWaitingRoomName);
+                    // TODO: Start of a game with gameKey 
+                    return true;
                 }
             }
+            Trace.WriteLine("Something went wrong\nExtensionMethods.CreateOrJoinWaitingRoom()");
+            return false;
         }
 
         /// <summary>

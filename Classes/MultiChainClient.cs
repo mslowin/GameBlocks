@@ -87,6 +87,59 @@ namespace GameBlocks.Classes
 
         }
 
+        /// <summary>
+        /// Creates new key from logins.
+        /// </summary>
+        /// <param name="queueStreamName">Name of a queue stream (e.g. QueueTicTacToe).</param>
+        /// <param name="waitingRoomName">Name of a waiting room from which logins will be taken.</param>
+        /// <returns>New game key consisting of logins and number (e.g. msowin_vs_tom222_1)</returns>
+        internal static string CreateNewGameKey(string queueStreamName, string waitingRoomName)
+        {
+            (string output, string err) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {queueStreamName} {waitingRoomName}");
+            List<string> logins = ExtensionsMethods.SearchInJson(output, "login");
+
+            logins.Sort();  // sorting alphabeticly
+            string partyName = $"{logins[0]}_vs_{logins[1]}_";  // creation of a party name login1_vs_login2_
+
+            List<Key> gameKeys = ReadStreamKeys("GameTicTacToe");  // TODO: magic string
+
+            List<string> gameKeysNames = new();
+            gameKeys.ForEach(x => gameKeysNames.Add(x.KeyName));  // Party names in the stream
+
+            List<string> desiredPartyNames = new();  // Party names containing PartyName
+
+            if (gameKeys.Count == 0)  // This is the first game in this stream
+            {
+                return $"{partyName}_1";
+            }
+
+            gameKeysNames.Sort();
+            gameKeysNames.Reverse();
+
+            gameKeysNames.ForEach(x =>
+            {
+                if (x.Contains(partyName))
+                {
+                    desiredPartyNames.Add(x);
+                }
+            });
+
+            if (desiredPartyNames.Count == 0) // This is the first game with these logins
+            {
+                return $"{partyName}_1";
+            }
+
+            var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length)) + 1;  // Removal of everything except the number
+
+            return $"{partyName}_{newGameIngex}";
+        }
+
+        /// <summary>
+        /// TODO: 
+        /// </summary>
+        /// <param name="streamName"></param>
+        /// <param name="keyName"></param>
+        /// <param name="jsonItems"></param>
         internal static void PublishToStream(string streamName, string keyName, string jsonItems)
         {
             RunCommand("multichain-cli", GlobalVariables.ChainName, $"publish {streamName} {keyName} {jsonItems}");
