@@ -68,11 +68,17 @@ namespace GameBlocks.Views
             switch (purposeIndex)
             {
                 case 0:
-                    BackgroundTask = Task.Factory.StartNew(() => WaitForPlayer(streamName, waitingRoomName, ct), ct);
+                    BackgroundTask = Task.Factory.StartNew(() => WaitForPlayer(streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
+                    {
+                        Close();
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
 
                 case 1:
-                    BackgroundTask = Task.Factory.StartNew(() => MatchmakingStartingAsync(5000, streamName, waitingRoomName, ct), ct);
+                    BackgroundTask = Task.Factory.StartNew(() => MatchmakingStartingAsync(5000, streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
+                    {
+                        Close();
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
             }
         }
@@ -94,12 +100,14 @@ namespace GameBlocks.Views
                 if (int.Parse(players[0]) == 2)
                 {
                     // Start Gry (utworzenie klucza z nazwami graczy)
+                    GlobalVariables.IsMatchmakingComplete = true;
                     break;
                 }
 
                 // When window clossed or cancel button pressed
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    GlobalVariables.IsMatchmakingComplete = false;
                     // Adding Item status:cancelled
                     MultiChainClient.PublishToStream(streamName, waitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"status\"\"\":\"\"\"cancelled\"\"\"}}}}");
                     break;
@@ -120,22 +128,25 @@ namespace GameBlocks.Views
             int loops = 0;
             while (true)
             {
-                await Task.Delay(1000);
+                Thread.Sleep(1000);
                 loops++;
 
-                if (loops == (milisecondsToStart/1000))
+                if (loops == ((milisecondsToStart - 1)/1000))
                 {
                     // Dołączenie do waitingRoomu i Start gry po upłynięciu kilku sekund
                     MultiChainClient.PublishToStream(streamName, waitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
+                    GlobalVariables.IsMatchmakingComplete = true;
+                    await Task.Delay(1000);
                     break;
-                    // Start gry  <-----
                 }
 
                 // When window clossed or cancel button pressed
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    Console.WriteLine("task canceled");
                     // Nothing should happen. Matchmaking cancelled
+                    Console.WriteLine("task canceled");
+                    GlobalVariables.IsMatchmakingComplete = false;
+                    await Task.Delay(1000);
                     break;
                 }
             }

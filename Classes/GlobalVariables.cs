@@ -30,5 +30,7 @@ namespace GameBlocks.Classes
         /// Account object with credentials inside.
         /// </summary>
         public static Account? UserAccount { get; set; } = null;
+
+        public static bool IsMatchmakingComplete { get; set; } = false;
     }
 }

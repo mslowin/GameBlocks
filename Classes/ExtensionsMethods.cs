@@ -137,6 +137,20 @@ namespace GameBlocks.Classes
                 // Cancel button can be pressed - then to the newly created waiting room secend Item (status:cancelled) is added
                 LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
+
+                if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
+                {
+                    Trace.WriteLine("Game cancelled");
+                }
+                if (GlobalVariables.IsMatchmakingComplete)
+                {
+                    Trace.WriteLine("Game starts");
+                    // Here logic for the game, opening new window and so on
+                    // ...
+                    // ...
+                    // After game is finished:
+                    GlobalVariables.IsMatchmakingComplete = false;
+                }
             }
             else if (lastRoomItems == 1) // When the player can join the waitnig room
             {
@@ -146,6 +160,20 @@ namespace GameBlocks.Classes
                 // If not cancelled the loading window will start a game
                 LoadingWindow loadingWindow = new LoadingWindow(1, "Matchmaking...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
+
+                if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
+                {
+                    Trace.WriteLine("Game cancelled");
+                }
+                if (GlobalVariables.IsMatchmakingComplete)
+                {
+                    Trace.WriteLine("Game starts");
+                    // Here logic for the game, opening new window and so on
+                    // ...
+                    // ...
+                    // After game is finished:
+                    GlobalVariables.IsMatchmakingComplete = false;
+                }
             }
         }
 
