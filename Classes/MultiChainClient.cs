@@ -90,18 +90,18 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Creates new key from logins.
         /// </summary>
-        /// <param name="queueStreamName">Name of a queue stream (e.g. QueueTicTacToe).</param>
+        /// <param name="gameName">Name of a game (e.g. "TicTacToe").</param>
         /// <param name="waitingRoomName">Name of a waiting room from which logins will be taken.</param>
         /// <returns>New game key consisting of logins and number (e.g. msowin_vs_tom222_1)</returns>
-        internal static string CreateNewGameKey(string queueStreamName, string waitingRoomName)
+        internal static string CreateNewGameKey(string gameName, string waitingRoomName)
         {
-            (string output, string err) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {queueStreamName} {waitingRoomName}");
+            (string output, string err) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems Queue{gameName} {waitingRoomName}");
             List<string> logins = ExtensionsMethods.SearchInJson(output, "login");
 
             logins.Sort();  // sorting alphabeticly
             string partyName = $"{logins[0]}_vs_{logins[1]}_";  // creation of a party name login1_vs_login2_
 
-            List<Key> gameKeys = ReadStreamKeys("GameTicTacToe");  // TODO: magic string
+            List<Key> gameKeys = ReadStreamKeys($"Game{gameName}");
 
             List<string> gameKeysNames = new();
             gameKeys.ForEach(x => gameKeysNames.Add(x.KeyName));  // Party names in the stream

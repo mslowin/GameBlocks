@@ -145,7 +145,7 @@ namespace GameBlocks.Classes
                     Trace.WriteLine("Game starts");
                     GlobalVariables.IsMatchmakingComplete = false;
 
-                    string gameKey = MultiChainClient.CreateNewGameKey(streamName, newWaitingRoomName);
+                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
                     // TODO: Start of a game with gameKey 
                     return true;
                 }
@@ -167,7 +167,7 @@ namespace GameBlocks.Classes
                     Trace.WriteLine("Game starts");
                     GlobalVariables.IsMatchmakingComplete = false;
 
-                    string gameKey = MultiChainClient.CreateNewGameKey(streamName, newWaitingRoomName);
+                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
                     // TODO: Start of a game with gameKey 
                     return true;
                 }
