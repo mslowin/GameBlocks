@@ -156,7 +156,7 @@ namespace GameBlocks.Classes
                 output += "|";
                 for (int j = 0; j < _grid.GetLength(1); j++)
                 {
-                    if (_grid[i,j] == "X" || _grid[i, j] == "o")
+                    if (_grid[i,j] == "X" || _grid[i, j] == "O")
                     {
                         output += $" {_grid[i, j]} |";
                     }

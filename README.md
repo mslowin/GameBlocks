@@ -15,6 +15,7 @@ TODO12: W MultichainClient.RunCommand() zmieniæ, ¿eby œcie¿ka do folderu by³a sc
 TODO13: Dodaæ losowanie symbolu, bo domyœlnie teraz jest X</br>
 TODO14: przetestowaæ gre jako osoba tworzaca waiting room</br>
 TODO15: Dodaæ koñczenie gry w kó³ko krzy¿yk - sprawdzanie zwyciêzcy</br>
+TODO16: Walidacja ruchów, ¿eby nie mo¿na by³o wstawiæ symbol we wczeœniej zajête miejsce</br>
 
 
 

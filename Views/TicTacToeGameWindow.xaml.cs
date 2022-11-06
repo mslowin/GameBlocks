@@ -145,7 +145,6 @@ namespace GameBlocks.Views
             {
                 string coordinates = MoveTextBox.Text;
                 int x = int.Parse(coordinates.Remove(1, 2));  // 1,2 -> 1
-                var test = coordinates.Remove(0, 2);
                 int y = int.Parse(coordinates.Remove(0, 2));  // 1,2 -> 2
                 _gameTicTacToe.PublishMove(new(x, y));
             }
