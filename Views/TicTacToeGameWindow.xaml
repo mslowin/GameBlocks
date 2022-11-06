@@ -1,0 +1,16 @@
+﻿<Window x:Class="GameBlocks.Views.TicTacToeGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GameBlocks.Views"
+        mc:Ignorable="d"
+        Title="TicTacToeGameWindow" Height="450" Width="800" Background="MediumSlateBlue">
+    <Grid>
+        <TextBox x:Name="MoveTextBox" HorizontalAlignment="Left" Margin="190,168,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="113" Height="32" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="63,168,0,0" TextWrapping="Wrap" TextAlignment="Right" Text="Move:" VerticalAlignment="Top" Width="113" Height="32" FontSize="20"/>
+        <TextBlock x:Name="GameAreaTextBlock" HorizontalAlignment="Left" Margin="355,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Height="212" Width="226" Background="White"/>
+        <Button x:Name="SubmitButton" Content="Submit" Click="Submit_Button_Click" HorizontalAlignment="Left" Margin="155,228,0,0" VerticalAlignment="Top" Height="40" Width="78" Background="lightgreen"/>
+
+    </Grid>
+</Window>

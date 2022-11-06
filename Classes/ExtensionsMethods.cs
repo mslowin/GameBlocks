@@ -116,8 +116,10 @@ namespace GameBlocks.Classes
         /// Creates or joins a waiting room inside a chain.
         /// </summary>
         /// <param name="gameName">Selected game name.</param>
-        /// <returns>True if Game should start, false if matchmaking cancelled.</returns>
-        internal static bool CreateOrJoinWaitingRoom(string gameName)
+        /// <returns>(True if Game should start - false if matchmaking cancelled,
+        /// true if user was first - false if user joined someone,
+        /// game key consisting of players logins and a number)</returns>
+        internal static (bool, bool, string?) CreateOrJoinWaitingRoom(string gameName)
         {
             string streamName = $"Queue{gameName}";
             var keys = MultiChainClient.ReadStreamKeys(streamName);
@@ -138,16 +140,17 @@ namespace GameBlocks.Classes
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
                 {
                     Trace.WriteLine("Game cancelled");
-                    return false;
+                    return (false, true, null);
                 }
                 if (GlobalVariables.IsMatchmakingComplete)
                 {
                     Trace.WriteLine("Game starts");
                     GlobalVariables.IsMatchmakingComplete = false;
 
+                    // Start of a game with gameKey
                     string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
-                    // TODO: Start of a game with gameKey 
-                    return true;
+
+                    return (true, true, gameKey);
                 }
             }
             else if (lastRoomItems == 1) // Joining waitnig room
@@ -160,20 +163,30 @@ namespace GameBlocks.Classes
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
                 {
                     Trace.WriteLine("Game cancelled");
-                    return false;
+                    return (false, false, null);
                 }
                 if (GlobalVariables.IsMatchmakingComplete)
                 {
                     Trace.WriteLine("Game starts");
                     GlobalVariables.IsMatchmakingComplete = false;
 
+                    // Start of a game with gameKey 
                     string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
-                    // TODO: Start of a game with gameKey 
-                    return true;
+
+                    return (true, false, gameKey);
                 }
             }
             Trace.WriteLine("Something went wrong\nExtensionMethods.CreateOrJoinWaitingRoom()");
-            return false;
+            return (false, false, null);
+        }
+
+        internal static void StartGame(string gameName, string gameKey, bool wasThisUserFirst)
+        {
+            if (gameName == "TicTacToe")
+            {
+                TicTacToeGameWindow ticTacToeGameWindow = new TicTacToeGameWindow(gameKey, wasThisUserFirst);
+                ticTacToeGameWindow.ShowDialog();
+            }
         }
 
         /// <summary>

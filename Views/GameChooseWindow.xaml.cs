@@ -48,7 +48,13 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            bool IsGameStart = ExtensionsMethods.CreateOrJoinWaitingRoom(_AvailableGames[_SelectedGame]);
+            string gameName = _AvailableGames[_SelectedGame];
+            (bool wasGameStarted, bool wasThisUserFirst, string? gameKey) = ExtensionsMethods.CreateOrJoinWaitingRoom(gameName);
+
+            if (wasGameStarted && gameKey != null)
+            {
+                ExtensionsMethods.StartGame(gameName, gameKey, wasThisUserFirst);
+            }
         }
 
         /// <summary>

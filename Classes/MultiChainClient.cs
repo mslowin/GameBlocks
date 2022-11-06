@@ -110,10 +110,10 @@ namespace GameBlocks.Classes
 
             if (gameKeys.Count == 0)  // This is the first game in this stream
             {
-                return $"{partyName}_1";
+                return $"{partyName}1";
             }
 
-            gameKeysNames.Sort();
+            //gameKeysNames.Sort();
             gameKeysNames.Reverse();
 
             gameKeysNames.ForEach(x =>
@@ -126,12 +126,12 @@ namespace GameBlocks.Classes
 
             if (desiredPartyNames.Count == 0) // This is the first game with these logins
             {
-                return $"{partyName}_1";
+                return $"{partyName}1";
             }
 
             var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length)) + 1;  // Removal of everything except the number
 
-            return $"{partyName}_{newGameIngex}";
+            return $"{partyName}{newGameIngex}";
         }
 
         /// <summary>
