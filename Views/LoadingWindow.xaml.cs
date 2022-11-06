@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace GameBlocks.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy LoadingWindow.xaml
+    /// Interaction logic for LoadingWindow.xaml class.
     /// </summary>
     public partial class LoadingWindow : Window
     {
@@ -28,7 +28,7 @@ namespace GameBlocks.Views
         private Task BackgroundTask { get; set; }
 
         /// <summary>
-        /// Token usd to stop background task from another task.
+        /// Token used to stop background task from another thread.
         /// </summary>
         private CancellationTokenSource ts = new();
 
@@ -43,7 +43,7 @@ namespace GameBlocks.Views
         private string WaitingRoomName { get; set; }
 
         /// <summary>
-        /// Intiger defying the purpose of loading window (0 - waiting for player, 1 - joining player).
+        /// Intiger defying the purpose of loading window (0 - waiting for another player, 1 - joining player).
         /// </summary>
         private int PurposeIndex { get; set; }
 
@@ -51,8 +51,8 @@ namespace GameBlocks.Views
         /// <summary>
         /// Constructor of LoadingWindow class.
         /// </summary>
-        /// <param name="purposeIndex">Intiger defying the purpose of loading window (0 - waiting for player, 1 - joining player).</param>
-        /// <param name="informations">Text displayed d loading window.</param>
+        /// <param name="purposeIndex">Intiger defying the purpose of loading window (0 - waiting for another player, 1 - joining player).</param>
+        /// <param name="informations">Text displayed on loading window.</param>
         /// <param name="streamName">Name of a stream in which the waitingroom is located.</param>
         /// <param name="waitingRoomName">Name of the waiting room in which the player is located.</param>
         public LoadingWindow(int purposeIndex, string informations, string streamName, string waitingRoomName)
@@ -84,7 +84,7 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Checks in loop if a new player joined waiing room.
+        /// Checks in loop if a new player joined the waiting room.
         /// </summary>
         /// <param name="streamName">Name of a stream where waiting room is located.</param>
         /// <param name="waitingRoomName">Name of a waiting room in which player is located.</param>
@@ -116,7 +116,7 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Gives player some time to cancel matchmaking. After this time starts game.
+        /// Gives player some time to cancel matchmaking. After this time starts the game.
         /// </summary>
         /// <param name="milisecondsToStart">Time in miliseconds when player can cancel matchmaking.</param>
         /// <param name="streamName">Name of a stream where waiting room is located.</param>
@@ -153,7 +153,7 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Cancels loading. Works like window close button
+        /// Cancels the loading. Works like window close button.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>

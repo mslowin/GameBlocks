@@ -15,7 +15,7 @@ namespace GameBlocks.Classes
     internal static class MultiChainClient
     {
         /// <summary>
-        /// Gathers information about the chain and its component. Creates classes.
+        /// Gathers information about the chain and it's components. Creates classes.
         /// </summary>
         /// <param name="chainName">Name of a chain.</param>
         /// <returns>Chain object.</returns>
@@ -34,7 +34,7 @@ namespace GameBlocks.Classes
         /// Creates Chain object from gathered Streams.
         /// </summary>
         /// <param name="allStreams">List of all Streams in a chain.</param>
-        /// <returns>Chain object.</returns>
+        /// <returns>New chain object.</returns>
         private static Chain CreateChainObjet(List<Stream> allStreams)
         {
             Stream rootStream = allStreams.Single(x => x.StreamName == "root");
@@ -92,10 +92,10 @@ namespace GameBlocks.Classes
         /// </summary>
         /// <param name="gameName">Name of a game (e.g. "TicTacToe").</param>
         /// <param name="waitingRoomName">Name of a waiting room from which logins will be taken.</param>
-        /// <returns>New game key consisting of logins and number (e.g. msowin_vs_tom222_1)</returns>
+        /// <returns>New game key consisting of logins and number (e.g. msowin_vs_tom222_1).</returns>
         internal static string CreateNewGameKey(string gameName, string waitingRoomName)
         {
-            (string output, string err) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems Queue{gameName} {waitingRoomName}");
+            (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems Queue{gameName} {waitingRoomName}");
             List<string> logins = ExtensionsMethods.SearchInJson(output, "login");
 
             logins.Sort();  // sorting alphabeticly
@@ -113,7 +113,6 @@ namespace GameBlocks.Classes
                 return $"{partyName}1";
             }
 
-            //gameKeysNames.Sort();
             gameKeysNames.Reverse();
 
             gameKeysNames.ForEach(x =>
@@ -135,23 +134,23 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
-        /// TODO: 
+        /// Publishes data to a stream.
         /// </summary>
-        /// <param name="streamName"></param>
-        /// <param name="keyName"></param>
-        /// <param name="jsonItems"></param>
+        /// <param name="streamName">Stream to publish data into.</param>
+        /// <param name="keyName">Key with witch the data will be published.</param>
+        /// <param name="jsonItems">Information to be published (In json format with tripple quotation marks).</param>
         internal static void PublishToStream(string streamName, string keyName, string jsonItems)
         {
             RunCommand("multichain-cli", GlobalVariables.ChainName, $"publish {streamName} {keyName} {jsonItems}");
         }
 
         /// <summary>
-        /// Runns a multichain command using CMD (warning: multichain must be already running).
+        /// Runs a multichain command using CMD (warning: multichain must be already running).
         /// </summary>
         /// <param name="prefix">E.g. multichain-cli or multichaind.</param>
         /// <param name="chainName">Name of the chain.</param>
-        /// <param name="command">instructions after chain name (e.g. liststreams or liststreamkeys streamName).</param>
-        /// <returns>Output informations (like in CMD) or error infrmations if something goes wrong.</returns>
+        /// <param name="command">Instructions after chain name (e.g. liststreams or liststreamkeys streamName).</param>
+        /// <returns>Output informations (like in CMD) or error infrmations if something went wrong.</returns>
         public static (string, string) RunCommand(string prefix, string chainName, string command)
         {
             Process process = new Process();
@@ -170,7 +169,7 @@ namespace GameBlocks.Classes
                 return ("", "");
             }
             process.Start();
-            // Read the output (or the error)
+
             string output = process.StandardOutput.ReadToEnd();
             string err = process.StandardError.ReadToEnd();
             process.WaitForExit();
@@ -179,7 +178,7 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
-        /// Asynchronicly starts a Node.
+        /// Asynchronously starts a Node.
         /// </summary>
         /// <param name="process">Process that starts a node.</param>
         private async static Task StartNodeAsync(Process process)

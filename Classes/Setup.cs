@@ -12,7 +12,7 @@ namespace GameBlocks.Classes
     internal class Setup
     {
         /// <summary>
-        /// ChainName provided in Setup file.
+        /// Name of a chain provided in Setup file.
         /// </summary>
         public string ChainName { get; set; } = "";
     }

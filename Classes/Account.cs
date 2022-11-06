@@ -12,20 +12,20 @@ namespace GameBlocks.Classes
     internal class Account
     {
         /// <summary>
-        /// Users login.
+        /// User's login.
         /// </summary>
         public string Login { get; set; }
 
         /// <summary>
-        /// Users password.
+        /// User's password.
         /// </summary>
         public string Password { get; set; }
 
         /// <summary>
         /// Constructor of an account class.
         /// </summary>
-        /// <param name="login">Users login.</param>
-        /// <param name="password">Users password.</param>
+        /// <param name="login">User's login.</param>
+        /// <param name="password">User's password.</param>
         public Account(string login, string password)
         {
             Login = login;

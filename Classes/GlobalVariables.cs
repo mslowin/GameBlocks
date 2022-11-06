@@ -22,7 +22,7 @@ namespace GameBlocks.Classes
         public static string NodeAddress { get; set; } = "";
 
         /// <summary>
-        /// Chain object of the chain (has all vital streams and keys stored inside).
+        /// Chain object of the game chain (has all vital streams and keys stored inside).
         /// </summary>
         public static Chain? MainChain { get; set; } = null;
 
@@ -31,6 +31,9 @@ namespace GameBlocks.Classes
         /// </summary>
         public static Account? UserAccount { get; set; } = null;
 
+        /// <summary>
+        /// Indicates whetcher a waitingroom was succesfully filled or the matchmaking was cancelled.
+        /// </summary>
         public static bool IsMatchmakingComplete { get; set; } = false;
     }
 }

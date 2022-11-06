@@ -19,7 +19,7 @@ using WPFCustomMessageBox;
 namespace GameBlocks.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml class.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -36,7 +36,7 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Checking chain for matching information in UsersStream to log into an account.
+        /// Checking the chain for matching information in UsersStream to log into an account.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>
@@ -60,42 +60,6 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Using multi chain command to start the node.
-        /// </summary>
-        /// <param name="sender">Reference to the sender e.g. button.</param>
-        /// <param name="e">Additional information object and event handler.</param>
-        //private void Start_Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Starting a Node
-        //    MultiChainClient.RunCommand("multichaind", GlobalVariables.ChainName, "-daemon");
-        //    liststreamsButton.IsEnabled = true;
-        //}
-
-        /// <summary>
-        /// Using multi chain command to list streams.
-        /// </summary>
-        /// <param name="sender">Reference to the sender e.g. button.</param>
-        /// <param name="e">Additional information object and event handler.</param>
-        //private void Liststreams_Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    string output, err;
-        //    (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
-        //    textBox1.Text = output;
-        //}
-
-        /// <summary>
-        /// Using multi chain command to stop the running node.
-        /// </summary>
-        /// <param name="sender">Reference to the sender e.g. button.</param>
-        /// <param name="e">Additional information object and event handler.</param>
-        //private void Stop_Button_Click(object sender, RoutedEventArgs e)
-        //{
-        //    // Stopping a Node
-        //    MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
-        //    liststreamsButton.IsEnabled = false;
-        //}
-
-        /// <summary>
         /// Handling the window closing event.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
@@ -116,8 +80,6 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            // Stopping a Node
-            //MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
             ExtensionsMethods.ExitApplication();
         }
     }

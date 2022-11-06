@@ -18,7 +18,7 @@ using WPFCustomMessageBox;
 namespace GameBlocks.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy GameChooseWindow.xaml
+    /// Interaction logic for GameChooseWindow.xaml class.
     /// </summary>
     public partial class GameChooseWindow : Window
     {
@@ -105,8 +105,6 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            // Stopping a Node
-            //MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
             ExtensionsMethods.ExitApplication();
         }
     }

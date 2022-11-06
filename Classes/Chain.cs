@@ -22,7 +22,7 @@ namespace GameBlocks.Classes
         public Stream RootStream { get; set; }
 
         /// <summary>
-        /// Stream containing users ogins and hashed passwords.
+        /// Stream containing users' logins and hashed passwords.
         /// </summary>
         public Stream UsersStream { get; set; }
 
@@ -41,7 +41,7 @@ namespace GameBlocks.Classes
         /// </summary>
         /// <param name="chainName">Name of a chain.</param>
         /// <param name="rootStream">Root stream to comunicate with the seed node/admin.</param>
-        /// <param name="usersStream">Stream containing users ogins and hashed passwords.</param>
+        /// <param name="usersStream">Stream containing users' logins and hashed passwords.</param>
         /// <param name="queueStreams">List of streams used as queues.</param>
         /// <param name="gameStreams">List of streams used as games.</param>
         public Chain(string chainName, Stream rootStream, Stream usersStream, List<Stream> queueStreams, List<Stream> gameStreams)
@@ -54,11 +54,11 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
-        /// Performs encryption and checks if such login and password hash are inside he chain.
+        /// Performs encryption and checks if such login and password hash are inside the chain.
         /// </summary>
         /// <param name="login">login from a text box.</param>
         /// <param name="password">password from a text box.</param>
-        /// <returns>true if successfuly logged in, else false.</returns>
+        /// <returns>True if successfuly logged in, else false.</returns>
         public bool LogIntoChainSuccess(string myLogin, string myPassword)
         {
             string output, err;

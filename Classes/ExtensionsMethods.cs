@@ -21,9 +21,9 @@ namespace GameBlocks.Classes
     internal static class ExtensionsMethods
     {
         /// <summary>
-        /// Reads Setup.json file and Creates Setup object.
+        /// Reads Setup.json file and Creates Setup class object.
         /// </summary>
-        /// <returns>Setup object.</returns>
+        /// <returns>New Setup class object.</returns>
         public static Setup? ReadSetupFile()
         {
             try
@@ -86,7 +86,7 @@ namespace GameBlocks.Classes
         }
 
         /// <summary>
-        /// Performs a search in a json file. Finds attributes and corrseponding values.
+        /// Performs a search in a json file. Finds specified attributes and corrseponding values.
         /// </summary>
         /// <param name="jsonText">Text to perform a search on.</param>
         /// <param name="attributeToSearchFor">Attribute to search for.</param>
@@ -100,7 +100,7 @@ namespace GameBlocks.Classes
             {
                 if (desiredTypeFlag)
                 {
-                    correspondingValues.Add(reader.Value.ToString());
+                    correspondingValues.Add(reader.Value!.ToString()!);
                     desiredTypeFlag = false;
                 }
                 if (reader.Value != null && reader.Value.ToString() == attributeToSearchFor)
@@ -118,7 +118,7 @@ namespace GameBlocks.Classes
         /// <param name="gameName">Selected game name.</param>
         /// <returns>(True if Game should start - false if matchmaking cancelled,
         /// true if user was first - false if user joined someone,
-        /// game key consisting of players logins and a number)</returns>
+        /// game key consisting of players' logins and a number)</returns>
         internal static (bool, bool, string?) CreateOrJoinWaitingRoom(string gameName)
         {
             string streamName = $"Queue{gameName}";
@@ -131,7 +131,7 @@ namespace GameBlocks.Classes
             {
                 lastRoomNumber++;
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}";
-                // TODO: Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli racz nie anuluje
+                // TODO: Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli gracz nie anuluje
                 MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
 
                 LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
@@ -180,6 +180,12 @@ namespace GameBlocks.Classes
             return (false, false, null);
         }
 
+        /// <summary>
+        /// Displays game window.
+        /// </summary>
+        /// <param name="gameName">Name of a game whose window should be displayed.</param>
+        /// <param name="gameKey">Game key to publish data with (e.g. login_vs_login_5).</param>
+        /// <param name="wasThisUserFirst">Indicates if the user created or joind a waiting room.</param>
         internal static void StartGame(string gameName, string gameKey, bool wasThisUserFirst)
         {
             if (gameName == "TicTacToe")
@@ -212,7 +218,7 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Gets full path to an image.
         /// </summary>
-        /// <param name="resourcePath">Path to an image from project perspective e.g. /Views/image.jpg.</param>
+        /// <param name="resourcePath">Path to an image from project perspective (e.g. /Views/image.jpg).</param>
         /// <returns>Uri identifiator of an image.</returns>
         public static Uri GetFullImageSource(string resourcePath)
         {
@@ -226,7 +232,6 @@ namespace GameBlocks.Classes
         /// </summary>
         public static void ExitApplication()
         {
-            // Stopping a Node
             MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, "stop");
             System.Windows.Application.Current.Shutdown();
         }
