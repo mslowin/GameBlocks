@@ -45,7 +45,7 @@ namespace GameBlocks.Views
 
             CancellationToken ct = ts.Token;
 
-            Task.Factory.StartNew(() => _gameTicTacToe.UpdateGame(ct), ct).ContinueWith((tsk) =>
+            Task.Factory.StartNew(() => _gameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
             {
                 // Tu coś do zmiany bedzie
                 Close();
@@ -62,15 +62,15 @@ namespace GameBlocks.Views
         {
             while (true)
             {
-                if (_didOpponentMove == true)
+                if (_didOpponentMove)  // when opponent moved
                 {
-                    this.Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = true; });
-                    this.Dispatcher.Invoke(() => { SubmitButton.IsEnabled = true; });
+                    Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = true; });
+                    Dispatcher.Invoke(() => { SubmitButton.IsEnabled = true; });
                 }
-                else if (_didOpponentMove == false)
+                else if (!_didOpponentMove)  // when opponent didnt move
                 {
-                    this.Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = false; });
-                    this.Dispatcher.Invoke(() => { SubmitButton.IsEnabled = false; });
+                    Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = false; });
+                    Dispatcher.Invoke(() => { SubmitButton.IsEnabled = false; });
                 }
 
                 if (cancellationToken.IsCancellationRequested)
