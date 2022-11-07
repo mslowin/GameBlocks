@@ -111,6 +111,8 @@ namespace GameBlocks.Classes
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.OpponentsMoveCoordinates = coordinates;
                     TicTacToeGameWindow.DidOpponentMove = true;
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = true; });
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = true; });
                 }
                 else if (symbols.Count > 0 && symbols.Last() == Symbol) // if the user moved
                 {
@@ -121,6 +123,8 @@ namespace GameBlocks.Classes
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.DidOpponentMove = false;
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = false; });
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = false; });
                 }
                 else  // this will be the first move
                 {
@@ -214,6 +218,7 @@ namespace GameBlocks.Classes
         /// <returns>Opponents symbol in string format ("X" or "O").</returns>
         private string CheckSymbol()
         {
+            Task.Delay(2000);  // Gives time for the firs person to publish it's symbol
             (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {StreamName} {GameKey}");
             List<string> opponentsSymbol = ExtensionsMethods.SearchInJson(output, "drawn");
             return opponentsSymbol.Last();

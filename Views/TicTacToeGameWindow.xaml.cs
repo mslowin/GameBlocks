@@ -76,11 +76,11 @@ namespace GameBlocks.Views
                 Close();
             }, TaskScheduler.FromCurrentSynchronizationContext());
 
-            Task.Factory.StartNew(() => WaitForYourTurn(ct), ct).ContinueWith((tsk) =>
-            {
-                // Tu coś do zmiany bedzie
-                Close();
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            //Task.Factory.StartNew(() => WaitForYourTurn(ct), ct).ContinueWith((tsk) =>
+            //{
+            //    // Tu coś do zmiany bedzie
+            //    Close();
+            //}, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         /// <summary>

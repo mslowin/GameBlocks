@@ -12,10 +12,9 @@ TODO9: Zamiast od razu tworzyæ waiting room, mo¿e te¿ daæ kilka sekund na anulow
 TODO10: Trzeba zakoñczyæ w¹tki przy nacisnieciu X w grze</br>
 TODO11: Ogarn¹æ metodê ExtensionMethods.CreateOrJoinWaitingRoom()</br>
 TODO12: Dodaæ losowanie symbolu, bo domyœlnie teraz jest X                                        <-----------</br>
-TODO13: przetestowaæ gre jako osoba tworzaca waiting room                                   <----</br>
-TODO14: Dodaæ koñczenie gry w kó³ko krzy¿yk - sprawdzanie zwyciêzcy                               <-----------</br>
-TODO15: Walidacja ruchów, ¿eby nie mo¿na by³o wstawiæ symbol we wczeœniej zajête miejsce          <-----------</br>
-TODO15: Enableing button and textblock from the first task          <-----------</br>
+TODO13: Dodaæ koñczenie gry w kó³ko krzy¿yk - sprawdzanie zwyciêzcy                               <-----------</br>
+TODO14: Walidacja ruchów, ¿eby nie mo¿na by³o wstawiæ symbol we wczeœniej zajête miejsce          <-----------</br>
+TODO15: Tell the user which symbol is his          <-----------</br>
 
 
 
