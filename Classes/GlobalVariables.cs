@@ -12,6 +12,11 @@ namespace GameBlocks.Classes
     internal static class GlobalVariables
     {
         /// <summary>
+        /// Path to a folder where multichain.exe is located.
+        /// </summary>
+        public static string PathToMultichainFolder { get; set; } = "";
+
+        /// <summary>
         /// Name of the chain from Setup file.
         /// </summary>
         public static string ChainName { get; set; } = "";

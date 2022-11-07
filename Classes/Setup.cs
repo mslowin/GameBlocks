@@ -9,8 +9,13 @@ namespace GameBlocks.Classes
     /// <summary>
     /// Setup class to store information from Setup.json file.
     /// </summary>
-    internal class Setup
+    public class Setup
     {
+        /// <summary>
+        /// Path to a folder where multichain.exe is located.
+        /// </summary>
+        public string PathToMultichainFolder { get; set; } = ""; 
+        
         /// <summary>
         /// Name of a chain provided in Setup file.
         /// </summary>

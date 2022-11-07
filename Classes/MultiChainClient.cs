@@ -154,10 +154,10 @@ namespace GameBlocks.Classes
         public static (string, string) RunCommand(string prefix, string chainName, string command)
         {
             Process process = new Process();
-            process.StartInfo.WorkingDirectory = @"d:\Multichain\";              // TODO: to powinno być sczytywane z pliku Setup
-            process.StartInfo.FileName = $@"d:\Multichain\{prefix}.exe";
+            string test = GlobalVariables.PathToMultichainFolder;
+            process.StartInfo.WorkingDirectory = GlobalVariables.PathToMultichainFolder;
+            process.StartInfo.FileName = $@"{GlobalVariables.PathToMultichainFolder}{prefix}.exe";
             process.StartInfo.Arguments = $"{chainName} {command}";
-            //string fullCommand = $"{prefix} {chainName} {command}";
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;

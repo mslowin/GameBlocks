@@ -30,7 +30,8 @@ namespace GameBlocks.Views
         {
             InitializeComponent();
             Setup? setup = ExtensionsMethods.ReadSetupFile();
-            GlobalVariables.ChainName = setup.ChainName;
+            GlobalVariables.ChainName = setup!.ChainName;
+            GlobalVariables.PathToMultichainFolder = setup!.PathToMultichainFolder;
             GlobalVariables.MainChain = MultiChainClient.InitializeChain(GlobalVariables.ChainName); // Starting a Node and gathering infotmation
             currentChainTextBlock.Text = setup.ChainName;
         }
@@ -44,7 +45,7 @@ namespace GameBlocks.Views
         {
             string login = loginTextBox.Text;
             string password = passwordTextBox.Text;
-            bool credentialsOk = GlobalVariables.MainChain.LogIntoChainSuccess(login, password);
+            bool credentialsOk = GlobalVariables.MainChain!.LogIntoChainSuccess(login, password);
 
             if(credentialsOk)
             {
