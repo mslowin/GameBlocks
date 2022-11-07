@@ -83,9 +83,9 @@ namespace GameBlocks.Classes
             TicTacToeGameWindow = ticTacToeGameWindow;
             GameKey = gameKey;
             Login = login;
-            Symbol = CheckSymbol();
-            if (Symbol == "X") OpponentsSymbol = "O";
-            else OpponentsSymbol = "X";
+            OpponentsSymbol = CheckSymbol();
+            if (OpponentsSymbol == "X") Symbol = "O";
+            else Symbol = "X";
         }
 
         /// <summary>

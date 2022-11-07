@@ -12,20 +12,20 @@ namespace GameBlocks.Classes
     public class Coordinates
     {
         /// <summary>
-        /// x coordinate (columns).
+        /// x coordinate (rows).
         /// </summary>
         public int X { get; set; }
 
         /// <summary>
-        /// y coordinate (rows).
+        /// y coordinate (columns).
         /// </summary>
         public int Y { get; set; }
 
         /// <summary>
         /// Constructor of Coordinates class.
         /// </summary>
-        /// <param name="X">x coordinate (columns).</param>
-        /// <param name="Y">y coordinate (rows).</param>
+        /// <param name="X">x coordinate (rows).</param>
+        /// <param name="Y">y coordinate (columns).</param>
         public Coordinates(int X, int Y)
         {
             this.X = X;
