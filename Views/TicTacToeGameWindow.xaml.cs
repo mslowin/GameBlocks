@@ -67,6 +67,7 @@ namespace GameBlocks.Views
             GameKey = gameKey;
             WasThisUserFirst = wasThisUserFirst;
             GameTicTacToe = StartGameTicTacToe(this, gameKey, wasThisUserFirst);
+            YourSymbolTextBox.Text = GameTicTacToe.Symbol;
 
             CancellationToken ct = _ts.Token;
 
@@ -75,39 +76,33 @@ namespace GameBlocks.Views
                 // Tu coś do zmiany bedzie
                 Close();
             }, TaskScheduler.FromCurrentSynchronizationContext());
-
-            //Task.Factory.StartNew(() => WaitForYourTurn(ct), ct).ContinueWith((tsk) =>
-            //{
-            //    // Tu coś do zmiany bedzie
-            //    Close();
-            //}, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        /// <summary>
-        /// In a loop checks if the opponent has made a move (_didOpponentMove variable).
-        /// </summary>
-        /// <param name="cancellationToken">Token used to stop background task from another thread.</param>
-        private void WaitForYourTurn(CancellationToken cancellationToken)
-        {
-            while (true)
-            {
-                if (DidOpponentMove)  // when opponent moved
-                {
-                    Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = true; });
-                    Dispatcher.Invoke(() => { SubmitButton.IsEnabled = true; });
-                }
-                else if (!DidOpponentMove)  // when opponent didnt move
-                {
-                    Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = false; });
-                    Dispatcher.Invoke(() => { SubmitButton.IsEnabled = false; });
-                }
+        ///// <summary>
+        ///// In a loop checks if the opponent has made a move (_didOpponentMove variable).
+        ///// </summary>
+        ///// <param name="cancellationToken">Token used to stop background task from another thread.</param>
+        //private void WaitForYourTurn(CancellationToken cancellationToken)
+        //{
+        //    while (true)
+        //    {
+        //        if (DidOpponentMove)  // when opponent moved
+        //        {
+        //            Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = true; });
+        //            Dispatcher.Invoke(() => { SubmitButton.IsEnabled = true; });
+        //        }
+        //        else if (!DidOpponentMove)  // when opponent didnt move
+        //        {
+        //            Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = false; });
+        //            Dispatcher.Invoke(() => { SubmitButton.IsEnabled = false; });
+        //        }
 
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    break;
-                }
-            }
-        }
+        //        if (cancellationToken.IsCancellationRequested)
+        //        {
+        //            break;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Creates TicTacToe class object.
