@@ -14,8 +14,6 @@ TODO11: Ogarn¹æ metodê ExtensionMethods.CreateOrJoinWaitingRoom()</br>
 TODO12: Dodaæ losowanie symbolu, bo domyœlnie teraz jest X                                        <-----------</br>
 TODO13: Dodaæ koñczenie gry w kó³ko krzy¿yk - sprawdzanie zwyciêzcy                               <-----------</br>
 TODO14: Walidacja ruchów, ¿eby nie mo¿na by³o wstawiæ symbol we wczeœniej zajête miejsce          <-----------</br>
-TODO15: Tell the user which symbol is his          <-----------</br>
-
 
 
 </br>
