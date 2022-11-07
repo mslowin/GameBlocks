@@ -17,33 +17,33 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Name of a stream where game data is published.
         /// </summary>
-        public static string _streamName { get; } = "GameTicTacToe";
+        public static string StreamName { get; } = "GameTicTacToe";
 
         /// <summary>
         /// TicTacToeGameWindow object to modify window's 
         /// propherties (e.g. to change TextBlocks on the window).
         /// </summary>
-        public static TicTacToeGameWindow? _ticTacToeGameWindow { get; set;  }
+        public static TicTacToeGameWindow? TicTacToeGameWindow { get; set;  }
 
         /// <summary>
         /// Key consisting of players' logins to publish data with.
         /// </summary>
-        public string _gameKey { get; set; }
+        public string GameKey { get; set; }
 
         /// <summary>
         /// User's login.
         /// </summary>
-        public string _login { get; set; }
+        public string Login { get; set; }
 
         /// <summary>
         /// User's symbol (ether "X" or "O").
         /// </summary>
-        public string _symbol { get; set; }
+        public string Symbol { get; set; }
 
         /// <summary>
         /// Opponent's symbol (ether "X" or "O").
         /// </summary>
-        public string _opponentsSymbol { get; set; }
+        public string OpponentsSymbol { get; set; }
 
         /// <summary>
         /// A two dimentional array forming game grid.
@@ -52,7 +52,7 @@ namespace GameBlocks.Classes
         /// 1,0 | 1,1 | 1,2
         /// 2,0 | 2,1 | 2,2
         /// </summary>
-        public string[,] _grid { get; set; } = new string[3,3];
+        public string[,] Grid { get; set; } = new string[3,3];
 
 
         /// <summary>
@@ -64,12 +64,12 @@ namespace GameBlocks.Classes
         /// <param name="symbol">User's symbol (ether "X" or "O").</param>
         public TicTacToe(TicTacToeGameWindow ticTacToeGameWindow, string gameKey, string login, string symbol)
         {
-            _ticTacToeGameWindow = ticTacToeGameWindow;
-            _gameKey = gameKey;
-            _login = login;
-            _symbol = symbol;
-            if (_symbol == "X") _opponentsSymbol = "O";
-            else _opponentsSymbol = "X";
+            TicTacToeGameWindow = ticTacToeGameWindow;
+            GameKey = gameKey;
+            Login = login;
+            Symbol = symbol;
+            if (Symbol == "X") OpponentsSymbol = "O";
+            else OpponentsSymbol = "X";
         }
 
         /// <summary>
@@ -80,12 +80,12 @@ namespace GameBlocks.Classes
         /// <param name="login">User's login.</param>
         public TicTacToe(TicTacToeGameWindow ticTacToeGameWindow, string gameKey, string login)
         {
-            _ticTacToeGameWindow = ticTacToeGameWindow;
-            _gameKey = gameKey;
-            _login = login;
-            _symbol = CheckSymbol();
-            if (_symbol == "X") _opponentsSymbol = "O";
-            else _opponentsSymbol = "X";
+            TicTacToeGameWindow = ticTacToeGameWindow;
+            GameKey = gameKey;
+            Login = login;
+            Symbol = CheckSymbol();
+            if (Symbol == "X") OpponentsSymbol = "O";
+            else OpponentsSymbol = "X";
         }
 
         /// <summary>
@@ -97,34 +97,34 @@ namespace GameBlocks.Classes
         {
             while (true)
             {
-                (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {_streamName} {_gameKey}");
+                (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {StreamName} {GameKey}");
                 List<string> moves = ExtensionsMethods.SearchInJson(output, "place");
                 List<string> symbols = ExtensionsMethods.SearchInJson(output, "symbol");
 
-                if (symbols.Count > 0 && symbols.Last() == _opponentsSymbol)  // if opponent moved
+                if (symbols.Count > 0 && symbols.Last() == OpponentsSymbol)  // if opponent moved
                 {
                     int x = int.Parse(moves.Last().Remove(1, 2));  // 1,2 -> 1
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
-                    TicTacToeGameWindow._allMoves.Add(coordinates);
-                    TicTacToeGameWindow._opponentsMoveCoordinates = coordinates;
-                    TicTacToeGameWindow._didOpponentMove = true;
+                    TicTacToeGameWindow.AllMoves.Add(coordinates);
+                    TicTacToeGameWindow.OpponentsMoveCoordinates = coordinates;
+                    TicTacToeGameWindow.DidOpponentMove = true;
                 }
-                else if (symbols.Count > 0 && symbols.Last() == _symbol) // if the user moved
+                else if (symbols.Count > 0 && symbols.Last() == Symbol) // if the user moved
                 {
                     int x = int.Parse(moves.Last().Remove(1, 2));  // 1,2 -> 1
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
-                    TicTacToeGameWindow._allMoves.Add(coordinates);
-                    TicTacToeGameWindow._didOpponentMove = false;
+                    TicTacToeGameWindow.AllMoves.Add(coordinates);
+                    TicTacToeGameWindow.DidOpponentMove = false;
                 }
                 else  // this will be the first move
                 {
-                    TicTacToeGameWindow._didOpponentMove = true;
+                    TicTacToeGameWindow.DidOpponentMove = true;
                 }
                 // TODO: ending the game
                 if (cancellationToken.IsCancellationRequested)
@@ -141,7 +141,7 @@ namespace GameBlocks.Classes
         /// <param name="coordinates">Coordinates where to put the symbol in the grid</param>
         private void UpdateGrid(string symbol, Coordinates coordinates)
         {
-            _grid[coordinates._x, coordinates._y] = symbol;
+            Grid[coordinates.X, coordinates.Y] = symbol;
         }
 
         /// <summary>
@@ -151,21 +151,21 @@ namespace GameBlocks.Classes
         public string DisplayGrid()
         {
             string output = "";
-            for (int i = 0; i < _grid.GetLength(0); i++)
+            for (int i = 0; i < Grid.GetLength(0); i++)
             {
                 output += "|";
-                for (int j = 0; j < _grid.GetLength(1); j++)
+                for (int j = 0; j < Grid.GetLength(1); j++)
                 {
-                    if (_grid[i,j] == "X" || _grid[i, j] == "O")
+                    if (Grid[i,j] == "X" || Grid[i, j] == "O")
                     {
-                        output += $" {_grid[i, j]} |";
+                        output += $" {Grid[i, j]} |";
                     }
                     else
                     {
                         output += $"    |";
                     }
                 }
-                output += System.Environment.NewLine;
+                output += Environment.NewLine;
             }
             return output;
         }
@@ -185,11 +185,11 @@ namespace GameBlocks.Classes
         /// <param name="coords">Coordinates on the grid where symbol was put.</param>
         public void PublishMove(Coordinates coords)
         {
-            MultiChainClient.PublishToStream(_streamName, _gameKey,
+            MultiChainClient.PublishToStream(StreamName, GameKey,
                 $"{{\"\"\"json\"\"\":{{" +
                 $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
-                $"\"\"\"symbol\"\"\":\"\"\"{_symbol}\"\"\"," +
-                $"\"\"\"place\"\"\":\"\"\"{coords._x},{coords._y}\"\"\"}}}}");
+                $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
+                $"\"\"\"place\"\"\":\"\"\"{coords.X},{coords.Y}\"\"\"}}}}");
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace GameBlocks.Classes
         {
             // TODO: later add logic to randomly select X or O
             string drawnSymbol = "X";
-            MultiChainClient.PublishToStream(_streamName, gameKey,
+            MultiChainClient.PublishToStream(StreamName, gameKey,
                 $"{{\"\"\"json\"\"\":{{" +
                 $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
                 $"\"\"\"drawn\"\"\":\"\"\"{drawnSymbol}\"\"\"}}}}");
@@ -214,7 +214,7 @@ namespace GameBlocks.Classes
         /// <returns>Opponents symbol in string format ("X" or "O").</returns>
         private string CheckSymbol()
         {
-            (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {_streamName} {_gameKey}");
+            (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {StreamName} {GameKey}");
             List<string> opponentsSymbol = ExtensionsMethods.SearchInJson(output, "drawn");
             return opponentsSymbol.Last();
         }

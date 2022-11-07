@@ -51,9 +51,8 @@ namespace GameBlocks.Classes
         /// <returns>List of all streams in a chain.</returns>
         public static List<Stream> ReadChainStreams()
         {
-            string output, err;
             List<Stream> allStreams = new List<Stream>();
-            (output, err) = RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
+            (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, "liststreams");
 
             List<string> streamNames = ExtensionsMethods.SearchInJson(output, "name");
 
@@ -73,9 +72,8 @@ namespace GameBlocks.Classes
         /// <returns>List of all Keys objects in a Stream.</returns>
         public static List<Key> ReadStreamKeys(string streamName)
         {
-            List <Key> keys = new List<Key>();
-            string output, err;
-            (output, err) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName}");
+            List <Key> keys = new();
+            (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName}");
 
             List<string> streamKeysNames = ExtensionsMethods.SearchInJson(output, "key");
             List<string> streamKeysItems = ExtensionsMethods.SearchInJson(output, "items");
@@ -154,7 +152,6 @@ namespace GameBlocks.Classes
         public static (string, string) RunCommand(string prefix, string chainName, string command)
         {
             Process process = new Process();
-            string test = GlobalVariables.PathToMultichainFolder;
             process.StartInfo.WorkingDirectory = GlobalVariables.PathToMultichainFolder;
             process.StartInfo.FileName = $@"{GlobalVariables.PathToMultichainFolder}{prefix}.exe";
             process.StartInfo.Arguments = $"{chainName} {command}";

@@ -14,11 +14,11 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Name of a stream.
         /// </summary>
-        public string StreamName { get; set; }
-        
+        public string StreamName { get; set; } = "";
+
         /// <summary>
         /// List of keys used in a stream.
         /// </summary>
-        public List<Key> Keys { get; set; }
+        public List<Key> Keys { get; set; } = new();
     }
 }

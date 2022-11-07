@@ -24,37 +24,37 @@ namespace GameBlocks.Views
         /// <summary>
         /// Indicates whether the opponent has made a move.
         /// </summary>
-        public static bool _didOpponentMove { get; set; } = false;
+        public static bool DidOpponentMove { get; set; } = false;
 
         /// <summary>
         /// Coordinates where opponent placed it's symbol.
         /// </summary>
-        public static Coordinates? _opponentsMoveCoordinates { get; set; }
+        public static Coordinates? OpponentsMoveCoordinates { get; set; }
 
         /// <summary>
         /// List with all moves from the begining of the game.
         /// </summary>
-        public static List<Coordinates> _allMoves { get; set; } = new();
+        public static List<Coordinates> AllMoves { get; set; } = new();
 
         /// <summary>
         /// Key consisting of players' logins to publish data with (e.g. login_vs_login_5).
         /// </summary>
-        public string _gameKey { get; set; }
+        public string GameKey { get; set; }
 
         /// <summary>
         /// Indicates if the user created or joind a waiting room.
         /// </summary>
-        public bool _wasThisUserFirst { get; set; }
+        public bool WasThisUserFirst { get; set; }
 
         /// <summary>
         /// TicTacToe class object to perform operations on.
         /// </summary>
-        public TicTacToe _gameTicTacToe { get; set; }
+        public TicTacToe GameTicTacToe { get; set; }
 
         /// <summary>
         /// Token used to stop background task from another thread.
         /// </summary>
-        private CancellationTokenSource ts = new();
+        private CancellationTokenSource _ts = new();
 
         /// <summary>
         /// TicTacToeGameWindow constructor.
@@ -64,13 +64,13 @@ namespace GameBlocks.Views
         public TicTacToeGameWindow(string gameKey, bool wasThisUserFirst)
         {
             InitializeComponent();
-            _gameKey = gameKey;
-            _wasThisUserFirst = wasThisUserFirst;
-            _gameTicTacToe = StartGameTicTacToe(this, gameKey, wasThisUserFirst);
+            GameKey = gameKey;
+            WasThisUserFirst = wasThisUserFirst;
+            GameTicTacToe = StartGameTicTacToe(this, gameKey, wasThisUserFirst);
 
-            CancellationToken ct = ts.Token;
+            CancellationToken ct = _ts.Token;
 
-            Task.Factory.StartNew(() => _gameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
+            Task.Factory.StartNew(() => GameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
             {
                 // Tu coś do zmiany bedzie
                 Close();
@@ -91,12 +91,12 @@ namespace GameBlocks.Views
         {
             while (true)
             {
-                if (_didOpponentMove)  // when opponent moved
+                if (DidOpponentMove)  // when opponent moved
                 {
                     Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = true; });
                     Dispatcher.Invoke(() => { SubmitButton.IsEnabled = true; });
                 }
-                else if (!_didOpponentMove)  // when opponent didnt move
+                else if (!DidOpponentMove)  // when opponent didnt move
                 {
                     Dispatcher.Invoke(() => { MoveTextBox.IsEnabled = false; });
                     Dispatcher.Invoke(() => { SubmitButton.IsEnabled = false; });
@@ -116,7 +116,7 @@ namespace GameBlocks.Views
         /// <param name="gameKey">Key consisting of players' logins to publish data with.</param>
         /// <param name="wasThisUserFirst">Indicates if the user created or joind a waiting room.</param>
         /// <returns>New TicTacToe class object.</returns>
-        public TicTacToe StartGameTicTacToe(TicTacToeGameWindow ticTacToeGameWindow, string gameKey, bool wasThisUserFirst)
+        public static TicTacToe StartGameTicTacToe(TicTacToeGameWindow ticTacToeGameWindow, string gameKey, bool wasThisUserFirst)
         {
             if (wasThisUserFirst)
             {
@@ -144,9 +144,9 @@ namespace GameBlocks.Views
             else
             {
                 string coordinates = MoveTextBox.Text;
-                int x = int.Parse(coordinates.Remove(1, 2));  // 1,2 -> 1
-                int y = int.Parse(coordinates.Remove(0, 2));  // 1,2 -> 2
-                _gameTicTacToe.PublishMove(new(x, y));
+                int x = int.Parse(coordinates.Remove(0, 2));  // 1,2 -> 2
+                int y = int.Parse(coordinates.Remove(1, 2));  // 1,2 -> 1
+                GameTicTacToe.PublishMove(new(x, y));
             }
         }
     }

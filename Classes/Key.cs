@@ -14,7 +14,7 @@ namespace GameBlocks.Classes
         /// <summary>
         /// Name of a key.
         /// </summary>
-        public string KeyName { get; set; }
+        public string KeyName { get; set; } = "";
 
         /// <summary>
         /// Items connected with this Key.

@@ -29,13 +29,11 @@ namespace GameBlocks.Classes
             try
             {
                 // Open the text file using a stream reader.
-                using (var sr = new StreamReader("../../../Setup.json"))    // <-- być może trzeba to będzie zmienić kiedyś jeśli będzie plik exe
-                {
-                    string json = sr.ReadToEnd();
-                    Setup? setup = JsonConvert.DeserializeObject<Setup>(json);
-                    
-                    return setup;
-                }
+                using var sr = new StreamReader("../../../Setup.json");    // <-- TODO: być może trzeba to będzie zmienić kiedyś jeśli będzie plik exe
+                string json = sr.ReadToEnd();
+                Setup? setup = JsonConvert.DeserializeObject<Setup>(json);
+
+                return setup;
             }
             catch (IOException e)
             {
@@ -57,24 +55,22 @@ namespace GameBlocks.Classes
         {
             try
             {
-                using (var sr = new StreamReader(pathToFile))
+                using var sr = new StreamReader(pathToFile);
+                string json = sr.ReadToEnd();
+                JsonTextReader reader = new(new StringReader(json));
+                while (reader.Read())
                 {
-                    string json = sr.ReadToEnd();
-                    JsonTextReader reader = new JsonTextReader(new StringReader(json));
-                    while (reader.Read())
+                    if (reader.Value != null)
                     {
-                        if (reader.Value != null)
-                        {
-                            Trace.WriteLine($"Token: {reader.TokenType}, Value: {reader.Value}");
-                        }
-                        else
-                        {
-                            Trace.WriteLine($"Token: {reader.TokenType}");
-                        }
+                        Trace.WriteLine($"Token: {reader.TokenType}, Value: {reader.Value}");
                     }
-
-                    return json;
+                    else
+                    {
+                        Trace.WriteLine($"Token: {reader.TokenType}");
+                    }
                 }
+
+                return json;
             }
             catch (IOException e)
             {
@@ -95,7 +91,7 @@ namespace GameBlocks.Classes
         {
             bool desiredTypeFlag = false;
             List<string> correspondingValues = new List<string>();
-            JsonTextReader reader = new JsonTextReader(new StringReader(jsonText));
+            JsonTextReader reader = new(new StringReader(jsonText));
             while (reader.Read())
             {
                 if (desiredTypeFlag)
@@ -134,7 +130,7 @@ namespace GameBlocks.Classes
                 // TODO: Może to zmienić, żeby nie był od razu tworony waiting room, tylko np po 3 sekundach jeśli gracz nie anuluje
                 MultiChainClient.PublishToStream(streamName, newWaitingRoomName, $"{{\"\"\"json\"\"\":{{\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"}}}}");
 
-                LoadingWindow loadingWindow = new LoadingWindow(0, "Waiting for another player...", streamName, newWaitingRoomName);
+                LoadingWindow loadingWindow = new(0, "Waiting for another player...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
 
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
@@ -157,7 +153,7 @@ namespace GameBlocks.Classes
             {
                 string newWaitingRoomName = $"waitingRoom{lastRoomNumber}"; // New waiting room is actually the last waiting room found in keys
 
-                LoadingWindow loadingWindow = new LoadingWindow(1, "Matchmaking...", streamName, newWaitingRoomName);
+                LoadingWindow loadingWindow = new(1, "Matchmaking...", streamName, newWaitingRoomName);
                 loadingWindow.ShowDialog();
 
                 if (!GlobalVariables.IsMatchmakingComplete)  // when matchmaking was cancelled
@@ -190,7 +186,7 @@ namespace GameBlocks.Classes
         {
             if (gameName == "TicTacToe")
             {
-                TicTacToeGameWindow ticTacToeGameWindow = new TicTacToeGameWindow(gameKey, wasThisUserFirst);
+                TicTacToeGameWindow ticTacToeGameWindow = new(gameKey, wasThisUserFirst);
                 ticTacToeGameWindow.ShowDialog();
             }
         }

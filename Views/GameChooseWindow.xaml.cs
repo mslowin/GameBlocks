@@ -25,12 +25,12 @@ namespace GameBlocks.Views
         /// <summary>
         /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
         /// </summary>
-        public int _SelectedGame = 0;
+        private int _selectedGame = 0;
 
         /// <summary>
         /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
         /// </summary>
-        public readonly List<string> _AvailableGames = new() { "TicTacToe", "Checkers" };
+        private readonly List<string> _availableGames = new() { "TicTacToe", "Checkers" };
 
         /// <summary>
         /// GameChooseWindow constructor.
@@ -48,7 +48,7 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            string gameName = _AvailableGames[_SelectedGame];
+            string gameName = _availableGames[_selectedGame];
             (bool wasGameStarted, bool wasThisUserFirst, string? gameKey) = ExtensionsMethods.CreateOrJoinWaitingRoom(gameName);
 
             if (wasGameStarted && gameKey != null)
@@ -64,8 +64,8 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Right_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
-            _SelectedGame++;
-            (_SelectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_SelectedGame, _AvailableGames);
+            _selectedGame++;
+            (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
             string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }
@@ -78,8 +78,8 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Left_Arrow_Button_Click(object sender, RoutedEventArgs e)
         {
-            _SelectedGame--;
-            (_SelectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_SelectedGame, _AvailableGames);
+            _selectedGame--;
+            (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
             string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }

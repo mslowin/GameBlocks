@@ -25,27 +25,27 @@ namespace GameBlocks.Views
         /// <summary>
         /// Background task which doesn't stop main thread.
         /// </summary>
-        private Task BackgroundTask { get; set; }
+        private Task? _backgroundTask { get; set; }
 
         /// <summary>
         /// Token used to stop background task from another thread.
         /// </summary>
-        private CancellationTokenSource ts = new();
+        private CancellationTokenSource _ts = new();
 
         /// <summary>
         /// Name of a stream in which the waitingroom is located.
         /// </summary>
-        private string StreamName { get; set; }
+        private string _streamName { get; set; }
 
         /// <summary>
         /// Name of the waiting room in which the player is located.
         /// </summary>
-        private string WaitingRoomName { get; set; }
+        private string _waitingRoomName { get; set; }
 
         /// <summary>
         /// Intiger defying the purpose of loading window (0 - waiting for another player, 1 - joining player).
         /// </summary>
-        private int PurposeIndex { get; set; }
+        private int _purposeIndex { get; set; }
 
 
         /// <summary>
@@ -58,24 +58,24 @@ namespace GameBlocks.Views
         public LoadingWindow(int purposeIndex, string informations, string streamName, string waitingRoomName)
         {
             InitializeComponent();
-            WaitingRoomName = waitingRoomName;
-            StreamName = streamName;
-            PurposeIndex = purposeIndex;
+            _waitingRoomName = waitingRoomName;
+            _streamName = streamName;
+            _purposeIndex = purposeIndex;
             LoadingInformaitonTextBlock.Text = informations;
 
-            CancellationToken ct = ts.Token;
+            CancellationToken ct = _ts.Token;
 
             switch (purposeIndex)
             {
                 case 0:
-                    BackgroundTask = Task.Factory.StartNew(() => WaitForPlayer(streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
+                    _backgroundTask = Task.Factory.StartNew(() => WaitForPlayer(streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
                     {
                         Close();
                     }, TaskScheduler.FromCurrentSynchronizationContext());
                     break;
 
                 case 1:
-                    BackgroundTask = Task.Factory.StartNew(() => MatchmakingStartingAsync(5000, streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
+                    _backgroundTask = Task.Factory.StartNew(() => MatchmakingStartingAsync(5000, streamName, waitingRoomName, ct), ct).ContinueWith((tsk) =>
                     {
                         Close();
                     }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -159,7 +159,7 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            ts.Cancel();
+            _ts.Cancel();
             Close();  // closes window and exeutes Window_Closed method
         }
 
@@ -170,7 +170,7 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            ts.Cancel();
+            _ts.Cancel();
         }
     }
 }
