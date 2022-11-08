@@ -107,12 +107,23 @@ namespace GameBlocks.Classes
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
-                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
+                    if (IsGameOver())
+                    {
+                        MultiChainClient.PublishToStream(StreamName, GameKey,
+                            $"{{\"\"\"json\"\"\":{{" +
+                            $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
+                            $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
+                            $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
+                        break;
+                    }
+
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.OpponentsMoveCoordinates = coordinates;
                     TicTacToeGameWindow.DidOpponentMove = true;
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = true; });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = true; });
+
                 }
                 else if (symbols.Count > 0 && symbols.Last() == Symbol) // if the user moved
                 {
@@ -120,9 +131,19 @@ namespace GameBlocks.Classes
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
-                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
+                    if (IsGameOver())
+                    {
+                        MultiChainClient.PublishToStream(StreamName, GameKey,
+                            $"{{\"\"\"json\"\"\":{{" +
+                            $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
+                            $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
+                            $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
+                        break;
+                    }
+
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.DidOpponentMove = false;
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = false; });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = false; });
                 }
@@ -130,7 +151,7 @@ namespace GameBlocks.Classes
                 {
                     TicTacToeGameWindow.DidOpponentMove = true;
                 }
-                // TODO: ending the game
+                // TODO: ending the game with X button
                 if (cancellationToken.IsCancellationRequested)
                 {
                     break;
@@ -146,6 +167,29 @@ namespace GameBlocks.Classes
         private void UpdateGrid(string symbol, Coordinates coordinates)
         {
             Grid[coordinates.X, coordinates.Y] = symbol;
+        }
+
+        /// <summary>
+        /// Checks whether someone has won the game.
+        /// </summary>
+        /// <returns>True if game is over, otherwise false.</returns>
+        private bool IsGameOver()
+        {
+            // Checking rows:
+            if (Grid[0, 0] == Symbol && Grid[0, 1] == Symbol && Grid[0, 2] == Symbol) { return true; }
+            if (Grid[1, 0] == Symbol && Grid[1, 1] == Symbol && Grid[1, 2] == Symbol) { return true; }
+            if (Grid[2, 0] == Symbol && Grid[2, 1] == Symbol && Grid[2, 2] == Symbol) { return true; }
+
+            // Checking columns:
+            if (Grid[0, 0] == Symbol && Grid[1, 0] == Symbol && Grid[2, 0] == Symbol) { return true; }
+            if (Grid[0, 1] == Symbol && Grid[1, 1] == Symbol && Grid[2, 1] == Symbol) { return true; }
+            if (Grid[0, 2] == Symbol && Grid[1, 2] == Symbol && Grid[2, 2] == Symbol) { return true; }
+
+            // Checking diagonals:
+            if (Grid[0, 0] == Symbol && Grid[1, 1] == Symbol && Grid[2, 2] == Symbol) { return true; }
+            if (Grid[2, 0] == Symbol && Grid[1, 1] == Symbol && Grid[0, 2] == Symbol) { return true; }
+
+            return false;
         }
 
         /// <summary>
@@ -172,15 +216,6 @@ namespace GameBlocks.Classes
                 output += Environment.NewLine;
             }
             return output;
-        }
-
-        /// <summary>
-        /// Checks whether someone won the game.
-        /// </summary>
-        /// <returns>True of game is over, otherwise false.</returns>
-        private bool IsGameOver()
-        {
-            return false;
         }
 
         /// <summary>
