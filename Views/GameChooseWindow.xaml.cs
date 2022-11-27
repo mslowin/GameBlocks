@@ -20,7 +20,7 @@ namespace GameBlocks.Views
     /// <summary>
     /// Interaction logic for GameChooseWindow.xaml class.
     /// </summary>
-    public partial class GameChooseWindow : Window
+    public partial class GameChooseWindow
     {
         /// <summary>
         /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
@@ -91,7 +91,7 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = CustomMessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var result = MessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes)
             {
                 e.Cancel = true;

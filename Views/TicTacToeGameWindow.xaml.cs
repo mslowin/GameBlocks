@@ -19,7 +19,7 @@ namespace GameBlocks.Views
     /// <summary>
     /// Interaction logic for TicTacToeGameWindow.xaml class.
     /// </summary>
-    public partial class TicTacToeGameWindow : Window
+    public partial class TicTacToeGameWindow
     {
         /// <summary>
         /// Indicates whether the opponent has made a move.

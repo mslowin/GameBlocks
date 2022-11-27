@@ -21,8 +21,13 @@ namespace GameBlocks.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml class.
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
+        /// <summary>
+        /// Indicates whether the window is visible or hidden;
+        /// </summary>
+        private bool _isVisible = true;
+
         /// <summary>
         /// MainWindow constructor.
         /// </summary>
@@ -51,6 +56,7 @@ namespace GameBlocks.Views
             {
                 GlobalVariables.UserAccount = new Account(login, password);     // creation of an account object
                 GameChooseWindow gameChooseWindow = new();
+                _isVisible = false;
                 Visibility = Visibility.Hidden;
                 gameChooseWindow.Show();
             }
@@ -67,10 +73,13 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = CustomMessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result != MessageBoxResult.Yes)
+            if (_isVisible)
             {
-                e.Cancel = true;
+                var result = MessageBox.Show("Do you really want to exit?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes)
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

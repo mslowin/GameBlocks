@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\arrow-icon.png" />
     <None Remove="Views\Checkers_Icon.jpg" />
+    <None Remove="Views\key-icon-small.png" />
+    <None Remove="Views\key-image-small.png" />
+    <None Remove="Views\login-icon-small.png" />
+    <None Remove="Views\login-icon.png" />
+    <None Remove="Views\right-arrow-icon.png" />
     <None Remove="Views\TicTacToe_Icon.jpg" />
   </ItemGroup>
 
@@ -17,11 +23,17 @@
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="StyleCop" Version="6.2.0" />
+    <PackageReference Include="WPF-UI" Version="2.0.2" />
     <PackageReference Include="WPFCustomMessageBox" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Views\arrow-icon.png" />
     <Resource Include="Views\Checkers_Icon.jpg" />
+    <Resource Include="Views\key-image-small.png" />
+    <Resource Include="Views\login-icon-small.png" />
+    <Resource Include="Views\login-icon.png" />
+    <Resource Include="Views\right-arrow-icon.png" />
     <Resource Include="Views\TicTacToe_Icon.jpg" />
   </ItemGroup>
 

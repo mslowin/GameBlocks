@@ -73,7 +73,7 @@ namespace GameBlocks.Classes
         public static List<Key> ReadStreamKeys(string streamName)
         {
             List <Key> keys = new();
-            (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName}");
+            (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName} * false 1000 0 true");
 
             List<string> streamKeysNames = ExtensionsMethods.SearchInJson(output, "key");
             List<string> streamKeysItems = ExtensionsMethods.SearchInJson(output, "items");
@@ -126,6 +126,7 @@ namespace GameBlocks.Classes
                 return $"{partyName}1";
             }
 
+            // TODO: tu cos nie tak
             var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length)) + 1;  // Removal of everything except the number
 
             return $"{partyName}{newGameIngex}";

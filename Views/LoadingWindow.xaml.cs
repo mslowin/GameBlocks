@@ -20,7 +20,7 @@ namespace GameBlocks.Views
     /// <summary>
     /// Interaction logic for LoadingWindow.xaml class.
     /// </summary>
-    public partial class LoadingWindow : Window
+    public partial class LoadingWindow
     {
         /// <summary>
         /// Background task which doesn't stop main thread.
