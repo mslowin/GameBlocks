@@ -35,7 +35,7 @@
                 <TextBox x:Name="MoveTextBox" HorizontalAlignment="Left" Margin="190,168,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" MinWidth="113" MinHeight="32" FontSize="20" Padding="10,0,10,0" BorderThickness="0,0,0,1" Cursor="IBeam"/>
                 <TextBlock HorizontalAlignment="Left" Margin="63,168,0,0" TextWrapping="Wrap" TextAlignment="Right" Text="Move:" VerticalAlignment="Top" Width="113" Height="32" FontSize="20" Foreground="#A9B5C2"/>
                 <TextBlock x:Name="GameAreaTextBlock" xml:space="preserve" HorizontalAlignment="Left" Margin="355,0,0,0" TextWrapping="Wrap" Text="|    |    |    |&#x0a;|    |    |    |&#x0a;|    |    |    |" FontSize="40" VerticalAlignment="Center" Height="212" Width="226" Background="Transparent"/>
-                <Button x:Name="SubmitButton" Content="Submit" Click="Submit_Button_Click" HorizontalAlignment="Left" Margin="155,228,0,0" VerticalAlignment="Top" Height="40" Width="78" Background="lightgreen"/>
+                <Button x:Name="SubmitButton" Content="Submit" Click="Submit_Button_Click" HorizontalAlignment="Left" Margin="155,228,0,0" VerticalAlignment="Top" Height="40" Width="78" Background="#70B63A"/>
                 <TextBlock x:Name="YourSymbolTextBox" HorizontalAlignment="Left" Margin="246,111,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="62" Height="32" FontSize="20"/>
                 <TextBlock HorizontalAlignment="Left" Margin="112,111,0,0" TextWrapping="Wrap" TextAlignment="Right" Text="Your symbol:" VerticalAlignment="Top" Width="120" Height="32" FontSize="20" Foreground="#A9B5C2"/>
             </Grid>

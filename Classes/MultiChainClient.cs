@@ -91,7 +91,7 @@ namespace GameBlocks.Classes
         /// <param name="gameName">Name of a game (e.g. "TicTacToe").</param>
         /// <param name="waitingRoomName">Name of a waiting room from which logins will be taken.</param>
         /// <returns>New game key consisting of logins and number (e.g. msowin_vs_tom222_1).</returns>
-        internal static string CreateNewGameKey(string gameName, string waitingRoomName)
+        internal static string CreateNewGameKey(string gameName, string waitingRoomName, bool wasThisUserFirst)
         {
             (string output, _) = RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems Queue{gameName} {waitingRoomName}");
             List<string> logins = ExtensionsMethods.SearchInJson(output, "login");
@@ -126,10 +126,17 @@ namespace GameBlocks.Classes
                 return $"{partyName}1";
             }
 
-            // TODO: tu cos nie tak
-            var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length)) + 1;  // Removal of everything except the number
+            if(wasThisUserFirst)
+            {
+                var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length));  // Removal of everything except the number
+                return $"{partyName}{newGameIngex}";
+            }
+            else
+            {
+                var newGameIngex = int.Parse(desiredPartyNames[0].Remove(0, partyName.Length)) + 1;  // Removal of everything except the number
+                return $"{partyName}{newGameIngex}";
+            }
 
-            return $"{partyName}{newGameIngex}";
         }
 
         /// <summary>

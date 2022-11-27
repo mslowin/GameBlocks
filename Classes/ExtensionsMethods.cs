@@ -144,7 +144,7 @@ namespace GameBlocks.Classes
                     GlobalVariables.IsMatchmakingComplete = false;
 
                     // Start of a game with gameKey
-                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
+                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName, wasThisUserFirst: true);
 
                     return (true, true, gameKey);
                 }
@@ -167,7 +167,7 @@ namespace GameBlocks.Classes
                     GlobalVariables.IsMatchmakingComplete = false;
 
                     // Start of a game with gameKey 
-                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName);
+                    string gameKey = MultiChainClient.CreateNewGameKey(gameName, newWaitingRoomName, wasThisUserFirst: false);
 
                     return (true, false, gameKey);
                 }
