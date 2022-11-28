@@ -68,8 +68,16 @@ namespace GameBlocks.Classes
             GameKey = gameKey;
             Login = login;
             Symbol = symbol;
-            if (Symbol == "X") OpponentsSymbol = "O";
-            else OpponentsSymbol = "X";
+            if (Symbol == "X")
+            {
+                OpponentsSymbol = "O";
+            }
+            else
+            {
+                OpponentsSymbol = "X";
+                ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = false; });
+                ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = false; });
+            }
         }
 
         /// <summary>
@@ -84,8 +92,16 @@ namespace GameBlocks.Classes
             GameKey = gameKey;
             Login = login;
             OpponentsSymbol = CheckSymbol();
-            if (OpponentsSymbol == "X") Symbol = "O";
-            else Symbol = "X";
+            if (OpponentsSymbol == "X")
+            {
+                Symbol = "O";
+                ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = false; });
+                ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = false; });
+            }
+            else
+            { 
+                Symbol = "X";
+            }
         }
 
         /// <summary>
