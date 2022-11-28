@@ -93,7 +93,7 @@ namespace GameBlocks.Classes
         /// </summary>
         /// <param name="ticTacToeGameWindow">TicTacToeGameWindow object to modify window's propherties.</param>
         /// <param name="cancellationToken">Token that can be used by other threads to cancel the loop.</param>
-        public void UpdateGame(TicTacToeGameWindow ticTacToeGameWindow, CancellationToken cancellationToken)
+        public bool UpdateGame(TicTacToeGameWindow ticTacToeGameWindow, CancellationToken cancellationToken)
         {
             while (true)
             {
@@ -107,6 +107,7 @@ namespace GameBlocks.Classes
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     if (IsGameOver())
                     {
                         MultiChainClient.PublishToStream(StreamName, GameKey,
@@ -114,13 +115,12 @@ namespace GameBlocks.Classes
                             $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
                             $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
                             $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
-                        break;
+                        return false;  // returning false as the opponen won
                     }
 
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.OpponentsMoveCoordinates = coordinates;
                     TicTacToeGameWindow.DidOpponentMove = true;
-                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = true; });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = true; });
 
@@ -131,6 +131,7 @@ namespace GameBlocks.Classes
                     int y = int.Parse(moves.Last().Remove(0, 2));  // 1,2 -> 2
                     Coordinates coordinates = new(x, y);
                     UpdateGrid(symbols.Last(), coordinates);
+                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     if (IsGameOver())
                     {
                         MultiChainClient.PublishToStream(StreamName, GameKey,
@@ -138,12 +139,11 @@ namespace GameBlocks.Classes
                             $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
                             $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
                             $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
-                        break;
+                        return true;  // returning true as the player won
                     }
 
                     TicTacToeGameWindow.AllMoves.Add(coordinates);
                     TicTacToeGameWindow.DidOpponentMove = false;
-                    ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.MoveTextBox.IsEnabled = false; });
                     ticTacToeGameWindow.Dispatcher.Invoke(() => { ticTacToeGameWindow.SubmitButton.IsEnabled = false; });
                 }
@@ -154,7 +154,7 @@ namespace GameBlocks.Classes
                 // TODO: ending the game with X button
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    break;
+                    return false;
                 }
             }
         }

@@ -71,9 +71,12 @@ namespace GameBlocks.Views
 
             CancellationToken ct = _ts.Token;
 
-            Task.Factory.StartNew(() => GameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
+            Task<bool>.Factory.StartNew(() => GameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
             {
-                // Tu coś do zmiany bedzie
+                // displaying results window:
+                var didUserWin = tsk.Result;
+                ResultsWindow resultsWindow = new(didUserWin);
+                resultsWindow.ShowDialog();
                 Close();
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
