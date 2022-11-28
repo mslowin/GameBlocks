@@ -49,7 +49,7 @@ namespace GameBlocks.Views
         private void LogIn_Button_Click(object sender, RoutedEventArgs e)
         {
             string login = loginTextBox.Text;
-            string password = passwordTextBox.Text;
+            string password = passwordTextBox.Password;
             bool credentialsOk = GlobalVariables.MainChain!.LogIntoChainSuccess(login, password);
 
             if(credentialsOk)

@@ -191,6 +191,7 @@ namespace GameBlocks.Classes
         /// <returns>True if game is over, otherwise false.</returns>
         private bool IsGameOver()
         {
+            // Checking whether the user had won:
             // Checking rows:
             if (Grid[0, 0] == Symbol && Grid[0, 1] == Symbol && Grid[0, 2] == Symbol) { return true; }
             if (Grid[1, 0] == Symbol && Grid[1, 1] == Symbol && Grid[1, 2] == Symbol) { return true; }
@@ -204,6 +205,21 @@ namespace GameBlocks.Classes
             // Checking diagonals:
             if (Grid[0, 0] == Symbol && Grid[1, 1] == Symbol && Grid[2, 2] == Symbol) { return true; }
             if (Grid[2, 0] == Symbol && Grid[1, 1] == Symbol && Grid[0, 2] == Symbol) { return true; }
+
+            // And checking whether opponent had won:
+            // Checking rows:
+            if (Grid[0, 0] == OpponentsSymbol && Grid[0, 1] == OpponentsSymbol && Grid[0, 2] == OpponentsSymbol) { return true; }
+            if (Grid[1, 0] == OpponentsSymbol && Grid[1, 1] == OpponentsSymbol && Grid[1, 2] == OpponentsSymbol) { return true; }
+            if (Grid[2, 0] == OpponentsSymbol && Grid[2, 1] == OpponentsSymbol && Grid[2, 2] == OpponentsSymbol) { return true; }
+
+            // Checking columns:
+            if (Grid[0, 0] == OpponentsSymbol && Grid[1, 0] == OpponentsSymbol && Grid[2, 0] == OpponentsSymbol) { return true; }
+            if (Grid[0, 1] == OpponentsSymbol && Grid[1, 1] == OpponentsSymbol && Grid[2, 1] == OpponentsSymbol) { return true; }
+            if (Grid[0, 2] == OpponentsSymbol && Grid[1, 2] == OpponentsSymbol && Grid[2, 2] == OpponentsSymbol) { return true; }
+
+            // Checking diagonals:
+            if (Grid[0, 0] == OpponentsSymbol && Grid[1, 1] == OpponentsSymbol && Grid[2, 2] == OpponentsSymbol) { return true; }
+            if (Grid[2, 0] == OpponentsSymbol && Grid[1, 1] == OpponentsSymbol && Grid[0, 2] == OpponentsSymbol) { return true; }
 
             return false;
         }
