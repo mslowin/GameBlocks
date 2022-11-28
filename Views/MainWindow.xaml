@@ -34,8 +34,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="3*" />
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="4*" />
+                <RowDefinition Height="14*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <!--Upper part-->
             <Grid Grid.Row="1">
@@ -57,11 +57,13 @@
                 <!--W przyszłości może application name jako png-->
                 <Label Grid.Column="1" Content="GameBlocks" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-210,0,0"/>
                 <TextBlock Grid.Column="1" x:Name="loginErrorTextBlock" Foreground="OrangeRed" FontSize="14" TextAlignment="Center" HorizontalAlignment="Center" Margin="0,-130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"  Width="284"/>
-                <Image Grid.Column="1" HorizontalAlignment="Center" Margin="-260,-50,0,0" VerticalAlignment="Center" Source="/Views/login-icon-small.png" Stretch="None"/>
-                <TextBox Grid.Column="1" x:Name="loginTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,-50,0,0" TextWrapping="Wrap" Text="login" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
-                <Image Grid.Column="1" HorizontalAlignment="Center" Margin="-260,70,0,0" VerticalAlignment="Center" Source="/Views/key-image-small.png" Stretch="None"/>
-                <TextBox Grid.Column="1" x:Name="passwordTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,70,0,0" TextWrapping="Wrap" Text="password" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
-                <ui:Button Grid.Column="1" Content="Log In" Click="LogIn_Button_Click" Background="#70B63A" HorizontalAlignment="Center" Margin="0,200,0,0" VerticalAlignment="Center" MinHeight="40" MinWidth="120"/>
+                <Label Grid.Column="1" Content="login:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-190,-85,0,0" FontSize="14"/>
+                <Image Grid.Column="1" HorizontalAlignment="Center" Margin="-260,-30,0,0" VerticalAlignment="Center" Source="/Views/login-icon-small.png" Stretch="None"/>
+                <TextBox Grid.Column="1" x:Name="loginTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,-30,0,0" TextWrapping="Wrap" Text="" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
+                <Label Grid.Column="1" Content="password:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-165,65,0,0" FontSize="14"/>
+                <Image Grid.Column="1" HorizontalAlignment="Center" Margin="-260,120,0,0" VerticalAlignment="Center" Source="/Views/key-image-small.png" Stretch="None"/>
+                <ui:PasswordBox Grid.Column="1" x:Name="passwordTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,120,0,0" TextWrapping="Wrap" Text="" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
+                <ui:Button Grid.Column="1" Content="Log In" Click="LogIn_Button_Click" Background="#70B63A" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Center" MinHeight="40" MinWidth="120"/>
             </Grid>
 
             <ui:TitleBar Grid.Row="0">

@@ -66,7 +66,7 @@ namespace GameBlocks.Views
         {
             _selectedGame++;
             (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
-            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
+            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.png";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }
 
@@ -80,7 +80,7 @@ namespace GameBlocks.Views
         {
             _selectedGame--;
             (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
-            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.jpg";
+            string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.png";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
         }
 

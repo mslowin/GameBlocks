@@ -10,12 +10,15 @@
   <ItemGroup>
     <None Remove="Views\arrow-icon.png" />
     <None Remove="Views\Checkers_Icon.jpg" />
+    <None Remove="Views\Checkers_Icon.png" />
     <None Remove="Views\key-icon-small.png" />
     <None Remove="Views\key-image-small.png" />
     <None Remove="Views\login-icon-small.png" />
     <None Remove="Views\login-icon.png" />
     <None Remove="Views\right-arrow-icon.png" />
     <None Remove="Views\TicTacToe_Icon.jpg" />
+    <None Remove="Views\TicTacToe_Icon.png" />
+    <None Remove="Views\TicTacToe_Icon_transparent.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,12 +32,12 @@
 
   <ItemGroup>
     <Resource Include="Views\arrow-icon.png" />
-    <Resource Include="Views\Checkers_Icon.jpg" />
+    <Resource Include="Views\Checkers_Icon.png" />
     <Resource Include="Views\key-image-small.png" />
     <Resource Include="Views\login-icon-small.png" />
     <Resource Include="Views\login-icon.png" />
     <Resource Include="Views\right-arrow-icon.png" />
-    <Resource Include="Views\TicTacToe_Icon.jpg" />
+    <Resource Include="Views\TicTacToe_Icon.png" />
   </ItemGroup>
 
 </Project>
