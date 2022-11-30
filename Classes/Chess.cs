@@ -52,6 +52,31 @@ namespace GameBlocks.Classes
         public List<Pawn> Pawns { get; set; }
 
         /// <summary>
+        /// List of Kings.
+        /// </summary>
+        public List<King> Kings { get; set; }
+
+        /// <summary>
+        /// List of Queens.
+        /// </summary>
+        public List<Queen> Queens { get; set; }
+
+        /// <summary>
+        /// List of Queens.
+        /// </summary>
+        public List<Bishop> Bishops { get; set; }
+
+        /// <summary>
+        /// List of Queens.
+        /// </summary>
+        public List<Knight> Knights{ get; set; }
+
+        /// <summary>
+        /// List of Queens.
+        /// </summary>
+        public List<Rook> Rooks { get; set; }
+
+        /// <summary>
         /// A two dimentional array forming game grid.
         /// x,y
         /// 0,0 | 0,1 | 0,2 | 0,3 | 0,4 | 0,5 | 0,6 | 0,7
@@ -84,7 +109,7 @@ namespace GameBlocks.Classes
             ChessGameWindow = chessGameWindow;
             GameKey = gameKey;
             Login = login; 
-            Pawns = InitiatePawns();
+            (Pawns, Kings, Queens, Bishops, Knights, Rooks) = InitiatePieces();
             Color = color;
             InitiateGrid();
             chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
@@ -112,7 +137,7 @@ namespace GameBlocks.Classes
             ChessGameWindow = chessGameWindow;
             GameKey = gameKey;
             Login = login;
-            Pawns = InitiatePawns();
+            (Pawns, Kings, Queens, Bishops, Knights, Rooks) = InitiatePieces();
             OpponentsColor = CheckColor();
             InitiateGrid();
             chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
@@ -133,15 +158,73 @@ namespace GameBlocks.Classes
         /// Initializes Pawns with their coordinates and colors.
         /// </summary>
         /// <returns>List of pawns.</returns>
-        public List<Pawn> InitiatePawns()
+        public (List<Pawn>, List<King>, List<Queen>, List<Bishop>, List<Knight>, List<Rook>) InitiatePieces()
         {
             List<Pawn> pawns = new();
+            List<King> kings = new();
+            List<Queen> queens = new();
+            List<Bishop> bishops = new();
+            List<Knight> knights = new();
+            List<Rook> rooks = new();
+
             for (int i = 0; i < 8; i++)
             {
                 pawns.Add(new(startCoordinates:new(1, i), color:"black"));
                 pawns.Add(new(startCoordinates:new(6, i), color:"white"));
             }
-            return pawns;
+            kings.Add(new(startCoordinates: new(0, 4), color: "black"));
+            kings.Add(new(startCoordinates: new(7, 4), color: "white"));
+            
+            queens.Add(new(startCoordinates: new(0, 3), color: "black"));
+            queens.Add(new(startCoordinates: new(7, 3), color: "white"));
+
+            bishops.Add(new(startCoordinates: new(0, 2), color: "black"));
+            bishops.Add(new(startCoordinates: new(0, 5), color: "black"));
+            bishops.Add(new(startCoordinates: new(7, 2), color: "white"));
+            bishops.Add(new(startCoordinates: new(7, 5), color: "white"));
+
+            knights.Add(new(startCoordinates: new(0, 1), color: "black"));
+            knights.Add(new(startCoordinates: new(0, 6), color: "black"));
+            knights.Add(new(startCoordinates: new(7, 1), color: "white"));
+            knights.Add(new(startCoordinates: new(7, 6), color: "white"));
+
+            rooks.Add(new(startCoordinates: new(0, 0), color: "black"));
+            rooks.Add(new(startCoordinates: new(0, 7), color: "black"));
+            rooks.Add(new(startCoordinates: new(7, 0), color: "white"));
+            rooks.Add(new(startCoordinates: new(7, 7), color: "white"));
+
+            return (pawns, kings, queens, bishops, knights, rooks);
+        }
+
+        /// <summary>
+        /// Initieates the grid with pawns at the start.
+        /// </summary>
+        public void InitiateGrid()
+        {
+            foreach (var pawn in Pawns)
+            {
+                Grid[pawn.CurrentCoordinates.X, pawn.CurrentCoordinates.Y] = pawn.Name;
+            }
+            foreach (var king in Kings)
+            {
+                Grid[king.CurrentCoordinates.X, king.CurrentCoordinates.Y] = king.Name;
+            }
+            foreach (var queen in Queens)
+            {
+                Grid[queen.CurrentCoordinates.X, queen.CurrentCoordinates.Y] = queen.Name;
+            }
+            foreach (var bishop in Bishops)
+            {
+                Grid[bishop.CurrentCoordinates.X, bishop.CurrentCoordinates.Y] = bishop.Name;
+            }
+            foreach (var knight in Knights)
+            {
+                Grid[knight.CurrentCoordinates.X, knight.CurrentCoordinates.Y] = knight.Name;
+            }
+            foreach (var rook in Rooks)
+            {
+                Grid[rook.CurrentCoordinates.X, rook.CurrentCoordinates.Y] = rook.Name;
+            }
         }
 
         /// <summary>
@@ -222,17 +305,6 @@ namespace GameBlocks.Classes
                 {
                     return false;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Initieates the grid with pawns at the start.
-        /// </summary>
-        public void InitiateGrid()
-        {
-            foreach (var pawn in Pawns)
-            {
-                Grid[pawn.CurrentCoordinates.X, pawn.CurrentCoordinates.Y] = pawn.Name;
             }
         }
 

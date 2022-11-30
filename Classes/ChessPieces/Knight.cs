@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace GameBlocks.Classes.ChessPieces
 {
-    /// <summary>
-    /// Class representing a pawn on Chess board.
-    /// </summary>
-    public class Pawn : ChessPiece
+    public class Knight : ChessPiece
     {
         /// <summary>
-        /// Constructor of a Pawn class.
+        /// Constructor of a Knight class.
         /// </summary>
         /// <param name="startCoordinates">Coordinates where the pawn is placed at the beginning.</param>
         /// <param name="color">Color of the pwan.</param>
-        public Pawn(Coordinates startCoordinates, string color)
+        public Knight(Coordinates startCoordinates, string color)
         {
             CurrentCoordinates = startCoordinates;
             Color = color;
-            Name = $"{color.Remove(1)}p";
+            Name = $"{color.Remove(1)}k";
         }
     }
 }
