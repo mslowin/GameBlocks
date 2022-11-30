@@ -11,16 +11,16 @@ namespace GameBlocks.Classes.ChessPieces
         /// <summary>
         /// Coordinates where the ChessPiece is located.
         /// </summary>
-        public Coordinates CurrentCoordinates { get; set; }
+        public Coordinates CurrentCoordinates { get; set; } = new(0, 0);
 
         /// <summary>
         /// Color of the ChessPiece.
         /// </summary>
-        public string Color { get; set; }
+        public string Color { get; set; } = "";
 
         /// <summary>
         /// Name of the ChessPiece.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
     }
 }

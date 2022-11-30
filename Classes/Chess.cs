@@ -361,6 +361,42 @@ namespace GameBlocks.Classes
                     pieceName = pawn.Name;
                 }
             }
+            foreach (var king in Kings)
+            {
+                if (king.CurrentCoordinates.X == coords.OldX && king.CurrentCoordinates.Y == coords.OldY)
+                {
+                    pieceName = king.Name;
+                }
+            }
+            foreach (var queen in Queens)
+            {
+                if (queen.CurrentCoordinates.X == coords.OldX && queen.CurrentCoordinates.Y == coords.OldY)
+                {
+                    pieceName = queen.Name;
+                }
+            }
+            foreach (var bishop in Bishops)
+            {
+                if (bishop.CurrentCoordinates.X == coords.OldX && bishop.CurrentCoordinates.Y == coords.OldY)
+                {
+                    pieceName = bishop.Name;
+                }
+            }
+            foreach (var knight in Knights)
+            {
+                if (knight.CurrentCoordinates.X == coords.OldX && knight.CurrentCoordinates.Y == coords.OldY)
+                {
+                    pieceName = knight.Name;
+                }
+            }
+            foreach (var rook in Rooks)
+            {
+                if (rook.CurrentCoordinates.X == coords.OldX && rook.CurrentCoordinates.Y == coords.OldY)
+                {
+                    pieceName = rook.Name;
+                }
+            }
+
             if (pieceName == "")
             {
                 Trace.WriteLine("There was no pieces here.");
