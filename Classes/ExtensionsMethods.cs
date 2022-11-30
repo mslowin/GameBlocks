@@ -119,9 +119,20 @@ namespace GameBlocks.Classes
         {
             string streamName = $"Queue{gameName}";
             var keys = MultiChainClient.ReadStreamKeys(streamName);
+            int lastRoomNumber;
+            int lastRoomItems;
 
-            int lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
-            int lastRoomItems = keys.Last().KeyItems;
+            if (keys.Count == 0)
+            {
+                // This is the first waiting room
+                lastRoomNumber = 0;
+                lastRoomItems = 2;  // so it seems like previous waiting room was full
+            }
+            else
+            {
+                lastRoomNumber = int.Parse(keys.Last().KeyName.Remove(0, 11));  // removes "waitingRoom" part from the name, leaving only number
+                lastRoomItems = keys.Last().KeyItems;
+            }
 
             if (lastRoomItems >= 2) // Creating waiting room
             {
@@ -188,6 +199,11 @@ namespace GameBlocks.Classes
             {
                 TicTacToeGameWindow ticTacToeGameWindow = new(gameKey, wasThisUserFirst);
                 ticTacToeGameWindow.ShowDialog();
+            }
+            if (gameName == "Chess")
+            {
+                ChessGameWindow chessGameWindow = new(gameKey, wasThisUserFirst);
+                chessGameWindow.ShowDialog();
             }
         }
 

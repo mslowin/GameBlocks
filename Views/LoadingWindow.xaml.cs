@@ -93,7 +93,7 @@ namespace GameBlocks.Views
         {
             while (true)
             {
-                (var output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys QueueTicTacToe {waitingRoomName}");
+                (var output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeys {streamName} {waitingRoomName}");
                 List<string> players = ExtensionsMethods.SearchInJson(output, "items");
 
                 // When someone joined

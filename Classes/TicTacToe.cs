@@ -285,7 +285,7 @@ namespace GameBlocks.Classes
         /// <returns>Opponents symbol in string format ("X" or "O").</returns>
         private string CheckSymbol()
         {
-            Task.Delay(5000);  // Gives time for the firs person to publish it's symbol
+            Task.Delay(5000);  // Gives time for the first person to publish it's symbol
             (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {StreamName} {GameKey}");
             List<string> opponentsSymbol = ExtensionsMethods.SearchInJson(output, "drawn");
             return opponentsSymbol.Last();

@@ -30,7 +30,7 @@ namespace GameBlocks.Views
         /// <summary>
         /// Indicator which game is currently selected (0 -> TicTacToe, 1 -> Checkers)
         /// </summary>
-        private readonly List<string> _availableGames = new() { "TicTacToe", "Checkers" };
+        private readonly List<string> _availableGames = new() { "TicTacToe", "Checkers", "Chess" };
 
         /// <summary>
         /// GameChooseWindow constructor.
