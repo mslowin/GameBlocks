@@ -82,6 +82,15 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
+        /// Delivers information for the user.
+        /// </summary>
+        /// <param name="informations">Informations to be displayed.</param>
+        public void DeliverInformation(string informations)
+        {
+            InformationTextBlock.Text = informations;
+        }
+
+        /// <summary>
         /// Creates Chess class object.
         /// </summary>
         /// <param name="chessGameWindow">ChessGameWindow object to modify window's propherties.</param>
@@ -111,7 +120,7 @@ namespace GameBlocks.Views
         {
             if (FromTextBox.Text == "" || ToTextBox.Text == "")
             {
-                // Coordinates needed
+                InformationTextBlock.Text = "Coordinates needed";
             }
             else
             {

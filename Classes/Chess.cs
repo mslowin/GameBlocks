@@ -310,6 +310,11 @@ namespace GameBlocks.Classes
             }
         }
 
+        /// <summary>
+        /// Updates pieces coordinates based on the grid.
+        /// </summary>
+        /// <param name="pieceName">Name of the piece to be moved.</param>
+        /// <param name="coordinates">Chess coordinates from where to take the piece and where to place it.</param>
         private void UpdatePieces(string pieceName, ChessCoordinates coordinates)
         {
             if (pieceName.EndsWith("p"))
@@ -338,6 +343,11 @@ namespace GameBlocks.Classes
             }
         }
 
+        /// <summary>
+        /// Moves specified Piece based on Chess coordinates.
+        /// </summary>
+        /// <param name="pieces">Dynamic List of pieces to search for the desired piece.</param>
+        /// <param name="coordinates">Chess coordinates from where to take the piece and where to place it.</param>
         public void MovePiece(dynamic pieces, ChessCoordinates coordinates)
         {
             foreach (var piec in pieces)
@@ -406,7 +416,7 @@ namespace GameBlocks.Classes
 
             if (pieceNames.Where(x => x != "").ToList().Count == 0)
             {
-                Trace.WriteLine("There was no users pieces here.");
+                ChessGameWindow!.Dispatcher.Invoke(() => { ChessGameWindow.InformationTextBlock.Text = "There were no users pieces here."; });
                 return;
             }
             else
@@ -418,10 +428,11 @@ namespace GameBlocks.Classes
             King opponentsKing = new(startCoordinates: new(0, 0), OpponentsColor);
             if (Grid[coords.NewX,coords.NewY].StartsWith(Color.First()) || Grid[coords.NewX, coords.NewY] == opponentsKing.Name)
             {
-                Trace.WriteLine($"{pieceName} can't move here.");
+                ChessGameWindow!.Dispatcher.Invoke(() => { ChessGameWindow.InformationTextBlock.Text = $"Piece can't be moved here."; });
                 return;
 
             }
+            ChessGameWindow!.Dispatcher.Invoke(() => { ChessGameWindow.InformationTextBlock.Text = ""; });
             MultiChainClient.PublishToStream(StreamName, GameKey,
                 $"{{\"\"\"json\"\"\":{{" +
                 $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
@@ -431,6 +442,12 @@ namespace GameBlocks.Classes
                 $"\"\"\"to\"\"\":\"\"\"{coords.NewX},{coords.NewY}\"\"\"}}}}");
         }
 
+        /// <summary>
+        /// Checks whether the "From" coordinates of Chess coordinates are taken by users piece.
+        /// </summary>
+        /// <param name="pieces">Dynamic list of pieces to search for a specific piece.</param>
+        /// <param name="coords">Chess coordinates to check.</param>
+        /// <returns>Name of the found piece. If no pieces found returns "".</returns>
         public string CheckIfTheCoordinatesContainUsersPiece(dynamic pieces, ChessCoordinates coords)
         {
             foreach (var piece in pieces)
