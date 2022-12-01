@@ -22,5 +22,11 @@ namespace GameBlocks.Classes.ChessPieces
             Color = color;
             Name = $"{color.Remove(1)}Q";
         }
+
+        public void Move(int newX, int newY)
+        {
+            CurrentCoordinates.X = newX;
+            CurrentCoordinates.Y = newY;
+        }
     }
 }

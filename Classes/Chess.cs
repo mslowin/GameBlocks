@@ -251,6 +251,7 @@ namespace GameBlocks.Classes
 
                     ChessCoordinates coordinates = new(oldX, oldY, newX, newY);
                     UpdateGrid(pieces.Last(), coordinates);
+                    UpdatePieces(pieces.Last(), coordinates);
                     chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     //if (IsGameOver())
                     //{
@@ -279,6 +280,7 @@ namespace GameBlocks.Classes
 
                     ChessCoordinates coordinates = new(oldX, oldY, newX, newY);
                     UpdateGrid(pieces.Last(), coordinates);
+                    UpdatePieces(pieces.Last(), coordinates);
                     chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
                     //if (IsGameOver())
                     //{
@@ -304,6 +306,45 @@ namespace GameBlocks.Classes
                 if (cancellationToken.IsCancellationRequested)
                 {
                     return false;
+                }
+            }
+        }
+
+        private void UpdatePieces(string pieceName, ChessCoordinates coordinates)
+        {
+            if (pieceName.EndsWith("p"))
+            {
+                MovePiece(Pawns, coordinates);
+            }
+            if (pieceName.EndsWith("K"))
+            {
+                MovePiece(Kings, coordinates);
+            }
+            if (pieceName.EndsWith("Q"))
+            {
+                MovePiece(Queens, coordinates);
+            }
+            if (pieceName.EndsWith("b"))
+            {
+                MovePiece(Bishops, coordinates);
+            }
+            if (pieceName.EndsWith("k"))
+            {
+                MovePiece(Knights, coordinates);
+            }
+            if (pieceName.EndsWith("r"))
+            {
+                MovePiece(Rooks, coordinates);
+            }
+        }
+
+        public void MovePiece(dynamic pieces, ChessCoordinates coordinates)
+        {
+            foreach (var piec in pieces)
+            {
+                if (piec.CurrentCoordinates.X == coordinates.OldX && piec.CurrentCoordinates.Y == coordinates.OldY)
+                {
+                    piec.Move(coordinates.NewX, coordinates.NewY);
                 }
             }
         }
@@ -353,54 +394,33 @@ namespace GameBlocks.Classes
         /// <param name="coords">Coordinates on the grid where symbol was put.</param>
         public void PublishMove(ChessCoordinates coords)
         {
+            // Checking wheteher there is a users piece in the "From" coordinates
+            List<string> pieceNames = new();
             string pieceName = "";
-            foreach(var pawn in Pawns)
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Pawns, coords));
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Kings, coords));
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Queens, coords));
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Bishops, coords));
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Knights, coords));
+            pieceNames.Add(CheckIfTheCoordinatesContainUsersPiece(Rooks, coords));
+
+            if (pieceNames.Where(x => x != "").ToList().Count == 0)
             {
-                if (pawn.CurrentCoordinates.X == coords.OldX && pawn.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = pawn.Name;
-                }
+                Trace.WriteLine("There was no users pieces here.");
+                return;
             }
-            foreach (var king in Kings)
+            else
             {
-                if (king.CurrentCoordinates.X == coords.OldX && king.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = king.Name;
-                }
-            }
-            foreach (var queen in Queens)
-            {
-                if (queen.CurrentCoordinates.X == coords.OldX && queen.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = queen.Name;
-                }
-            }
-            foreach (var bishop in Bishops)
-            {
-                if (bishop.CurrentCoordinates.X == coords.OldX && bishop.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = bishop.Name;
-                }
-            }
-            foreach (var knight in Knights)
-            {
-                if (knight.CurrentCoordinates.X == coords.OldX && knight.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = knight.Name;
-                }
-            }
-            foreach (var rook in Rooks)
-            {
-                if (rook.CurrentCoordinates.X == coords.OldX && rook.CurrentCoordinates.Y == coords.OldY)
-                {
-                    pieceName = rook.Name;
-                }
+                pieceName = pieceNames.First(x => x != "");
             }
 
-            if (pieceName == "")
+            // Checking whether there aren't any users pieces and no opponents King in the destination field
+            King opponentsKing = new(startCoordinates: new(0, 0), OpponentsColor);
+            if (Grid[coords.NewX,coords.NewY].StartsWith(Color.First()) || Grid[coords.NewX, coords.NewY] == opponentsKing.Name)
             {
-                Trace.WriteLine("There was no pieces here.");
+                Trace.WriteLine($"{pieceName} can't move here.");
                 return;
+
             }
             MultiChainClient.PublishToStream(StreamName, GameKey,
                 $"{{\"\"\"json\"\"\":{{" +
@@ -409,6 +429,18 @@ namespace GameBlocks.Classes
                 $"\"\"\"piece\"\"\":\"\"\"{pieceName}\"\"\"," +
                 $"\"\"\"from\"\"\":\"\"\"{coords.OldX},{coords.OldY}\"\"\"," +
                 $"\"\"\"to\"\"\":\"\"\"{coords.NewX},{coords.NewY}\"\"\"}}}}");
+        }
+
+        public string CheckIfTheCoordinatesContainUsersPiece(dynamic pieces, ChessCoordinates coords)
+        {
+            foreach (var piece in pieces)
+            {
+                if (piece.CurrentCoordinates.X == coords.OldX && piece.CurrentCoordinates.Y == coords.OldY && piece.Name.StartsWith(Color.First()))
+                {
+                    return piece.Name;
+                }
+            }
+            return "";
         }
         
 
