@@ -68,6 +68,17 @@ namespace GameBlocks.Views
             (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
             string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.png";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
+
+            if (GameNameTextBlock.Text == "Checkers")
+            {
+                StartButton.IsEnabled = false;
+                StartButton.Content = "unavailable";
+            }
+            else
+            {
+                StartButton.IsEnabled = true;
+                StartButton.Content = "START";
+            }
         }
 
 
@@ -82,6 +93,17 @@ namespace GameBlocks.Views
             (_selectedGame, GameNameTextBlock.Text) = ExtensionsMethods.ChooseGameTitle(_selectedGame, _availableGames);
             string resourcePath = $"Views/{GameNameTextBlock.Text}_Icon.png";
             GameImage.Source = new BitmapImage(ExtensionsMethods.GetFullImageSource(resourcePath));
+
+            if (GameNameTextBlock.Text == "Checkers")
+            {
+                StartButton.IsEnabled = false;
+                StartButton.Content = "unavailable";
+            }
+            else
+            {
+                StartButton.IsEnabled = true;
+                StartButton.Content = "START";
+            }
         }
 
         /// <summary>
