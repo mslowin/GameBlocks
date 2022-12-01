@@ -463,7 +463,6 @@ namespace GameBlocks.Classes
             {
                 var pawn = Pawns.First(p => p.CurrentCoordinates.X == coords.OldX && p.CurrentCoordinates.Y == coords.OldY);
                 return pawn.IsMovePossible(coords.NewX, coords.NewY);
-
             }
             if (pieceName.EndsWith("K"))
             {
@@ -473,6 +472,8 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("b"))
             {
+                var bishop = Bishops.First(b => b.CurrentCoordinates.X == coords.OldX && b.CurrentCoordinates.Y == coords.OldY);
+                return bishop.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("k"))
             {

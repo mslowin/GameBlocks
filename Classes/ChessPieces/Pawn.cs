@@ -23,6 +23,12 @@ namespace GameBlocks.Classes.ChessPieces
             Name = $"{color.Remove(1)}p";
         }
 
+        /// <summary>
+        /// Changes Pawns coordinates.
+        /// </summary>
+        /// <param name="newX">New X coordinate of the Pawn.</param>
+        /// <param name="newY">New Y coordinate of the Pawn.</param>
+        /// <returns></returns>
         public bool Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;
@@ -31,6 +37,12 @@ namespace GameBlocks.Classes.ChessPieces
             return true;
         }
 
+        /// <summary>
+        /// Checks whether move is legal.
+        /// </summary>
+        /// <param name="newX">X coordinate to move the pawn to.</param>
+        /// <param name="newY">Y coordinate to move the pawn to.</param>
+        /// <returns>True if the move is legal, false if illegal</returns>
         public bool IsMovePossible(int newX, int newY)
         {
             if (Color == "white")
