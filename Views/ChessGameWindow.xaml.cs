@@ -82,12 +82,23 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Delivers information for the user.
+        /// Clears information textbox after changing destination text box.
         /// </summary>
-        /// <param name="informations">Informations to be displayed.</param>
-        public void DeliverInformation(string informations)
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void ToTexTBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            InformationTextBlock.Text = informations;
+            InformationTextBlock.Text = "";
+        }
+
+        /// <summary>
+        /// Clears information textbox after changing starting coordinates text box.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void FromTexTBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            InformationTextBlock.Text = "";
         }
 
         /// <summary>

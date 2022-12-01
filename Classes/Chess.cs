@@ -432,6 +432,15 @@ namespace GameBlocks.Classes
                 return;
 
             }
+            bool isMovePossible = CheckIfMovePossible(pieceName, coords);
+
+            // Checking if the move is possible (Pieces Laws)
+            if (!isMovePossible)
+            {
+                ChessGameWindow!.Dispatcher.Invoke(() => { ChessGameWindow.InformationTextBlock.Text = $"Impossible move."; });
+                return;
+            }
+            
             ChessGameWindow!.Dispatcher.Invoke(() => { ChessGameWindow.InformationTextBlock.Text = ""; });
             MultiChainClient.PublishToStream(StreamName, GameKey,
                 $"{{\"\"\"json\"\"\":{{" +
@@ -440,6 +449,38 @@ namespace GameBlocks.Classes
                 $"\"\"\"piece\"\"\":\"\"\"{pieceName}\"\"\"," +
                 $"\"\"\"from\"\"\":\"\"\"{coords.OldX},{coords.OldY}\"\"\"," +
                 $"\"\"\"to\"\"\":\"\"\"{coords.NewX},{coords.NewY}\"\"\"}}}}");
+        }
+
+        /// <summary>
+        /// Checks whether move is possible depending on type of piece.
+        /// </summary>
+        /// <param name="pieceName">Name of the piece to check if move possible.</param>
+        /// <param name="coords">Chess coordinates of the move to be checked.</param>
+        /// <returns>true if the move is possible, false if not.</returns>
+        private bool CheckIfMovePossible(string pieceName, ChessCoordinates coords)
+        {
+            if (pieceName.EndsWith("p"))
+            {
+                var pawn = Pawns.First(p => p.CurrentCoordinates.X == coords.OldX && p.CurrentCoordinates.Y == coords.OldY);
+                return pawn.IsMovePossible(coords.NewX, coords.NewY);
+
+            }
+            if (pieceName.EndsWith("K"))
+            {
+            }
+            if (pieceName.EndsWith("Q"))
+            {
+            }
+            if (pieceName.EndsWith("b"))
+            {
+            }
+            if (pieceName.EndsWith("k"))
+            {
+            }
+            if (pieceName.EndsWith("r"))
+            {
+            }
+            return false;
         }
 
         /// <summary>

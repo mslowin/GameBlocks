@@ -37,9 +37,9 @@
                 <TextBlock x:Name="YourColorTextBox" HorizontalAlignment="Center" Margin="-320,-250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="106" Height="32" FontSize="20"/>
 
                 <TextBlock HorizontalAlignment="Center" Margin="-574,-150,0,0" TextWrapping="Wrap" TextAlignment="Right" Text="From:" VerticalAlignment="Center" Width="112" Height="32" FontSize="20" Foreground="#A9B5C2"/>
-                <TextBox x:Name="FromTextBox" HorizontalAlignment="Center" Margin="-320,-150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" MinWidth="113" MinHeight="32" FontSize="20" Padding="10,0,10,0" BorderThickness="0,0,0,1" Cursor="IBeam"/>
+                <TextBox x:Name="FromTextBox" TextChanged="FromTexTBox_TextChanged" HorizontalAlignment="Center" Margin="-320,-150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" MinWidth="113" MinHeight="32" FontSize="20" Padding="10,0,10,0" BorderThickness="0,0,0,1" Cursor="IBeam"/>
                 <TextBlock HorizontalAlignment="Center" Margin="-574,-30,0,0" TextWrapping="Wrap" TextAlignment="Right" Text="To:" VerticalAlignment="Center" Width="112" Height="32" FontSize="20" Foreground="#A9B5C2"/>
-                <TextBox x:Name="ToTextBox" HorizontalAlignment="Center" Margin="-320,-30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" MinWidth="113" MinHeight="32" FontSize="20" Padding="10,0,10,0" BorderThickness="0,0,0,1" Cursor="IBeam"/>
+                <TextBox x:Name="ToTextBox" TextChanged="ToTexTBox_TextChanged" HorizontalAlignment="Center" Margin="-320,-30,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" MinWidth="113" MinHeight="32" FontSize="20" Padding="10,0,10,0" BorderThickness="0,0,0,1" Cursor="IBeam"/>
                 
                 <TextBlock x:Name="InformationTextBlock" HorizontalAlignment="Center" Margin="-450,250,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="" VerticalAlignment="Center" MinWidth="120" Width="auto" Height="auto" FontSize="16" Foreground="red"/>
 

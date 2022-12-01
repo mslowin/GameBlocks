@@ -23,10 +23,38 @@ namespace GameBlocks.Classes.ChessPieces
             Name = $"{color.Remove(1)}p";
         }
 
-        public void Move(int newX, int newY)
+        public bool Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;
             CurrentCoordinates.Y = newY;
+
+            return true;
+        }
+
+        public bool IsMovePossible(int newX, int newY)
+        {
+            if (Color == "white")
+            {
+                if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
 }
