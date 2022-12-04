@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace GameBlocks.Views
 {
     /// <summary>
-    /// Interaction logic for TicTacToeGameWindow.xaml class.
+    /// Interaction logic for ChessGameWindow.xaml class.
     /// </summary>
-    public partial class TicTacToeGameWindow
+    public partial class ChessGameWindow
     {
         /// <summary>
         /// Indicates whether the opponent has made a move.
@@ -29,12 +29,12 @@ namespace GameBlocks.Views
         /// <summary>
         /// Coordinates where opponent placed it's symbol.
         /// </summary>
-        public static Coordinates? OpponentsMoveCoordinates { get; set; }
+        public static ChessCoordinates? OpponentsMoveCoordinates { get; set; }
 
         /// <summary>
         /// List with all moves from the begining of the game.
         /// </summary>
-        public static List<Coordinates> AllMoves { get; set; } = new();
+        public static List<ChessCoordinates> AllMoves { get; set; } = new();
 
         /// <summary>
         /// Key consisting of players' logins to publish data with (e.g. login_vs_login_5).
@@ -49,7 +49,7 @@ namespace GameBlocks.Views
         /// <summary>
         /// TicTacToe class object to perform operations on.
         /// </summary>
-        public TicTacToe GameTicTacToe { get; set; }
+        public Chess GameChess { get; set; }
 
         /// <summary>
         /// Token used to stop background task from another thread.
@@ -57,21 +57,21 @@ namespace GameBlocks.Views
         private CancellationTokenSource _ts = new();
 
         /// <summary>
-        /// TicTacToeGameWindow constructor.
+        /// ChessGameWindow constructor.
         /// </summary>
         /// <param name="gameKey">Key consisting of players' logins to publish data with.</param>
         /// <param name="wasThisUserFirst">Indicates if the user created or joind a waiting room.</param>
-        public TicTacToeGameWindow(string gameKey, bool wasThisUserFirst)
+        public ChessGameWindow(string gameKey, bool wasThisUserFirst)
         {
             InitializeComponent();
             GameKey = gameKey;
             WasThisUserFirst = wasThisUserFirst;
-            GameTicTacToe = StartGameTicTacToe(this, gameKey, wasThisUserFirst);
-            YourSymbolTextBox.Text = GameTicTacToe.Symbol;
+            GameChess = StartGameChess(this, gameKey, wasThisUserFirst);
+            YourColorTextBox.Text = GameChess.Color;
 
             CancellationToken ct = _ts.Token;
 
-            Task<bool>.Factory.StartNew(() => GameTicTacToe.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
+            Task<bool>.Factory.StartNew(() => GameChess.UpdateGame(this, ct), ct).ContinueWith((tsk) =>
             {
                 // displaying results window:
                 var didUserWin = tsk.Result;
@@ -82,23 +82,43 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
-        /// Creates TicTacToe class object.
+        /// Clears information textbox after changing destination text box.
         /// </summary>
-        /// <param name="ticTacToeGameWindow">TicTacToeGameWindow object to modify window's propherties.</param>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void ToTexTBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            InformationTextBlock.Text = "";
+        }
+
+        /// <summary>
+        /// Clears information textbox after changing starting coordinates text box.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void FromTexTBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+            InformationTextBlock.Text = "";
+        }
+
+        /// <summary>
+        /// Creates Chess class object.
+        /// </summary>
+        /// <param name="chessGameWindow">ChessGameWindow object to modify window's propherties.</param>
         /// <param name="gameKey">Key consisting of players' logins to publish data with.</param>
         /// <param name="wasThisUserFirst">Indicates if the user created or joind a waiting room.</param>
-        /// <returns>New TicTacToe class object.</returns>
-        public static TicTacToe StartGameTicTacToe(TicTacToeGameWindow ticTacToeGameWindow, string gameKey, bool wasThisUserFirst)
+        /// <returns>New Chess class object.</returns>
+        private Chess StartGameChess(ChessGameWindow chessGameWindow, string gameKey, bool wasThisUserFirst)
         {
             if (wasThisUserFirst)
             {
-                TicTacToe gameTicTacToe = new(ticTacToeGameWindow, gameKey, GlobalVariables.UserAccount!.Login);
-                return gameTicTacToe;
+                Chess gameChess = new(chessGameWindow, gameKey, GlobalVariables.UserAccount!.Login);
+                return gameChess;
             }
             else
             {
-                TicTacToe gameTicTacToe = new(ticTacToeGameWindow, gameKey, GlobalVariables.UserAccount!.Login, TicTacToe.DrawSymbol(gameKey));
-                return gameTicTacToe;
+                Chess gameChess = new(chessGameWindow, gameKey, GlobalVariables.UserAccount!.Login, Chess.DrawColor(gameKey));
+                return gameChess;
             }
         }
 
@@ -109,16 +129,19 @@ namespace GameBlocks.Views
         /// <param name="e">Additional information object and event handler.</param>
         private void Submit_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (MoveTextBox.Text == "")
+            if (FromTextBox.Text == "" || ToTextBox.Text == "")
             {
-                // Coordinates needed
+                InformationTextBlock.Text = "Coordinates needed";
             }
             else
             {
-                string coordinates = MoveTextBox.Text;
-                int y = int.Parse(coordinates.Remove(0, 2));
-                int x = int.Parse(coordinates.Remove(1, 2));
-                GameTicTacToe.PublishMove(new(x, y));
+                string fromCoordinates = FromTextBox.Text;
+                string ToCoordinates = ToTextBox.Text;
+                int oldY = int.Parse(fromCoordinates.Remove(0, 2));
+                int oldX = int.Parse(fromCoordinates.Remove(1, 2));
+                int newY = int.Parse(ToCoordinates.Remove(0, 2));
+                int newX = int.Parse(ToCoordinates.Remove(1, 2));
+                GameChess.PublishMove(new(oldX, oldY, newX, newY));
             }
         }
     }

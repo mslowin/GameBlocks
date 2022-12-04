@@ -270,8 +270,17 @@ namespace GameBlocks.Classes
         /// <returns>Drawn symbol in string type ("X" or "O").</returns>
         public static string DrawSymbol(string gameKey)
         {
-            // TODO: later add logic to randomly select X or O
-            string drawnSymbol = "X";
+            Random randomNumber = new Random();
+            int randomIntiger = randomNumber.Next(0, 2);
+            string drawnSymbol;
+            if (randomIntiger == 0)
+            {
+                drawnSymbol = "X";
+            }
+            else
+            {
+                drawnSymbol = "O";
+            }
             MultiChainClient.PublishToStream(StreamName, gameKey,
                 $"{{\"\"\"json\"\"\":{{" +
                 $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
@@ -285,7 +294,7 @@ namespace GameBlocks.Classes
         /// <returns>Opponents symbol in string format ("X" or "O").</returns>
         private string CheckSymbol()
         {
-            Task.Delay(5000);  // Gives time for the firs person to publish it's symbol
+            Task.Delay(5000);  // Gives time for the first person to publish it's symbol
             (string output, _) = MultiChainClient.RunCommand("multichain-cli", GlobalVariables.ChainName, $"liststreamkeyitems {StreamName} {GameKey}");
             List<string> opponentsSymbol = ExtensionsMethods.SearchInJson(output, "drawn");
             return opponentsSymbol.Last();

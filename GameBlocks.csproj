@@ -11,6 +11,7 @@
     <None Remove="Views\arrow-icon.png" />
     <None Remove="Views\Checkers_Icon.jpg" />
     <None Remove="Views\Checkers_Icon.png" />
+    <None Remove="Views\Chess_Icon.png" />
     <None Remove="Views\key-icon-small.png" />
     <None Remove="Views\key-image-small.png" />
     <None Remove="Views\login-icon-small.png" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <Resource Include="Views\arrow-icon.png" />
     <Resource Include="Views\Checkers_Icon.png" />
+    <Resource Include="Views\Chess_Icon.png" />
     <Resource Include="Views\key-image-small.png" />
     <Resource Include="Views\login-icon-small.png" />
     <Resource Include="Views\login-icon.png" />
