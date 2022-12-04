@@ -556,8 +556,17 @@ namespace GameBlocks.Classes
         /// <returns>Drawn symbol in string type ("black" or "white").</returns>
         public static string DrawColor(string gameKey)
         {
-            // TODO: later add logic to randomly select black or white
-            string drawnSymbol = "white";
+            Random randomNumber = new Random();
+            int randomIntiger = randomNumber.Next(0, 2);
+            string drawnSymbol;
+            if (randomIntiger == 0)
+            {
+                drawnSymbol = "white";
+            }
+            else
+            {
+                drawnSymbol = "black";
+            }
             MultiChainClient.PublishToStream(StreamName, gameKey,
                 $"{{\"\"\"json\"\"\":{{" +
                 $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
