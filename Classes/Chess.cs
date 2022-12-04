@@ -471,6 +471,8 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("Q"))
             {
+                var queen = Queens.First(Q => Q.CurrentCoordinates.X == coords.OldX && Q.CurrentCoordinates.Y == coords.OldY);
+                return queen.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("b"))
             {
