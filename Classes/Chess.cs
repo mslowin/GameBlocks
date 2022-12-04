@@ -466,7 +466,7 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("K"))
             {
-                var king = Kings.First(k => k.CurrentCoordinates.X == coords.OldX && k.CurrentCoordinates.Y == coords.OldY);
+                var king = Kings.First(K => K.CurrentCoordinates.X == coords.OldX && K.CurrentCoordinates.Y == coords.OldY);
                 return king.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("Q"))
@@ -482,6 +482,8 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("r"))
             {
+                var rook = Rooks.First(r => r.CurrentCoordinates.X == coords.OldX && r.CurrentCoordinates.Y == coords.OldY);
+                return rook.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             return false;
         }
