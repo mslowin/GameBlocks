@@ -43,7 +43,7 @@
                 
                 <TextBlock x:Name="InformationTextBlock" HorizontalAlignment="Center" Margin="-450,250,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="" VerticalAlignment="Center" MinWidth="120" Width="auto" Height="auto" FontSize="16" Foreground="red"/>
 
-                <TextBlock x:Name="GameAreaTextBlock" xml:space="preserve" HorizontalAlignment="Center" Margin="280,0,0,0" TextWrapping="Wrap" FontSize="20" VerticalAlignment="Center" Height="358" Width="370" Background="white"
+                <TextBlock x:Name="GameAreaTextBlock" xml:space="preserve" HorizontalAlignment="Center" Margin="280,0,0,0" TextWrapping="Wrap" FontSize="19" VerticalAlignment="Center" Height="386" Width="386" Background="white"
                            Foreground="red"
                            FontWeight="Light"
                            FontStretch="SemiCondensed"

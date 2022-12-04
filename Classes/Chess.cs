@@ -376,24 +376,62 @@ namespace GameBlocks.Classes
         /// <returns>Chess grid in txt format.</returns>
         public string DisplayGrid()
         {
-            string output = "";
-            for (int i = 0; i < Grid.GetLength(0); i++)
+            string output = "\u00A0\u00A0\u00A0|";
+            if (Color == "white")
             {
-                output += "|";
                 for (int j = 0; j < Grid.GetLength(1); j++)
                 {
-                    if (Grid[i, j] == " ")
-                    {
-                        output += $"\u00A0\u00A0\u00A0|";
-                    }
-                    else
-                    {
-                        output += $"{Grid[i, j]}\u00A0|";
-                    }
+                    output += $"\u00A0{j}\u00A0|";
                 }
                 output += Environment.NewLine;
-                output += "+---+---+---+---+---+---+---+---+";
+                output += "---+---+---+---+---+---+---+---+---+";
                 output += Environment.NewLine;
+                for (int i = 0; i < Grid.GetLength(0); i++)
+                {
+                    output += $"\u00A0{i}\u00A0|";
+                    for (int j = 0; j < Grid.GetLength(1); j++)
+                    {
+                        if (Grid[i, j] == " ")
+                        {
+                            output += $"\u00A0\u00A0\u00A0|";
+                        }
+                        else
+                        {
+                            output += $"{Grid[i, j]}\u00A0|";
+                        }
+                    }
+                    output += Environment.NewLine;
+                    output += "---+---+---+---+---+---+---+---+---+";
+                    output += Environment.NewLine;
+                }
+            }
+            else
+            {
+                for (int j = Grid.GetLength(1) - 1; j >= 0; j--)
+                {
+                    output += $"\u00A0{j}\u00A0|";
+                }
+                output += Environment.NewLine;
+                output += "---+---+---+---+---+---+---+---+---+";
+                output += Environment.NewLine;
+                for (int i = Grid.GetLength(0) - 1; i >= 0; i--)
+                {
+                    output += $"\u00A0{i}\u00A0|";
+                    for (int j = Grid.GetLength(1) - 1; j >= 0; j--)
+                    {
+                        if (Grid[i, j] == " ")
+                        {
+                            output += $"\u00A0\u00A0\u00A0|";
+                        }
+                        else
+                        {
+                            output += $"{Grid[i, j]}\u00A0|";
+                        }
+                    }
+                    output += Environment.NewLine;
+                    output += "---+---+---+---+---+---+---+---+---+";
+                    output += Environment.NewLine;
+                }
             }
             return output;
         }
