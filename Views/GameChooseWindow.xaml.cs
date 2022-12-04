@@ -42,14 +42,37 @@ namespace GameBlocks.Views
         }
 
         /// <summary>
+        /// Handlig keyboard buttons clicks.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                Start_Button_Click(sender, e);
+            }
+            if (e.Key == System.Windows.Input.Key.Right)
+            {
+                Right_Arrow_Button_Click(sender, e);
+            }
+            if (e.Key == System.Windows.Input.Key.Left)
+            {
+                Left_Arrow_Button_Click(sender, e);
+            }
+        }
+
+        /// <summary>
         /// Starts a new game.
         /// </summary>
         /// <param name="sender">Reference to the sender e.g. button.</param>
         /// <param name="e">Additional information object and event handler.</param>
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
+            LoadingIcon.Visibility = Visibility.Visible;
             string gameName = _availableGames[_selectedGame];
             (bool wasGameStarted, bool wasThisUserFirst, string? gameKey) = ExtensionsMethods.CreateOrJoinWaitingRoom(gameName);
+            LoadingIcon.Visibility = Visibility.Hidden;
 
             if (wasGameStarted && gameKey != null)
             {

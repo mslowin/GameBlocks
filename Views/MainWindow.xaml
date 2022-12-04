@@ -12,7 +12,8 @@
         Background="{ui:ThemeResource ApplicationBackgroundBrush}"
         ExtendsContentIntoTitleBar="True"
         WindowBackdropType="Mica"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" 
+        KeyUp="Window_KeyUp">
     <!--WindowCornerPreference="Round"-->
 
     <Border BorderThickness="3">
@@ -62,8 +63,8 @@
                 <TextBox Grid.Column="1" x:Name="loginTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,-30,0,0" TextWrapping="Wrap" Text="" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
                 <Label Grid.Column="1" Content="password:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-165,65,0,0" FontSize="14"/>
                 <Image Grid.Column="1" HorizontalAlignment="Center" Margin="-260,120,0,0" VerticalAlignment="Center" Source="/Views/key-image-small.png" Stretch="None"/>
-                <ui:PasswordBox Grid.Column="1" x:Name="passwordTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,120,0,0" TextWrapping="Wrap" Text="" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35"/>
-                <ui:Button Grid.Column="1" Content="Log In" Click="LogIn_Button_Click" Background="#70B63A" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Center" MinHeight="40" MinWidth="120"/>
+                <ui:PasswordBox Grid.Column="1" x:Name="passwordTextBox" HorizontalAlignment="Center" BorderThickness="0,0,0,1" Margin="0,120,0,0" TextWrapping="Wrap" Text="" FontSize="18" VerticalAlignment="Center" MinWidth="224" MinHeight="35" Cursor="IBeam"/>
+                <ui:Button x:Name="logInButton" Grid.Column="1" Content="Log In" Click="LogIn_Button_Click" Background="#70B63A" HorizontalAlignment="Center" Margin="0,240,0,0" VerticalAlignment="Center" MinHeight="40" MinWidth="120"/>
             </Grid>
 
             <ui:TitleBar Grid.Row="0">

@@ -58,11 +58,25 @@ namespace GameBlocks.Views
                 GameChooseWindow gameChooseWindow = new();
                 _isVisible = false;
                 Visibility = Visibility.Hidden;
+                logInButton.IsEnabled = false;
                 gameChooseWindow.Show();
             }
             else
             {
                 loginErrorTextBlock.Text = "Invalid login or password";
+            }
+        }
+
+        /// <summary>
+        /// Handlig keyboard buttons clicks.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Return)
+            {
+                LogIn_Button_Click(sender, e);
             }
         }
 

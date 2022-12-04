@@ -556,7 +556,7 @@ namespace GameBlocks.Classes
         /// <returns>Drawn symbol in string type ("black" or "white").</returns>
         public static string DrawColor(string gameKey)
         {
-            Random randomNumber = new Random();
+            Random randomNumber = new();
             int randomIntiger = randomNumber.Next(0, 2);
             string drawnSymbol;
             if (randomIntiger == 0)
