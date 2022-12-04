@@ -23,8 +23,8 @@ namespace GameBlocks.Classes.ChessPieces
         /// <summary>
         /// Changes Rooks coordinates.
         /// </summary>
-        /// <param name="newX">New X coordinate of the Rooks.</param>
-        /// <param name="newY">New Y coordinate of the Rooks.</param>
+        /// <param name="newX">New X coordinate of the Rook.</param>
+        /// <param name="newY">New Y coordinate of the Rook.</param>
         public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;

@@ -26,8 +26,8 @@ namespace GameBlocks.Classes.ChessPieces
         /// <summary>
         /// Changes Queens coordinates.
         /// </summary>
-        /// <param name="newX">New X coordinate of the Queens.</param>
-        /// <param name="newY">New Y coordinate of the Queens.</param>
+        /// <param name="newX">New X coordinate of the Queen.</param>
+        /// <param name="newY">New Y coordinate of the Queen.</param>
         public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;

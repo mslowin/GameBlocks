@@ -481,6 +481,8 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("k"))
             {
+                var knight = Knights.First(k => k.CurrentCoordinates.X == coords.OldX && k.CurrentCoordinates.Y == coords.OldY);
+                return knight.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("r"))
             {

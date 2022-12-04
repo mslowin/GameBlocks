@@ -26,8 +26,8 @@ namespace GameBlocks.Classes.ChessPieces
         /// <summary>
         /// Changes Kings coordinates.
         /// </summary>
-        /// <param name="newX">New X coordinate of the Kings.</param>
-        /// <param name="newY">New Y coordinate of the Kings.</param>
+        /// <param name="newX">New X coordinate of the King.</param>
+        /// <param name="newY">New Y coordinate of the King.</param>
         public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;

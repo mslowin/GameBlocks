@@ -20,10 +20,45 @@ namespace GameBlocks.Classes.ChessPieces
             Name = $"{color.Remove(1)}k";
         }
 
+        /// <summary>
+        /// Changes Knights coordinates.
+        /// </summary>
+        /// <param name="newX">New X coordinate of the Knight.</param>
+        /// <param name="newY">New Y coordinate of the Knight.</param>
         public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;
             CurrentCoordinates.Y = newY;
+        }
+
+        /// <summary>
+        /// Checks whether move is legal.
+        /// </summary>
+        /// <param name="newX">X coordinate to move the Knight to.</param>
+        /// <param name="newY">Y coordinate to move the Knight to.</param>
+        /// <returns>True if the move is legal, false if illegal</returns>
+        public bool IsMovePossible(int newX, int newY, string[,] Grid)
+        {
+            if (newX == CurrentCoordinates.X - 2 && (newY == CurrentCoordinates.Y + 1 || newY == CurrentCoordinates.Y - 1))
+            {
+                return true;
+            }
+            if (newX == CurrentCoordinates.X + 2 && (newY == CurrentCoordinates.Y + 1 || newY == CurrentCoordinates.Y - 1))
+            {
+                return true;
+            }
+
+            if ((newX == CurrentCoordinates.X +1 || newX == CurrentCoordinates.X - 1) && newY == CurrentCoordinates.Y - 2)
+            {
+                return true;
+            }
+            if ((newX == CurrentCoordinates.X + 1 || newX == CurrentCoordinates.X - 1) && newY == CurrentCoordinates.Y + 2)
+            {
+                return true;
+            }
+
+            return false;
+
         }
     }
 }
