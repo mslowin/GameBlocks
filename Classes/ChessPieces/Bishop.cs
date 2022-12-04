@@ -25,13 +25,10 @@ namespace GameBlocks.Classes.ChessPieces
         /// </summary>
         /// <param name="newX">New X coordinate of the Bishop.</param>
         /// <param name="newY">New Y coordinate of the Bishop.</param>
-        /// <returns></returns>
-        public bool Move(int newX, int newY)
+        public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;
             CurrentCoordinates.Y = newY;
-
-            return true;
         }
 
         /// <summary>

@@ -466,6 +466,8 @@ namespace GameBlocks.Classes
             }
             if (pieceName.EndsWith("K"))
             {
+                var king = Kings.First(k => k.CurrentCoordinates.X == coords.OldX && k.CurrentCoordinates.Y == coords.OldY);
+                return king.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("Q"))
             {

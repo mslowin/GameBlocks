@@ -23,10 +23,35 @@ namespace GameBlocks.Classes.ChessPieces
             Name = $"{color.Remove(1)}K";
         }
 
+        /// <summary>
+        /// Changes Kings coordinates.
+        /// </summary>
+        /// <param name="newX">New X coordinate of the Kings.</param>
+        /// <param name="newY">New Y coordinate of the Kings.</param>
         public void Move(int newX, int newY)
         {
             CurrentCoordinates.X = newX;
             CurrentCoordinates.Y = newY;
+        }
+
+        /// <summary>
+        /// Checks whether move is legal.
+        /// </summary>
+        /// <param name="newX">X coordinate to move the King to.</param>
+        /// <param name="newY">Y coordinate to move the King to.</param>
+        /// <returns>True if the move is legal, false if illegal</returns>
+        public bool IsMovePossible(int newX, int newY, string[,] Grid)
+        {
+            if (newX > CurrentCoordinates.X + 1 || newX < CurrentCoordinates.X - 1)
+            {
+                return false;
+            }
+            if (newY > CurrentCoordinates.Y + 1 || newY < CurrentCoordinates.Y - 1)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
