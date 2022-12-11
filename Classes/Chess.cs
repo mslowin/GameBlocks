@@ -112,7 +112,6 @@ namespace GameBlocks.Classes
             (Pawns, Kings, Queens, Bishops, Knights, Rooks) = InitiatePieces();
             Color = color;
             InitiateGrid();
-            chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
             if (Color == "black")
             {
                 OpponentsColor = "white";
@@ -124,6 +123,7 @@ namespace GameBlocks.Classes
             {
                 OpponentsColor = "black";
             }
+            chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
         }
 
         /// <summary>
@@ -140,7 +140,6 @@ namespace GameBlocks.Classes
             (Pawns, Kings, Queens, Bishops, Knights, Rooks) = InitiatePieces();
             OpponentsColor = CheckColor();
             InitiateGrid();
-            chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
             if (OpponentsColor == "black")
             {
                 Color = "white";
@@ -152,6 +151,7 @@ namespace GameBlocks.Classes
                 chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.ToTextBox.IsEnabled = false; });
                 chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.SubmitButton.IsEnabled = false; });
             }
+            chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
         }
 
         /// <summary>

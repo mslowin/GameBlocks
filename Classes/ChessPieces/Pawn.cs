@@ -12,6 +12,11 @@ namespace GameBlocks.Classes.ChessPieces
     public class Pawn : ChessPiece
     {
         /// <summary>
+        /// Indicates whether this is the first move of the pawn.
+        /// </summary>
+        private bool _isThisTheFirstMove { get; set; } = true;
+
+        /// <summary>
         /// Constructor of a Pawn class.
         /// </summary>
         /// <param name="startCoordinates">Coordinates where the pawn is placed at the beginning.</param>
@@ -44,8 +49,14 @@ namespace GameBlocks.Classes.ChessPieces
         {
             if (Color == "white")
             {
+                if (_isThisTheFirstMove && newX == CurrentCoordinates.X - 2 && newY == CurrentCoordinates.Y)
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
                 if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y)
                 {
+                    _isThisTheFirstMove = false;
                     return true;
                 }
                 else
@@ -55,8 +66,14 @@ namespace GameBlocks.Classes.ChessPieces
             }
             else
             {
+                if (_isThisTheFirstMove && newX == CurrentCoordinates.X + 2 && newY == CurrentCoordinates.Y)
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
                 if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y)
                 {
+                    _isThisTheFirstMove = false;
                     return true;
                 }
                 else
