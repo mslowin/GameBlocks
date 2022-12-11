@@ -39,6 +39,8 @@ namespace GameBlocks.Views
         {
             InitializeComponent();
             PlayerLoginTextBlock.Text = GlobalVariables.UserAccount!.Login;
+            GlobalVariables.NumberOfPoints = Points.ReadPointsFromStream();
+            PointsTextBlock.Text = GlobalVariables.NumberOfPoints;
         }
 
         /// <summary>
@@ -78,6 +80,8 @@ namespace GameBlocks.Views
             {
                 ExtensionsMethods.StartGame(gameName, gameKey, wasThisUserFirst);
             }
+
+            PointsTextBlock.Text = Points.ReadPointsFromStream();
         }
 
         /// <summary>

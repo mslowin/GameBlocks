@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameBlocks.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,11 +27,17 @@ namespace GameBlocks.Views
             {
                 ResultTextBlock.Text = "You Win!";
                 ResultTextBlock.Foreground = Brushes.Gold;
+                PointsTextBlock.Text = "+30 points";
+                PointsTextBlock.Foreground = Brushes.Gold;
+                Points.AddPoints("30");
             }
             else
             {
                 ResultTextBlock.Text = "You Loose :(";
                 ResultTextBlock.Foreground = Brushes.Red;
+                PointsTextBlock.Text = "-30 points";
+                PointsTextBlock.Foreground = Brushes.Red;
+                Points.AddPoints("-30");
             }
         }
 

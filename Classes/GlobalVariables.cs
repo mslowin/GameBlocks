@@ -37,6 +37,11 @@ namespace GameBlocks.Classes
         public static Account? UserAccount { get; set; } = null;
 
         /// <summary>
+        /// Intiger containing the total number of users points taken from the chain.
+        /// </summary>
+        public static string NumberOfPoints { get; set; } = "";
+
+        /// <summary>
         /// Indicates whetcher a waitingroom was succesfully filled or the matchmaking was cancelled.
         /// </summary>
         public static bool IsMatchmakingComplete { get; set; } = false;

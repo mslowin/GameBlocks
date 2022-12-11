@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GameBlocks.Views"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         mc:Ignorable="d"
-        Title="ResultsWindow" Height="200" Width="400"
+        Title="ResultsWindow" Height="300" Width="400"
         ExtendsContentIntoTitleBar="True"
         WindowBackdropType="Mica"
         WindowStartupLocation="CenterScreen">
@@ -29,6 +29,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             
@@ -40,6 +41,14 @@
                        Text="Results"
                        Foreground="Gold"/>
 
+            <TextBlock x:Name="PointsTextBlock" 
+                       Grid.Row="2" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"
+                       FontSize="25"
+                       Text="Points"
+                       Foreground="Gold"/>
+            
             <Button x:Name="OkButton" 
                     Content="OK"
                     Click="OkButton_Click"

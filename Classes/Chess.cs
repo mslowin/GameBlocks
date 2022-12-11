@@ -359,8 +359,7 @@ namespace GameBlocks.Classes
         public void RemovePieceFromToCoords(dynamic pieces, string PieceName, ChessCoordinates coords)
         {
             foreach (var piec in pieces)
-            { 
-                // TODO: jesli to ta figura, ktora zostala ruszona, to nie usuwamy
+            {
                 if (piec.Name != PieceName && piec.CurrentCoordinates.X == coords.NewX && piec.CurrentCoordinates.Y == coords.NewY)
                 {
                     piec.Move(100, 100);

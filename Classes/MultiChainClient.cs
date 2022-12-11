@@ -39,10 +39,11 @@ namespace GameBlocks.Classes
         {
             Stream rootStream = allStreams.Single(x => x.StreamName == "root");
             Stream usersStream = allStreams.Single(x => x.StreamName == "UsersStream");
+            Stream pointsStream = allStreams.Single(x => x.StreamName == "PointsStream");
             List<Stream> queueStreams = allStreams.Where(x => x.StreamName.StartsWith("Queue")).ToList();
             List<Stream> gameStreams = allStreams.Where(x => x.StreamName.StartsWith("Game")).ToList();
 
-            return new Chain(GlobalVariables.ChainName, rootStream, usersStream, queueStreams, gameStreams);
+            return new Chain(GlobalVariables.ChainName, rootStream, usersStream, pointsStream, queueStreams, gameStreams);
         }
 
         /// <summary>

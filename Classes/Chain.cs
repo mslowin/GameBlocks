@@ -27,6 +27,11 @@ namespace GameBlocks.Classes
         public Stream UsersStream { get; set; }
 
         /// <summary>
+        /// Stream containing users' points.
+        /// </summary>
+        public Stream PointsStream { get; set; }
+
+        /// <summary>
         /// List of streams used as queues (names of which always start with "Queue").
         /// </summary>
         public List<Stream> QueueStreams { get; set; }
@@ -44,11 +49,12 @@ namespace GameBlocks.Classes
         /// <param name="usersStream">Stream containing users' logins and hashed passwords.</param>
         /// <param name="queueStreams">List of streams used as queues.</param>
         /// <param name="gameStreams">List of streams used as games.</param>
-        public Chain(string chainName, Stream rootStream, Stream usersStream, List<Stream> queueStreams, List<Stream> gameStreams)
+        public Chain(string chainName, Stream rootStream, Stream usersStream, Stream pointsStream, List<Stream> queueStreams, List<Stream> gameStreams)
         {
             ChainName = chainName;
             RootStream = rootStream;
             UsersStream = usersStream;
+            PointsStream = pointsStream;
             QueueStreams = queueStreams;
             GameStreams = gameStreams;
         }
