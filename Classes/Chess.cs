@@ -317,6 +317,13 @@ namespace GameBlocks.Classes
         /// <param name="coordinates">Chess coordinates from where to take the piece and where to place it.</param>
         private void UpdatePieces(string pieceName, ChessCoordinates coordinates)
         {
+            RemovePieceFromToCoords(Pawns, pieceName, coordinates);
+            RemovePieceFromToCoords(Bishops, pieceName, coordinates);
+            RemovePieceFromToCoords(Kings, pieceName, coordinates);
+            RemovePieceFromToCoords(Knights, pieceName, coordinates);
+            RemovePieceFromToCoords(Queens, pieceName, coordinates);
+            RemovePieceFromToCoords(Rooks, pieceName, coordinates);
+
             if (pieceName.EndsWith("p"))
             {
                 MovePiece(Pawns, coordinates);
@@ -340,6 +347,24 @@ namespace GameBlocks.Classes
             if (pieceName.EndsWith("r"))
             {
                 MovePiece(Rooks, coordinates);
+            }
+        }
+
+        /// <summary>
+        /// Removes piece which ocupied the "To" coordinates of Chess coordinates.
+        /// </summary>
+        /// <param name="pieces">Dynamic list of pieces to search for a piece.</param>
+        /// <param name="PieceName">Name of a last moved piece.</param>
+        /// <param name="coords">Chess coordinates to check.</param>
+        public void RemovePieceFromToCoords(dynamic pieces, string PieceName, ChessCoordinates coords)
+        {
+            foreach (var piec in pieces)
+            { 
+                // TODO: jesli to ta figura, ktora zostala ruszona, to nie usuwamy
+                if (piec.Name != PieceName && piec.CurrentCoordinates.X == coords.NewX && piec.CurrentCoordinates.Y == coords.NewY)
+                {
+                    piec.Move(100, 100);
+                }
             }
         }
 
