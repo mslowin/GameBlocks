@@ -524,12 +524,12 @@ namespace GameBlocks.Classes
             if (pieceName.EndsWith("p"))
             {
                 var pawn = Pawns.First(p => p.CurrentCoordinates.X == coords.OldX && p.CurrentCoordinates.Y == coords.OldY);
-                return pawn.IsMovePossible(coords.NewX, coords.NewY);
+                return pawn.IsMovePossible(coords.NewX, coords.NewY, Grid);
             }
             if (pieceName.EndsWith("K"))
             {
                 var king = Kings.First(K => K.CurrentCoordinates.X == coords.OldX && K.CurrentCoordinates.Y == coords.OldY);
-                return king.IsMovePossible(coords.NewX, coords.NewY, Grid);
+                return king.IsMovePossible(coords.NewX, coords.NewY, Grid, this);
             }
             if (pieceName.EndsWith("Q"))
             {
@@ -544,7 +544,7 @@ namespace GameBlocks.Classes
             if (pieceName.EndsWith("k"))
             {
                 var knight = Knights.First(k => k.CurrentCoordinates.X == coords.OldX && k.CurrentCoordinates.Y == coords.OldY);
-                return knight.IsMovePossible(coords.NewX, coords.NewY, Grid);
+                return knight.IsMovePossible(coords.NewX, coords.NewY);
             }
             if (pieceName.EndsWith("r"))
             {

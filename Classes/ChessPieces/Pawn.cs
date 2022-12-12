@@ -11,6 +11,8 @@ namespace GameBlocks.Classes.ChessPieces
     /// </summary>
     public class Pawn : ChessPiece
     {
+        public List<Coordinates> PossibleMoves { get; set; }
+
         /// <summary>
         /// Indicates whether this is the first move of the pawn.
         /// </summary>
@@ -44,17 +46,39 @@ namespace GameBlocks.Classes.ChessPieces
         /// </summary>
         /// <param name="newX">X coordinate to move the pawn to.</param>
         /// <param name="newY">Y coordinate to move the pawn to.</param>
+        /// <param name="Grid">Grid with all pieces on it.</param>
         /// <returns>True if the move is legal, false if illegal</returns>
-        public bool IsMovePossible(int newX, int newY)
+        public bool IsMovePossible(int newX, int newY, string[,] Grid)
         {
+            List<Coordinates> possibleCoordinates = new();
+
             if (Color == "white")
             {
-                if (_isThisTheFirstMove && newX == CurrentCoordinates.X - 2 && newY == CurrentCoordinates.Y)
+                possibleCoordinates.Add(new(CurrentCoordinates.X - 1, CurrentCoordinates.Y + 1));
+                possibleCoordinates.Add(new(CurrentCoordinates.X - 1, CurrentCoordinates.Y - 1));
+                PossibleMoves = possibleCoordinates;
+
+                if (_isThisTheFirstMove 
+                    && newX == CurrentCoordinates.X - 2 && newY == CurrentCoordinates.Y
+                    && Grid[newX,newY] == " ")
                 {
                     _isThisTheFirstMove = false;
                     return true;
                 }
-                if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y)
+                if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y
+                    && Grid[newX, newY] == " ")
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
+                if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y + 1
+                    && Grid[newX, newY] != " ")
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
+                if (newX == CurrentCoordinates.X - 1 && newY == CurrentCoordinates.Y - 1
+                    && Grid[newX, newY] != " ")
                 {
                     _isThisTheFirstMove = false;
                     return true;
@@ -66,12 +90,31 @@ namespace GameBlocks.Classes.ChessPieces
             }
             else
             {
-                if (_isThisTheFirstMove && newX == CurrentCoordinates.X + 2 && newY == CurrentCoordinates.Y)
+                possibleCoordinates.Add(new(CurrentCoordinates.X + 1, CurrentCoordinates.Y + 1));
+                possibleCoordinates.Add(new(CurrentCoordinates.X + 1, CurrentCoordinates.Y - 1));
+                PossibleMoves = possibleCoordinates;
+
+                if (_isThisTheFirstMove 
+                    && newX == CurrentCoordinates.X + 2 && newY == CurrentCoordinates.Y
+                    && Grid[newX, newY] == " ")
                 {
                     _isThisTheFirstMove = false;
                     return true;
                 }
-                if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y)
+                if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y
+                    && Grid[newX, newY] == " ")
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
+                if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y + 1
+                    && Grid[newX, newY] != " ")
+                {
+                    _isThisTheFirstMove = false;
+                    return true;
+                }
+                if (newX == CurrentCoordinates.X + 1 && newY == CurrentCoordinates.Y - 1
+                    && Grid[newX, newY] != " ")
                 {
                     _isThisTheFirstMove = false;
                     return true;

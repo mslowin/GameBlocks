@@ -8,6 +8,8 @@ namespace GameBlocks.Classes.ChessPieces
 {
     public class Knight : ChessPiece
     {
+        public List<Coordinates> PossibleMoves { get; set; }
+
         /// <summary>
         /// Constructor of a Knight class.
         /// </summary>
@@ -37,8 +39,20 @@ namespace GameBlocks.Classes.ChessPieces
         /// <param name="newX">X coordinate to move the Knight to.</param>
         /// <param name="newY">Y coordinate to move the Knight to.</param>
         /// <returns>True if the move is legal, false if illegal</returns>
-        public bool IsMovePossible(int newX, int newY, string[,] Grid)
+        public bool IsMovePossible(int newX, int newY)
         {
+            List<Coordinates> possibleCoordinates = new();
+            possibleCoordinates.Add(new(CurrentCoordinates.X - 2, CurrentCoordinates.Y + 1));
+            possibleCoordinates.Add(new(CurrentCoordinates.X - 2, CurrentCoordinates.Y - 1));
+            possibleCoordinates.Add(new(CurrentCoordinates.X + 2, CurrentCoordinates.Y + 1));
+            possibleCoordinates.Add(new(CurrentCoordinates.X + 2, CurrentCoordinates.Y - 1));
+            possibleCoordinates.Add(new(CurrentCoordinates.X + 1, CurrentCoordinates.Y - 2));
+            possibleCoordinates.Add(new(CurrentCoordinates.X - 1, CurrentCoordinates.Y - 2));
+            possibleCoordinates.Add(new(CurrentCoordinates.X + 1, CurrentCoordinates.Y + 2));
+            possibleCoordinates.Add(new(CurrentCoordinates.X - 1, CurrentCoordinates.Y + 2));
+            PossibleMoves = possibleCoordinates;
+
+
             if (newX == CurrentCoordinates.X - 2 && (newY == CurrentCoordinates.Y + 1 || newY == CurrentCoordinates.Y - 1))
             {
                 return true;
@@ -48,7 +62,7 @@ namespace GameBlocks.Classes.ChessPieces
                 return true;
             }
 
-            if ((newX == CurrentCoordinates.X +1 || newX == CurrentCoordinates.X - 1) && newY == CurrentCoordinates.Y - 2)
+            if ((newX == CurrentCoordinates.X + 1 || newX == CurrentCoordinates.X - 1) && newY == CurrentCoordinates.Y - 2)
             {
                 return true;
             }

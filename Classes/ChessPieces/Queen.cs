@@ -11,6 +11,10 @@ namespace GameBlocks.Classes.ChessPieces
     /// </summary>
     public class Queen : ChessPiece
     {
+        public List<Coordinates> PossibleMoves { get; set; }
+
+        private string opponentsColor { get; set; }
+
         /// <summary>
         /// Constructor of a Queen class.
         /// </summary>
@@ -21,6 +25,8 @@ namespace GameBlocks.Classes.ChessPieces
             CurrentCoordinates = startCoordinates;
             Color = color;
             Name = $"{color.Remove(1)}Q";
+            if (Color == "white") { opponentsColor = "black"; }
+            else { opponentsColor = "white"; }
         }
 
         /// <summary>
@@ -39,10 +45,12 @@ namespace GameBlocks.Classes.ChessPieces
         /// </summary>
         /// <param name="newX">X coordinate to move the Queen to.</param>
         /// <param name="newY">Y coordinate to move the Queen to.</param>
+        /// <param name="Grid">Grid with all pieces on it.</param>
         /// <returns>True if the move is legal, false if illegal</returns>
         public bool IsMovePossible(int newX, int newY, string[,] Grid)
         {
             List<Coordinates> possibleCoordinates = new();
+            string opponentsKingName = opponentsColor.First() + "K";
 
             int bottomIterations = Grid.GetLength(0) - 1 - CurrentCoordinates.X;
             int upperIterations = Grid.GetLength(0) - 1 - bottomIterations;
@@ -56,53 +64,118 @@ namespace GameBlocks.Classes.ChessPieces
             int multiplier = 1;
             for (int i = 0; i < bottomIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X + multiplier, CurrentCoordinates.Y));
+                var xCoord = CurrentCoordinates.X + multiplier;
+                var yCoord = CurrentCoordinates.Y;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < rightIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X, CurrentCoordinates.Y + multiplier));
+                var xCoord = CurrentCoordinates.X;
+                var yCoord = CurrentCoordinates.Y + multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < leftIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X, CurrentCoordinates.Y - multiplier));
+                var xCoord = CurrentCoordinates.X;
+                var yCoord = CurrentCoordinates.Y - multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < upperIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X - multiplier, CurrentCoordinates.Y));
+                var xCoord = CurrentCoordinates.X - multiplier;
+                var yCoord = CurrentCoordinates.Y;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < bottomRightIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X + multiplier, CurrentCoordinates.Y + multiplier));
+                var xCoord = CurrentCoordinates.X + multiplier;
+                var yCoord = CurrentCoordinates.Y + multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < bottomLeftIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X + multiplier, CurrentCoordinates.Y - multiplier));
+                var xCoord = CurrentCoordinates.X + multiplier;
+                var yCoord = CurrentCoordinates.Y - multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < upperRightIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X - multiplier, CurrentCoordinates.Y + multiplier));
+                var xCoord = CurrentCoordinates.X - multiplier;
+                var yCoord = CurrentCoordinates.Y + multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
             multiplier = 1;
             for (int i = 0; i < upperLeftIterations; i++)
             {
-                possibleCoordinates.Add(new(CurrentCoordinates.X - multiplier, CurrentCoordinates.Y - multiplier));
+                var xCoord = CurrentCoordinates.X - multiplier;
+                var yCoord = CurrentCoordinates.Y - multiplier;
+
+                if (Grid[xCoord, yCoord] != " " && Grid[xCoord, yCoord] != opponentsKingName)
+                {
+                    possibleCoordinates.Add(new(xCoord, yCoord));
+                    break;
+                }
+                possibleCoordinates.Add(new(xCoord, yCoord));
                 multiplier++;
             }
 
             var matchingCoordinates = possibleCoordinates.Where(p => p.X == newX && p.Y == newY).ToList();
+            PossibleMoves = possibleCoordinates;
             if (matchingCoordinates.Count == 0)
             {
                 return false;

@@ -20,6 +20,10 @@ namespace GameBlocks.Views
     /// </summary>
     public partial class ResultsWindow
     {
+        /// <summary>
+        /// Constructor of results window.
+        /// </summary>
+        /// <param name="didUserWin">Indicates whether the user has won.</param>
         public ResultsWindow(bool didUserWin)
         {
             InitializeComponent();
@@ -41,6 +45,11 @@ namespace GameBlocks.Views
             }
         }
 
+        /// <summary>
+        /// Happens after clicking OK button.
+        /// </summary>
+        /// <param name="sender">Reference to the sender e.g. button.</param>
+        /// <param name="e">Additional information object and event handler.</param>
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
