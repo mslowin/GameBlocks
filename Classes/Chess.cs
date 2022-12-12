@@ -253,15 +253,15 @@ namespace GameBlocks.Classes
                     UpdateGrid(pieces.Last(), coordinates);
                     UpdatePieces(pieces.Last(), coordinates);
                     chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
-                    //if (IsGameOver())
-                    //{
-                    //    MultiChainClient.PublishToStream(StreamName, GameKey,
-                    //        $"{{\"\"\"json\"\"\":{{" +
-                    //        $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
-                    //        $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
-                    //        $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
-                    //    return false;  // returning false as the opponen won
-                    //}
+                    if (IsGameOver())
+                    {
+                        MultiChainClient.PublishToStream(StreamName, GameKey,
+                            $"{{\"\"\"json\"\"\":{{" +
+                            $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
+                            $"\"\"\"symbol\"\"\":\"\"\"{OpponentsColor}\"\"\"," +
+                            $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
+                        return false;  // returning false as the opponen won
+                    }
 
                     ChessGameWindow.AllMoves.Add(coordinates);
                     ChessGameWindow.OpponentsMoveCoordinates = coordinates;
@@ -282,15 +282,15 @@ namespace GameBlocks.Classes
                     UpdateGrid(pieces.Last(), coordinates);
                     UpdatePieces(pieces.Last(), coordinates);
                     chessGameWindow.Dispatcher.Invoke(() => { chessGameWindow.GameAreaTextBlock.Text = DisplayGrid(); });
-                    //if (IsGameOver())
-                    //{
-                    //    MultiChainClient.PublishToStream(StreamName, GameKey,
-                    //        $"{{\"\"\"json\"\"\":{{" +
-                    //        $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
-                    //        $"\"\"\"symbol\"\"\":\"\"\"{Symbol}\"\"\"," +
-                    //        $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
-                    //    return true;  // returning true as the player won
-                    //}
+                    if (IsGameOver())
+                    {
+                        MultiChainClient.PublishToStream(StreamName, GameKey,
+                            $"{{\"\"\"json\"\"\":{{" +
+                            $"\"\"\"login\"\"\":\"\"\"{GlobalVariables.UserAccount!.Login}\"\"\"," +
+                            $"\"\"\"symbol\"\"\":\"\"\"{Color}\"\"\"," +
+                            $"\"\"\"satus\"\"\":\"\"\"WYGRANA\"\"\"}}}}");
+                        return true;  // returning true as the player won
+                    }
 
                     ChessGameWindow.AllMoves.Add(coordinates);
                     ChessGameWindow.DidOpponentMove = false;
@@ -308,6 +308,39 @@ namespace GameBlocks.Classes
                     return false;
                 }
             }
+        }
+
+        private bool IsGameOver()
+        {
+            List<bool> possibleKingsMoves = new();
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X + 1, Kings[0].CurrentCoordinates.Y + 1, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X + 1, Kings[0].CurrentCoordinates.Y, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X + 1, Kings[0].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X, Kings[0].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X - 1, Kings[0].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X - 1, Kings[0].CurrentCoordinates.Y, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X - 1, Kings[0].CurrentCoordinates.Y + 1, Grid, this));
+            possibleKingsMoves.Add(Kings[0].IsMovePossible(Kings[0].CurrentCoordinates.X, Kings[0].CurrentCoordinates.Y + 1, Grid, this));
+            if (possibleKingsMoves.Select(x => x == true).ToList().Count == 0)
+            {
+                return true;
+            }
+
+            possibleKingsMoves.RemoveRange(0, possibleKingsMoves.Count);
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X + 1, Kings[1].CurrentCoordinates.Y + 1, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X + 1, Kings[1].CurrentCoordinates.Y, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X + 1, Kings[1].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X, Kings[1].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X - 1, Kings[1].CurrentCoordinates.Y - 1, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X - 1, Kings[1].CurrentCoordinates.Y, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X - 1, Kings[1].CurrentCoordinates.Y + 1, Grid, this));
+            possibleKingsMoves.Add(Kings[1].IsMovePossible(Kings[1].CurrentCoordinates.X, Kings[1].CurrentCoordinates.Y + 1, Grid, this));
+            if (possibleKingsMoves.Select(x => x == true).ToList().Count == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
